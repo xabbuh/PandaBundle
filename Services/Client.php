@@ -64,6 +64,18 @@ class Client
     }
     
     /**
+     * Send a request to the Panda encoding service to encode a video file that
+     * can be found under a particular url.
+     * 
+     * @param string $url The url where the encoding service can fetch the video
+     * @return string The server response
+     */
+    public function encodeVideoByUrl($url)
+    {
+        return $this->post("/videos.json", array("source_url" => $url));
+    }
+    
+    /**
      * Upload a video file to the Panda encoding service.
      * 
      * @param string $localPath The path to the local video file
