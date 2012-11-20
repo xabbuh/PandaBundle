@@ -81,7 +81,7 @@ class Client
      * @param string $localPath The path to the local video file
      * @return string The server response
      */
-    public function uploadFile($localPath)
+    public function encodeVideoFile($localPath)
     {
         return $this->post("/videos.json", array("file" => "@$localPath"));
     }
