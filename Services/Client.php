@@ -82,7 +82,9 @@ class Client
      */
     public function encodeVideoByUrl($url)
     {
-        return $this->post("/videos.json", array("source_url" => $url));
+        $response = $this->post("/videos.json", array("source_url" => $url));
+        $transformer = $this->container->get("xabbuh_panda.video_transformer");
+        return $transformer->transform($response);
     }
     
     /**
@@ -93,7 +95,9 @@ class Client
      */
     public function encodeVideoFile($localPath)
     {
-        return $this->post("/videos.json", array("file" => "@$localPath"));
+        $response = $this->post("/videos.json", array("file" => "@$localPath"));
+        $transformer = $this->container->get("xabbuh_panda.video_transformer");
+        return $transformer->transform($response);
     }
     
     /**
