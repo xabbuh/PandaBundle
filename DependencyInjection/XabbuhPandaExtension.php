@@ -29,11 +29,14 @@ class XabbuhPandaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        // set parameters
+        // set cloud access parameters
         $container->setParameter("xabbuh_panda.cloud_id", $config["cloud"]["cloud_id"]);
         $container->setParameter("xabbuh_panda.access_key", $config["cloud"]["access_key"]);
         $container->setParameter("xabbuh_panda.secret_key", $config["cloud"]["secret_key"]);
         $container->setParameter("xabbuh_panda.api_host", $config["cloud"]["api_host"]);
+        
+        // set services class names parameters
+        $container->setParameter("xabbuh_panda.client.class", $config["client"]["class"]);
 
         // and load the service definition
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

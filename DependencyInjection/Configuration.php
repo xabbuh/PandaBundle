@@ -28,11 +28,21 @@ class Configuration implements ConfigurationInterface
         
         $rootNode
             ->children()
-                ->arrayNode("cloud")->children()
-                    ->scalarNode("cloud_id")->end()
-                    ->scalarNode("access_key")->end()
-                    ->scalarNode("secret_key")->end()
-                    ->scalarNode("api_host")->defaultValue("api.pandastream.com")->end()
+                ->arrayNode("cloud")
+                    ->children()
+                        ->scalarNode("cloud_id")->end()
+                        ->scalarNode("access_key")->end()
+                        ->scalarNode("secret_key")->end()
+                        ->scalarNode("api_host")->defaultValue("api.pandastream.com")->end()
+                    ->end()
+                ->end()
+                ->arrayNode("client")
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode("class")
+                            ->defaultValue("Xabbuh\PandaBundle\Services\Client")
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
         
