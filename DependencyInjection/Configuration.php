@@ -28,10 +28,12 @@ class Configuration implements ConfigurationInterface
         
         $rootNode
             ->children()
-                ->scalarNode("cloud_id")->end()
-                ->scalarNode("access_key")->end()
-                ->scalarNode("secret_key")->end()
-                ->scalarNode("api_host")->defaultValue("api.pandastream.com")->end()
+                ->arrayNode("cloud")->children()
+                    ->scalarNode("cloud_id")->end()
+                    ->scalarNode("access_key")->end()
+                    ->scalarNode("secret_key")->end()
+                    ->scalarNode("api_host")->defaultValue("api.pandastream.com")->end()
+                ->end()
             ->end();
         
         return $treeBuilder;
