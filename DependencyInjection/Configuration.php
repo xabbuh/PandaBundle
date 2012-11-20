@@ -44,6 +44,19 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode("transformers")
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode("video")
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode("class")
+                                    ->defaultValue("Xabbuh\PandaBundle\Services\JsonToVideoTransformer")
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
         
         return $treeBuilder;
