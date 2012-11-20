@@ -11,6 +11,8 @@
 
 namespace Xabbuh\PandaBundle\Services;
 
+use Symfony\Component\DependencyInjection\Container;
+
 /**
  * Intuitive PHP interface for the Panda video encoding service API.
  *
@@ -46,21 +48,29 @@ class Client
      */
     private $apiHost;
     
+    /**
+     * The service container context
+     * @var Symfony\Component\DependencyInjection\Container
+     */
+    private $container;
+    
     
     /**
      * Constructs the Panda client service.
      * 
-     * @param type $cloudId Panda cloud id
-     * @param type $accessKey API access key
-     * @param type $secretKey API secret key
-     * @param type $apiHost  API host
+     * @param string $cloudId Panda cloud id
+     * @param string $accessKey API access key
+     * @param string $secretKey API secret key
+     * @param string $apiHost  API host
+     * @param Symfony\Component\DependencyInjection\Container $container The service container
      */
-    public function __construct($cloudId, $accessKey, $secretKey, $apiHost)
+    public function __construct($cloudId, $accessKey, $secretKey, $apiHost, Container $container)
     {
         $this->cloudId = $cloudId;
         $this->accessKey = $accessKey;
         $this->secretKey = $secretKey;
         $this->apiHost = $apiHost;
+        $this->container = $container;
     }
     
     /**
