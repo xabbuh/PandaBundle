@@ -158,16 +158,8 @@ class Client
      */
     private function request($method, $path, array $params)
     {
-        // add authentication data to the request parameters
-        $params["cloud_id"] = $this->cloudId;
-        $params["access_key"] = $this->accessKey;
-        $oldTz = date_default_timezone_get();
-        date_default_timezone_set("UTC");
-        $params["timestamp"] = date("c");
-        date_default_timezone_set($oldTz);
-        
-        // generate request signature
-        $params["signature"] = $this->signature($method, $path, $params);
+        // sign the request parameters
+        $params = $this->signParams($method, $path, $params);
         
         // build url, append url parameters if the request method is GET or DELETE
         $url = "https://{$this->apiHost}/v2{$path}";
@@ -191,6 +183,37 @@ class Client
     }
     
     /**
+     * Generate signature for a given set of request parameters and add the
+     * signature to the parameters.
+     * 
+     * @param string $method The HTTP method
+     * @param string $path The request path
+     * @param array $params Request parameters
+     * @return array The signed parameters 
+     */
+    public function signParams($method, $path, array $params)
+    {
+        // add authentication data to the request parameters if not set
+        if(!isset($params["cloud_id"])) {
+            $params["cloud_id"] = $this->cloudId;
+        }
+        if(!isset($params["access_key"])) {
+            $params["access_key"] = $this->accessKey;
+        }
+        if(!isset($params["timestamp"])) {
+            $oldTz = date_default_timezone_get();
+            date_default_timezone_set("UTC");
+            $params["timestamp"] = date("c");
+            date_default_timezone_set($oldTz);
+        }
+        
+        // generate the signature
+        $params["signature"] = $this->signature($method, $path, $params);
+        
+        return $params;
+    }
+    
+    /**
      * Generates the signature for an API requests based on its parameters.
      * 
      * @param string $method The HTTP method
@@ -198,14 +221,14 @@ class Client
      * @param array $params Request parameters
      * @return string The generated signature
      */
-    private function signature($method, $path, $params)
+    public function signature($method, $path, array $params)
     {
         ksort($params);
         if(isset($params["file"])) {
             unset($params["file"]);
         }
         $canonicalQueryString = strtr(http_build_query($params), "+", "%20");
-        $stringToSign = sprintf("%s\n%s\n%s\n%s", $method, $this->apiHost, $path, $canonicalQueryString);
+        $stringToSign = sprintf("%s\n%s\n%s\n%s", strtoupper($method), $this->apiHost, $path, $canonicalQueryString);
         $hmac = hash_hmac("sha256", $stringToSign, $this->secretKey, true);
         return base64_encode($hmac);
     }
