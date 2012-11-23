@@ -78,12 +78,12 @@ class Client
      * can be found under a particular url.
      * 
      * @param string $url The url where the encoding service can fetch the video
-     * @return string The server response
+     * @return \Xabbuh\PandaBundle\Model\Video The created video
      */
     public function encodeVideoByUrl($url)
     {
         $response = $this->post("/videos.json", array("source_url" => $url));
-        $transformer = $this->container->get("xabbuh_panda.video_transformer");
+        $transformer = $this->container->get("xabbuh_panda.transformers.video");
         return $transformer->transform($response);
     }
     
@@ -91,12 +91,12 @@ class Client
      * Upload a video file to the Panda encoding service.
      * 
      * @param string $localPath The path to the local video file
-     * @return string The server response
+     * @return \Xabbuh\PandaBundle\Model\Video The created video
      */
     public function encodeVideoFile($localPath)
     {
         $response = $this->post("/videos.json", array("file" => "@$localPath"));
-        $transformer = $this->container->get("xabbuh_panda.video_transformer");
+        $transformer = $this->container->get("xabbuh_panda.transformers.video");
         return $transformer->transform($response);
     }
     
