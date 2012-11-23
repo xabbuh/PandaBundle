@@ -78,7 +78,7 @@ class Client
      * can be found under a particular url.
      * 
      * @param string $url The url where the encoding service can fetch the video
-     * @return \Xabbuh\PandaBundle\Model\Video The created video
+     * @return Xabbuh\PandaBundle\Model\Video The created video
      */
     public function encodeVideoByUrl($url)
     {
@@ -91,7 +91,7 @@ class Client
      * Upload a video file to the Panda encoding service.
      * 
      * @param string $localPath The path to the local video file
-     * @return \Xabbuh\PandaBundle\Model\Video The created video
+     * @return Xabbuh\PandaBundle\Model\Video The created video
      */
     public function encodeVideoFile($localPath)
     {
@@ -103,11 +103,11 @@ class Client
     /**
      * Helper method to send GET requests to the Panda API.
      * 
-     * @param type $path The path to send requests to
-     * @param type $params Url parameters
+     * @param string $path The path to send requests to
+     * @param array $params Url parameters
      * @return string The server response
      */
-    private function get($path, $params)
+    private function get($path, array $params = array())
     {
         return $this->request("GET", $path, $params);
     }
@@ -115,11 +115,11 @@ class Client
     /**
      * Helper method to send POST requests to the Panda API.
      * 
-     * @param type $path The path to send requests to
-     * @param type $params Url parameters
+     * @param string $path The path to send requests to
+     * @param array $params Url parameters
      * @return string The server response
      */
-    private function post($path, $params)
+    private function post($path, array $params = array())
     {
         return $this->request("POST", $path, $params);
     }
@@ -127,11 +127,11 @@ class Client
     /**
      * Helper method to send PUT requests to the Panda API.
      * 
-     * @param type $path The path to send requests to
-     * @param type $params Parameters
+     * @param string $path The path to send requests to
+     * @param array $params Parameters
      * @return string The server response
      */
-    private function put($path, $params)
+    private function put($path, array $params = array())
     {
         return $this->request("PUT", $path, $params);
     }
@@ -139,11 +139,11 @@ class Client
     /**
      * Helper method to send DELETE requests to the Panda API.
      * 
-     * @param type $path The path to send requests to
-     * @param type $params Parameters
+     * @param string $path The path to send requests to
+     * @param array $params Parameters
      * @return string The server response
      */
-    private function delete($path, $params)
+    private function delete($path, array $params = array())
     {
         return $this->request("DELETE", $path, $params);
     }
