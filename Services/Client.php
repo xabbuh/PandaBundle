@@ -101,6 +101,17 @@ class Client
     }
     
     /**
+     * Retrieve the cloud's notifications configuration
+     * 
+     * @return Xabbuh\PandaBundle\Model\Notifications The notifications
+     */
+    public function getNotifications()
+    {
+        $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
+        return $transformer->transform($this->get("/notifications.json"));
+    }
+    
+    /**
      * Helper method to send GET requests to the Panda API.
      * 
      * @param string $path The path to send requests to
