@@ -29,6 +29,7 @@ class ShowNotificationsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName("panda:notifications:show");
+        $this->setDescription("Show the current notification configuration");
     }
     
     /**
