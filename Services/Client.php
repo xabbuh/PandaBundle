@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Services;
 
 use Symfony\Component\DependencyInjection\Container;
+use Xabbuh\PandaBundle\Model\Notifications;
 
 /**
  * Intuitive PHP interface for the Panda video encoding service API.
@@ -101,7 +102,7 @@ class Client
     }
     
     /**
-     * Retrieve the cloud's notifications configuration
+     * Retrieve the cloud's notifications configuration.
      * 
      * @return Xabbuh\PandaBundle\Model\Notifications The notifications
      */
@@ -109,6 +110,20 @@ class Client
     {
         $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
         return $transformer->transform($this->get("/notifications.json"));
+    }
+    
+    /**
+     * Change the notifications configuration.
+     * 
+     * @param Xabbuh\PandaBundle\Model\Notifications $notifications The new configuration
+     * @return Xabbuh\PandaBundle\Model\Notifications The new configuration
+     */
+    public function setNotifications(Notifications $notifications)
+    {
+        $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
+        $params = $transformer->toRequestParams($notifications);
+        $response = $this->put("/notifications.json", $params);
+        return $transformer->transform($response);
     }
     
     /**
