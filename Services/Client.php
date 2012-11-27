@@ -238,7 +238,11 @@ class Client
         if(isset($params["file"])) {
             unset($params["file"]);
         }
-        $canonicalQueryString = strtr(http_build_query($params), "+", "%20");
+        $canonicalQueryString = str_replace(
+            array("+", "%5B", "%5D"),
+            array("%20", "[", "]"),
+            http_build_query($params)
+        );
         $stringToSign = sprintf("%s\n%s\n%s\n%s", strtoupper($method), $this->apiHost, $path, $canonicalQueryString);
         $hmac = hash_hmac("sha256", $stringToSign, $this->secretKey, true);
         return base64_encode($hmac);
