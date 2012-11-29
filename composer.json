@@ -1,3 +1,4 @@
 {
-    "name": "xabbuh/panda-bundle"
+    "name": "xabbuh/panda-bundle",
+    "target-dir": "Xabbuh/PandaBundle"
 }
