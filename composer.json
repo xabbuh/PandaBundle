@@ -1,4 +1,7 @@
 {
     "name": "xabbuh/panda-bundle",
+    "autoload": {
+        "psr-0": { "Xabbuh\\PandaBundle": "" }
+    },
     "target-dir": "Xabbuh/PandaBundle"
 }
