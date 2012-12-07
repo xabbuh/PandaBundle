@@ -85,7 +85,7 @@ class Client
     {
         $response = $this->post("/videos.json", array("source_url" => $url));
         $transformer = $this->container->get("xabbuh_panda.transformers.video");
-        return $transformer->transform($response);
+        return $transformer->fromJSON($response);
     }
     
     /**
@@ -98,7 +98,7 @@ class Client
     {
         $response = $this->post("/videos.json", array("file" => "@$localPath"));
         $transformer = $this->container->get("xabbuh_panda.transformers.video");
-        return $transformer->transform($response);
+        return $transformer->fromJSON($response);
     }
     
     /**
@@ -109,7 +109,7 @@ class Client
     public function getNotifications()
     {
         $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
-        return $transformer->transform($this->get("/notifications.json"));
+        return $transformer->fromJSON($this->get("/notifications.json"));
     }
     
     /**
@@ -123,7 +123,7 @@ class Client
         $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
         $params = $transformer->toRequestParams($notifications);
         $response = $this->put("/notifications.json", $params);
-        return $transformer->transform($response);
+        return $transformer->fromJSON($response);
     }
     
     /**

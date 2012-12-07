@@ -15,21 +15,21 @@ use Xabbuh\PandaBundle\Model\NotificationEvent;
 use Xabbuh\PandaBundle\Model\Notifications;
 
 /**
- * Transformation between a JSON string as returned by the Panda webservice into
- * a Notifications model object and vice versa.
+ * Transformation from variuos data representation formats into Notifications
+ * model objects and vice versa.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de> 
  */
-class JsonToNotificationsTransformer
+class NotificationsTransformer
 {
     /**
-     * Transform the JSON representation of notifications a Notifications model
-     * object.
+     * Transform the JSON representation of notifications into a Notifications
+     * model object.
      * 
      * @param string $jsonString The string in json format being transformed
      * @return Xabbuh\PandaBundle\Model\Notifications The notifications
      */
-    public function transform($jsonString)
+    public function fromJSON($jsonString)
     {
         $json = json_decode($jsonString);
         $notifications = new Notifications();

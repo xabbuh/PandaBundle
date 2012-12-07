@@ -14,8 +14,8 @@ namespace Xabbuh\PandaBundle\Services;
 use Xabbuh\PandaBundle\Model\Video;
 
 /**
- * Transformation between a JSON string as returned by the Panda webservice into
- * a Video model object and vice versa.
+ * Transformation from various data representation formats into Video models and
+ * vice versa.
  * 
  * A JSON object returned by the Panda api service may contain the following
  * properties:
@@ -44,7 +44,7 @@ use Xabbuh\PandaBundle\Model\Video;
  * 
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class JsonToVideoTransformer
+class VideoTransformer
 {
     /**
      * Transform the JSON representation of a video into a Video model object.
@@ -52,7 +52,7 @@ class JsonToVideoTransformer
      * @param string $jsonString JSON representation of a video
      * @return Xabbuh\PandaBundle\Model\Video The generated model object
      */
-    public function transform($jsonString)
+    public function fromJSON($jsonString)
     {
         $json = json_decode($jsonString);
         $video = new Video();
