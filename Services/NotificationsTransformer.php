@@ -46,36 +46,6 @@ class NotificationsTransformer
     }
     
     /**
-     * Transform a Notifications object back into a JSON encoded string.
-     * 
-     * @param Xabbuh\PandaBundle\Model\Notifications $notifications The notifications being transformed
-     * @return string The transformed JSON object
-     */
-    public function reverseTransform(Notifications $notifications)
-    {
-        $jsonObject = new \stdClass();
-        $jsonObject->url = $notifications->getUrl();
-        $jsonObject->events = new \stdClass();
-        $videoCreatedEvent = $notifications->getNotificationEvent("video_created");
-        if ($videoCreatedEvent) {
-            $jsonObject->events->video_created = $videoCreatedEvent->isActive();
-        }
-        $videoEncodedEvent = $notifications->getNotificationEvent("video_encoded");
-        if ($videoEncodedEvent) {
-            $jsonObject->events->video_encoded = $videoEncodedEvent->isActive();
-        }
-        $encodingProgressEvent = $notifications->getNotificationEvent("encoding_progress");
-        if ($encodingProgressEvent) {
-            $jsonObject->events->encoding_progress = $encodingProgressEvent->isActive();
-        }
-        $encodingCompletedEvent = $notifications->getNotificationEvent("encoding_completed");
-        if ($encodingCompletedEvent) {
-            $jsonObject->events->encoding_completed = $encodingCompletedEvent->isActive();
-        }
-        return json_encode($jsonObject);
-    }
-    
-    /**
      * Transform a Notifications object into an array of request parameters which
      * can be used in api requests.
      * 

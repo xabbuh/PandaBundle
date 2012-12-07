@@ -78,36 +78,4 @@ class VideoTransformer
         $video->setPath($json->path);
         return $video;
     }
-    
-    /**
-     * Transform a Video object back into a JSON encoded string.
-     * 
-     * @param Video $video The video being transformed
-     * @return string The transformed JSON object
-     */
-    public function reverseTransform(Video $video)
-    {
-        $jsonObject = new \stdClass();
-        $jsonObject->id = $video->getId();
-        $jsonObject->created_at = $video->getCreatedAt();
-        $jsonObject->updated_at = $video->getUpdatedAt();
-        $jsonObject->original_filename = $video->getOriginalFilename();
-        $jsonObject->extname = $video->getExtname();
-        $jsonObject->source_url = $video->getSourceUrl();
-        $jsonObject->duration = $video->getDuration();
-        $jsonObject->width = $video->getWidth();
-        $jsonObject->height = $video->getHeight();
-        $jsonObject->file_size = $video->getFileSize();
-        $jsonObject->video_bitrate = $video->getVideoBitrate();
-        $jsonObject->audio_bitrate = $video->getAudioBitrate();
-        $jsonObject->video_codec = $video->getVideoCodec();
-        $jsonObject->audio_codec = $video->getAudioCodec();
-        $jsonObject->fps = $video->getFps();
-        $jsonObject->audio_channels = $video->getAudioChannels();
-        $jsonObject->audio_sample_rate = $video->getAudioSampleRate();
-        $jsonObject->status = $video->getStatus();
-        $jsonObject->mime_type = $video->getMimeType();
-        $jsonObject->path = $video->getPath();
-        return json_encode($jsonObject);
-    }
 }
