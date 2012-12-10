@@ -3,5 +3,8 @@
     "autoload": {
         "psr-0": { "Xabbuh\\PandaBundle": "" }
     },
+    "require": {
+        "xabbuh/panda-client": "*"
+    },
     "target-dir": "Xabbuh/PandaBundle"
 }

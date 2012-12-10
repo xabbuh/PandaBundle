@@ -37,6 +37,8 @@ class XabbuhPandaExtension extends Extension
         
         // set services class names parameters
         $container->setParameter("xabbuh_panda.client.class", $config["client"]["class"]);
+        $container->setParameter("xabbuh_panda.client.api.class", $config["client"]["api"]["class"]);
+        $container->setParameter("xabbuh_panda.client.rest.class", $config["client"]["rest"]["class"]);
         $container->setParameter("xabbuh_panda.controller.class", $config["controller"]["class"]);
         $container->setParameter("xabbuh_panda.transformer.class", $config["transformer"]["class"]);
 
