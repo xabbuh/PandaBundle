@@ -9,7 +9,7 @@
 * file that was distributed with this source code.
 */
 
-namespace Xabbuh\PandaBundle\Services;
+namespace Xabbuh\PandaBundle\Transformers;
 
 use Xabbuh\PandaBundle\Model\Video;
 

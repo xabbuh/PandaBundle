@@ -50,10 +50,11 @@ class Client
     private $apiHost;
     
     /**
-     * The service container context
-     * @var Symfony\Component\DependencyInjection\Container
+     * The factory that creates and manages transformer instances
+     * 
+     * @var \Xabbuh\PandaBundle\Services\TransformerFactory
      */
-    private $container;
+    private $transformerFactory;
     
     
     /**
@@ -63,15 +64,15 @@ class Client
      * @param string $accessKey API access key
      * @param string $secretKey API secret key
      * @param string $apiHost  API host
-     * @param Symfony\Component\DependencyInjection\Container $container The service container
+     * @param \Xabbuh\PandaBundle\Services\TransformerFactory $transformerFactory The transformer factory
      */
-    public function __construct($cloudId, $accessKey, $secretKey, $apiHost, Container $container)
+    public function __construct($cloudId, $accessKey, $secretKey, $apiHost, TransformerFactory $transformerFactory)
     {
         $this->cloudId = $cloudId;
         $this->accessKey = $accessKey;
         $this->secretKey = $secretKey;
         $this->apiHost = $apiHost;
-        $this->container = $container;
+        $this->transformerFactory = $transformerFactory;
     }
     
     /**
@@ -84,7 +85,7 @@ class Client
     public function encodeVideoByUrl($url)
     {
         $response = $this->post("/videos.json", array("source_url" => $url));
-        $transformer = $this->container->get("xabbuh_panda.transformers.video");
+        $transformer = $this->transformerFactory->get("Video");
         return $transformer->fromJSON($response);
     }
     
@@ -97,7 +98,7 @@ class Client
     public function encodeVideoFile($localPath)
     {
         $response = $this->post("/videos.json", array("file" => "@$localPath"));
-        $transformer = $this->container->get("xabbuh_panda.transformers.video");
+        $transformer = $this->transformerFactory->get("Video");
         return $transformer->fromJSON($response);
     }
     
@@ -108,7 +109,7 @@ class Client
      */
     public function getNotifications()
     {
-        $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
+        $transformer = $this->transformerFactory->get("Notifications");
         return $transformer->fromJSON($this->get("/notifications.json"));
     }
     
@@ -120,7 +121,7 @@ class Client
      */
     public function setNotifications(Notifications $notifications)
     {
-        $transformer = $this->container->get("xabbuh_panda.transformers.notifications");
+        $transformer = $this->transformerFactory->get("Notifications");
         $params = $transformer->toRequestParams($notifications);
         $response = $this->put("/notifications.json", $params);
         return $transformer->fromJSON($response);

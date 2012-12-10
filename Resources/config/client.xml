@@ -9,7 +9,7 @@
             <argument>%xabbuh_panda.access_key%</argument>
             <argument>%xabbuh_panda.secret_key%</argument>
             <argument>%xabbuh_panda.api_host%</argument>
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="xabbuh_panda.transformer"/>
         </service>
     </services>
 </container>

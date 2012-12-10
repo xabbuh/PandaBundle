@@ -38,8 +38,7 @@ class XabbuhPandaExtension extends Extension
         // set services class names parameters
         $container->setParameter("xabbuh_panda.client.class", $config["client"]["class"]);
         $container->setParameter("xabbuh_panda.controller.class", $config["controller"]["class"]);
-        $container->setParameter("xabbuh_panda.transformers.notifications.class", $config["transformers"]["notifications"]["class"]);
-        $container->setParameter("xabbuh_panda.transformers.video.class", $config["transformers"]["video"]["class"]);
+        $container->setParameter("xabbuh_panda.transformer.class", $config["transformer"]["class"]);
 
         // and load the service definitions
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

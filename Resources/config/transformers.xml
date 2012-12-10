@@ -4,7 +4,6 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="xabbuh_panda.transformers.notifications" class="%xabbuh_panda.transformers.notifications.class%"/>
-        <service id="xabbuh_panda.transformers.video" class="%xabbuh_panda.transformers.video.class%"/>
+        <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.class%"/>
     </services>
 </container>
