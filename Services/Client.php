@@ -111,7 +111,7 @@ class Client
     {
         $transformer = $this->transformerFactory->get("Notifications");
         $params = $transformer->toRequestParams($notifications);
-        $response = $this->pandaApi->setNotifications($params);
+        $response = $this->pandaApi->setNotifications($params->all());
         return $transformer->fromJSON($response);
     }
     

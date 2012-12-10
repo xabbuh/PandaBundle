@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Transformers;
 
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Xabbuh\PandaBundle\Model\NotificationEvent;
 use Xabbuh\PandaBundle\Model\Notifications;
 
@@ -46,33 +47,44 @@ class NotificationsTransformer
     }
     
     /**
-     * Transform a Notifications object into an array of request parameters which
-     * can be used in api requests.
+     * Transform a Notifications object into a ParameterBag of request parameters.
      * 
      * @param \Xabbuh\PandaBundle\Model\Notifications $notifications The notifications to transform
-     * @return array The request parameters
+     * @return \Symfony\Component\HttpFoundation\ParameterBag The request parameters
      */
     public function toRequestParams(Notifications $notifications)
     {
-        $params = array();
+        $params = new ParameterBag();
         if ($notifications->getUrl() != null) {
-            $params["url"] = $notifications->getUrl();
+            $params->set("url", $notifications->getUrl());
         }
         $videoCreatedEvent = $notifications->getNotificationEvent("video_created");
         if ($videoCreatedEvent) {
-            $params["events[video_created]"] = $videoCreatedEvent->isActive() ? "true" : "false";
+            $params->set(
+                "events[video_created]",
+                $videoCreatedEvent->isActive() ? "true" : "false"
+            );
         }
         $videoEncodedEvent = $notifications->getNotificationEvent("video_encoded");
         if ($videoEncodedEvent) {
-            $params["events[video_encoded]"] = $videoEncodedEvent->isActive() ? "true" : "false";
+            $params->set(
+                "events[video_encoded]",
+                $videoEncodedEvent->isActive() ? "true" : "false"
+            );
         }
         $encodingProgressEvent = $notifications->getNotificationEvent("encoding_progress");
         if ($encodingProgressEvent) {
-            $params["events[encoding_progress]"] = $encodingProgressEvent->isActive() ? "true" : "false";
+            $params->set(
+                "events[encoding_progress]",
+                $encodingProgressEvent->isActive() ? "true" : "false"
+            );
         }
         $encodingCompletedEvent = $notifications->getNotificationEvent("encoding_completed");
         if ($encodingCompletedEvent) {
-            $params["events[encoding_completed]"] = $encodingCompletedEvent->isActive() ? "true" : "false";
+            $params->set(
+                "events[encoding_completed]",
+                $encodingCompletedEvent->isActive() ? "true" : "false"
+            );
         }
         return $params;
     }
