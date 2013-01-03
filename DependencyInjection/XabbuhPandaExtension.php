@@ -29,23 +29,49 @@ class XabbuhPandaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        // set cloud access parameters
-        $container->setParameter("xabbuh_panda.cloud_id", $config["cloud"]["cloud_id"]);
-        $container->setParameter("xabbuh_panda.access_key", $config["cloud"]["access_key"]);
-        $container->setParameter("xabbuh_panda.secret_key", $config["cloud"]["secret_key"]);
-        $container->setParameter("xabbuh_panda.api_host", $config["cloud"]["api_host"]);
-        
         // set services class names parameters
-        $container->setParameter("xabbuh_panda.client.class", $config["client"]["class"]);
+        $container->setParameter("xabbuh_panda.account.manager.class", "Xabbuh\\PandaBundle\\Account\\AccountManager");
+        $container->setParameter("xabbuh_panda.account.config_provider.class", "Xabbuh\\PandaBundle\\Account\\ConfigAccountProvider");
+        $container->setParameter("xabbuh_panda.cloud.manager.class", "Xabbuh\\PandaBundle\\Cloud\\CloudManager");
+        $container->setParameter("xabbuh_panda.cloud.factory.class", "Xabbuh\\PandaBundle\\Cloud\\CloudFactory");
+        $container->setParameter("xabbuh_panda.cloud.config_provider.class", "Xabbuh\\PandaBundle\\Cloud\\ConfigCloudProvider");
         $container->setParameter("xabbuh_panda.client.api.class", $config["client"]["api"]["class"]);
         $container->setParameter("xabbuh_panda.client.rest.class", $config["client"]["rest"]["class"]);
         $container->setParameter("xabbuh_panda.controller.class", $config["controller"]["class"]);
         $container->setParameter("xabbuh_panda.transformer.class", $config["transformer"]["class"]);
 
+        $container->setParameter("xabbuh_panda.account.default", $config["default_account"]);
+        $container->setParameter("xabbuh_panda.cloud.default", $config["default_cloud"]);
+
         // and load the service definitions
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('client.xml');
+        $loader->load("account_manager.xml");
+        $loader->load("cloud_manager.xml");
+        $loader->load("cloud_factory.xml");
         $loader->load("controller.xml");
         $loader->load("transformers.xml");
+
+        $this->loadConfigAccountProvider($config["accounts"], $container, $loader);
+        $this->loadConfigCloudProvider($config["clouds"], $container, $loader);
+    }
+
+    private function loadConfigAccountProvider(array $accounts, ContainerBuilder $container, XmlFileLoader $loader)
+    {
+        $loader->load("config_account_provider.xml");
+        $configAccountProvider = $container->getDefinition("xabbuh_panda.config_account_provider");
+        $configAccountProvider->addArgument($accounts);
+    }
+
+    private function loadConfigCloudProvider(array $clouds, ContainerBuilder $container, XmlFileLoader $loader)
+    {
+        // add missing account key if the default account should be used
+        foreach ($clouds as &$cloud) {
+            if (!isset($cloud["account"])) {
+                $cloud["account"] = $container->getParameter("xabbuh_panda.account.default");
+            }
+        }
+        $loader->load("config_cloud_provider.xml");
+        $configCloudProvider = $container->getDefinition("xabbuh_panda.config_cloud_provider");
+        $configCloudProvider->addArgument($clouds);
     }
 }

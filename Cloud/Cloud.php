@@ -9,11 +9,14 @@
 * file that was distributed with this source code.
 */
 
-namespace Xabbuh\PandaBundle\Services;
+namespace Xabbuh\PandaBundle\Cloud;
 
 use Symfony\Component\DependencyInjection\Container;
+use Xabbuh\PandaBundle\Account\Account;
 use Xabbuh\PandaBundle\Model\Notifications;
+use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaClient\PandaApi;
+use Xabbuh\PandaClient\PandaRestClient;
 
 /**
  * Intuitive PHP interface for the Panda video encoding service API.
@@ -24,7 +27,7 @@ use Xabbuh\PandaClient\PandaApi;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Client
+class Cloud
 {
     /**
      * The wrapped Panda API implementation
@@ -39,11 +42,11 @@ class Client
      * @var \Xabbuh\PandaBundle\Services\TransformerFactory
      */
     private $transformerFactory;
-    
-    
+
+
     /**
      * Constructs the Panda client service.
-     * 
+     *
      * @param \Xabbuh\PandaClient\PandaApi $pandaApi The Panda API implementation being wrapped
      * @param \Xabbuh\PandaBundle\Services\TransformerFactory $transformerFactory The transformer factory
      */

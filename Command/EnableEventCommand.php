@@ -48,6 +48,8 @@ class EnableEventCommand extends ContainerAwareCommand
         $notificationEvent = new NotificationEvent($event, true);
         $notifications = new Notifications();
         $notifications->addNotificationEvent($notificationEvent);
-        $this->getContainer()->get("xabbuh_panda.client")->setNotifications($notifications);
+        $cloud = $this->getContainer()->get("xabbuh_panda.cloud_manager")
+            ->getDefaultCloud();
+        $cloud->setNotifications($notifications);
     }
 }

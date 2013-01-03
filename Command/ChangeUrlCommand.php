@@ -41,6 +41,8 @@ class ChangeUrlCommand extends ContainerAwareCommand
     {
         $notifications = new Notifications();
         $notifications->setUrl($input->getArgument("url"));
-        $this->getContainer()->get("xabbuh_panda.client")->setNotifications($notifications);
+        $cloud = $this->getContainer()->get("xabbuh_panda.cloud_manager")
+            ->getDefaultCloud();
+        $cloud->setNotifications($notifications);
     }
 }

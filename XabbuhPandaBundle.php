@@ -11,7 +11,9 @@
 
 namespace Xabbuh\PandaBundle;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Xabbuh\PandaBundle\DependencyInjection\ProviderCompilerPass;
 
 /**
  * XabbuhPandaBundle provides an interface for using the
@@ -22,5 +24,13 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class XabbuhPandaBundle extends Bundle
 {
-    
+    /**
+     * {@inheritDoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new ProviderCompilerPass());
+    }
 }

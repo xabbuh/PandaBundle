@@ -37,8 +37,9 @@ class ShowNotificationsCommand extends ContainerAwareCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $client = $this->getContainer()->get("xabbuh_panda.client");
-        $notifications = $client->getNotifications();
+        $cloud = $this->getContainer()->get("xabbuh_panda.cloud_manager")
+            ->getDefaultCloud();
+        $notifications = $cloud->getNotifications();
         
         $output->writeln("url: " . $notifications->getUrl());
         
