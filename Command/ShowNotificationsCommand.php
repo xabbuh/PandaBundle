@@ -11,17 +11,15 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Xabbuh\PandaBundle\Model\Notifications;
 
 /**
  * Fetch notification status information via command-line.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ShowNotificationsCommand extends ContainerAwareCommand
+class ShowNotificationsCommand extends CloudCommand
 {
     /**
      * {@inheritDoc}
@@ -30,6 +28,8 @@ class ShowNotificationsCommand extends ContainerAwareCommand
     {
         $this->setName("panda:notifications:show");
         $this->setDescription("Show the current notification configuration");
+
+        parent::configure();
     }
     
     /**
@@ -37,8 +37,7 @@ class ShowNotificationsCommand extends ContainerAwareCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $cloud = $this->getContainer()->get("xabbuh_panda.cloud_manager")
-            ->getDefaultCloud();
+        $cloud = $this->getCloud($input);
         $notifications = $cloud->getNotifications();
         
         $output->writeln("url: " . $notifications->getUrl());

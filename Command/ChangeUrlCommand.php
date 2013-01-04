@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,7 +21,7 @@ use Xabbuh\PandaBundle\Model\Notifications;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ChangeUrlCommand extends ContainerAwareCommand
+class ChangeUrlCommand extends CloudCommand
 {
     /**
      * {@inheritDoc} 
@@ -32,6 +31,8 @@ class ChangeUrlCommand extends ContainerAwareCommand
         $this->setName("panda:notifications:change-url");
         $this->setDescription("Change the endpoint for notification requests");
         $this->addArgument("url", InputArgument::REQUIRED, "The new url", null);
+
+        parent::configure();
     }
     
     /**
@@ -41,8 +42,7 @@ class ChangeUrlCommand extends ContainerAwareCommand
     {
         $notifications = new Notifications();
         $notifications->setUrl($input->getArgument("url"));
-        $cloud = $this->getContainer()->get("xabbuh_panda.cloud_manager")
-            ->getDefaultCloud();
+        $cloud = $this->getCloud($input);
         $cloud->setNotifications($notifications);
     }
 }

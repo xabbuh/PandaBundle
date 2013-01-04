@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,7 +22,7 @@ use Xabbuh\PandaBundle\Model\Notifications;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class DisableEventCommand extends ContainerAwareCommand
+class DisableEventCommand extends CloudCommand
 {
     /**
      * {@inheritDoc} 
@@ -37,6 +36,8 @@ class DisableEventCommand extends ContainerAwareCommand
             InputArgument::REQUIRED,
             "The event being disabled"
         );
+
+        parent::configure();
     }
     
     /**
@@ -48,8 +49,7 @@ class DisableEventCommand extends ContainerAwareCommand
         $notificationEvent = new NotificationEvent($event, false);
         $notifications = new Notifications();
         $notifications->addNotificationEvent($notificationEvent);
-        $cloud = $this->getContainer()->get("xabbuh_panda.cloud_manager")
-            ->getDefaultCloud();
+        $cloud = $this->getCloud($input);
         $cloud->setNotifications($notifications);
     }
 }
