@@ -24,7 +24,7 @@ abstract class CloudCommand extends ContainerAwareCommand
         $this->addOption(
             "cloud",
             "-c",
-            InputOption::VALUE_OPTIONAL,
+            InputOption::VALUE_REQUIRED,
             "Cloud on which the command is executed."
         );
     }
