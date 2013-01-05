@@ -44,12 +44,16 @@ class CloudFactory
      * Create a cloud instance for a cloud given by its id and panda account.
      *
      * @param $cloudId The cloud id
-     * @param $accountKey The internal account key
+     * @param $accountKey The internal account key (pass null to use the default account)
      * @return Cloud The generated instance
      */
-    public function get($cloudId, $accountKey)
+    public function get($cloudId, $accountKey = null)
     {
-        $account = $this->accountManager->getAccount($accountKey);
+        if ($accountKey == null) {
+            $account = $this->accountManager->getDefaultAccount();
+        } else {
+            $account = $this->accountManager->getAccount($accountKey);
+        }
         $restClient = new PandaRestClient(
             $cloudId,
             $account->getAccessKey(),
