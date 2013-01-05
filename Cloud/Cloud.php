@@ -92,6 +92,29 @@ class Cloud
         $transformer = $this->transformerFactory->get("Video");
         return $transformer->fromJSON($response);
     }
+
+    /**
+     * Retrieve all profiles.
+     *
+     * @return array The list of profiles
+     */
+    public function getProfiles()
+    {
+        $transformer = $this->transformerFactory->get("Profile");
+        return $transformer->fromJSONCollection($this->pandaApi->getProfiles());
+    }
+
+    /**
+     * Retrieve informations for a profile.
+     *
+     * @param $profileId The id of the profile being fetched
+     * @return \Xabbuh\PandaBundle\Model\Profile The profile
+     */
+    public function getProfile($profileId)
+    {
+        $transformer = $this->transformerFactory->get("Profile");
+        return $transformer->fromJSON($this->pandaApi->getProfile($profileId));
+    }
     
     /**
      * Retrieve the cloud's notifications configuration.
