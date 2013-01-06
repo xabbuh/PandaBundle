@@ -12,11 +12,9 @@
 namespace Xabbuh\PandaBundle\Cloud;
 
 use Symfony\Component\DependencyInjection\Container;
-use Xabbuh\PandaBundle\Account\Account;
 use Xabbuh\PandaBundle\Model\Notifications;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaClient\PandaApi;
-use Xabbuh\PandaClient\PandaRestClient;
 
 /**
  * Intuitive PHP interface for the Panda video encoding service API.
@@ -90,6 +88,18 @@ class Cloud
     {
         $response = $this->pandaApi->encodeVideoFile($localPath);
         $transformer = $this->transformerFactory->get("Video");
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Fetch the cloud's data from the panda server.
+     * 
+     * @return \Xabbuh\PandaBundle\Model\Cloud The cloud's model data
+     */
+    public function getCloudData()
+    {
+        $response = $this->pandaApi->getCloud($this->pandaApi->getRestClient()->getCloudId());
+        $transformer = $this->transformerFactory->get("Cloud");
         return $transformer->fromJSON($response);
     }
     
