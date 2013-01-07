@@ -102,6 +102,18 @@ class Cloud
         $transformer = $this->transformerFactory->get("Cloud");
         return $transformer->fromJSON($response);
     }
+
+    /**
+     * Change cloud data.
+     *
+     * @param $cloudId
+     * @param array $data
+     * @return string The server response
+     */
+    public function setCloud($cloudId, array $data)
+    {
+        return $this->pandaApi->setCloud($cloudId, $data);
+    }
     
     /**
      * Retrieve the cloud's notifications configuration.
