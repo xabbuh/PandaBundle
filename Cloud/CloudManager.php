@@ -75,4 +75,17 @@ class CloudManager
     {
         return $this->getCloud($this->defaultCloudKey);
     }
+
+    /**
+     * Get all managed clouds.
+     *
+     * An associative array is returned where the internal keys is associated
+     * the configured cloud.
+     *
+     * @return array
+     */
+    public function getClouds()
+    {
+        return $this->clouds;
+    }
 }
