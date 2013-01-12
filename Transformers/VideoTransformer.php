@@ -54,28 +54,55 @@ class VideoTransformer
      */
     public function fromJSON($jsonString)
     {
+        return $this->fromObject(json_decode($jsonString));
+    }
+
+    /**
+     * Transform a JSON representation of a collection of videos into an array
+     * of Video objects.
+     *
+     * @param string $jsonString The JSON string being transformed
+     * @return array The transformed Videos
+     */
+    public function fromJSONCollection($jsonString)
+    {
         $json = json_decode($jsonString);
+        $videos = array();
+        foreach ($json as $object) {
+            $videos[] = $this->fromObject($object);
+        }
+        return $videos;
+    }
+
+    /**
+     * Transform a standard PHP object into a Video instance.
+     *
+     * @param \stdClass $object The object being transformed
+     * @return \Xabbuh\PandaBundle\Model\Video The transformed Video
+     */
+    private function fromObject(\stdClass $object)
+    {
         $video = new Video();
-        $video->setId($json->id);
-        $video->setCreatedAt($json->created_at);
-        $video->setUpdatedAt($json->updated_at);
-        $video->setOriginalFilename($json->original_filename);
-        $video->setExtname($json->extname);
-        $video->setSourceUrl($json->source_url);
-        $video->setDuration($json->duration);
-        $video->setWidth($json->width);
-        $video->setHeight($json->height);
-        $video->setFileSize($json->file_size);
-        $video->setVideoBitrate($json->video_bitrate);
-        $video->setAudioBitrate($json->audio_bitrate);
-        $video->setVideoCodec($json->video_codec);
-        $video->setAudioCodec($json->audio_codec);
-        $video->setFps($json->fps);
-        $video->setAudioChannels($json->audio_channels);
-        $video->setAudioSampleRate($json->audio_sample_rate);
-        $video->setStatus($json->status);
-        $video->setMimeType($json->mime_type);
-        $video->setPath($json->path);
+        $video->setId($object->id);
+        $video->setCreatedAt($object->created_at);
+        $video->setUpdatedAt($object->updated_at);
+        $video->setOriginalFilename($object->original_filename);
+        $video->setExtname($object->extname);
+        $video->setSourceUrl($object->source_url);
+        $video->setDuration($object->duration);
+        $video->setWidth($object->width);
+        $video->setHeight($object->height);
+        $video->setFileSize($object->file_size);
+        $video->setVideoBitrate($object->video_bitrate);
+        $video->setAudioBitrate($object->audio_bitrate);
+        $video->setVideoCodec($object->video_codec);
+        $video->setAudioCodec($object->audio_codec);
+        $video->setFps($object->fps);
+        $video->setAudioChannels($object->audio_channels);
+        $video->setAudioSampleRate($object->audio_sample_rate);
+        $video->setStatus($object->status);
+        $video->setMimeType($object->mime_type);
+        $video->setPath($object->path);
         return $video;
     }
 }
