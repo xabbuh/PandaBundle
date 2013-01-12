@@ -63,6 +63,18 @@ class Cloud
     {
         return $this->pandaApi;
     }
+
+    /**
+     * Retrieve a collection of videos from the server.
+     * 
+     * @return array Array of Videos
+     */
+    public function getVideos()
+    {
+        $response = $this->pandaApi->getVideos();
+        $transformer = $this->transformerFactory->get("Video");
+        return $transformer->fromJSONCollection($response);
+    }
     
     /**
      * Send a request to the Panda encoding service to encode a video file that
