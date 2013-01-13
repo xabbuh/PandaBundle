@@ -66,7 +66,7 @@ class Cloud
 
     /**
      * Retrieve a collection of videos from the server.
-     * 
+     *
      * @return array Array of Videos
      */
     public function getVideos()
@@ -74,6 +74,17 @@ class Cloud
         $response = $this->pandaApi->getVideos();
         $transformer = $this->transformerFactory->get("Video");
         return $transformer->fromJSONCollection($response);
+    }
+
+    /**
+     * Delete a video.
+     *
+     * @param $videoId The video being deleted
+     * @return string The server response
+     */
+    public function deleteVideo($videoId)
+    {
+        return $this->pandaApi->deleteVideo($videoId);
     }
     
     /**
