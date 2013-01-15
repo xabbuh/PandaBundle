@@ -113,6 +113,20 @@ class Cloud
         $transformer = $this->transformerFactory->get("Video");
         return $transformer->fromJSON($response);
     }
+    
+    /**
+     * Receive encodings filtered by video from the server.
+     *
+     * @param $videoId Id of the video to filter by
+     * @param array $filter Optional additional filters
+     * @return array A collection of Encoding objects
+     */
+    public function getEncodingsForVideo($videoId, array $filter = null)
+    {
+        $response = $this->pandaApi->getEncodingsForVideo($videoId);
+        $transformer = $this->transformerFactory->get("Encoding");
+        return $transformer->fromJSONCollection($response);
+    }
 
     /**
      * Fetch the cloud's data from the panda server.
