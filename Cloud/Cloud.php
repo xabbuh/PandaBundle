@@ -14,7 +14,7 @@ namespace Xabbuh\PandaBundle\Cloud;
 use Symfony\Component\DependencyInjection\Container;
 use Xabbuh\PandaBundle\Model\Notifications;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
-use Xabbuh\PandaClient\PandaApi;
+use Xabbuh\PandaClient\ApiInterface;
 
 /**
  * Intuitive PHP interface for the Panda video encoding service API.
@@ -30,7 +30,7 @@ class Cloud
     /**
      * The wrapped Panda API implementation
      * 
-     * @var \Xabbuh\PandaClient\PandaApi
+     * @var \Xabbuh\PandaClient\ApiInterface
      */
     private $pandaApi;
     
@@ -45,10 +45,10 @@ class Cloud
     /**
      * Constructs the Panda client service.
      *
-     * @param \Xabbuh\PandaClient\PandaApi $pandaApi The Panda API implementation being wrapped
+     * @param \Xabbuh\PandaClient\Api $pandaApi The Panda API implementation being wrapped
      * @param \Xabbuh\PandaBundle\Services\TransformerFactory $transformerFactory The transformer factory
      */
-    public function __construct(PandaApi $pandaApi, TransformerFactory $transformerFactory)
+    public function __construct(ApiInterface $pandaApi, TransformerFactory $transformerFactory)
     {
         $this->pandaApi = $pandaApi;
         $this->transformerFactory = $transformerFactory;
@@ -57,7 +57,7 @@ class Cloud
     /**
      * Returns the Panda API implementation.
      * 
-     * @return \Xabbuh\PandaClient\PandaApi The Panda API implementation
+     * @return \Xabbuh\PandaClient\ApiInterface The Panda API implementation
      */
     public function getPandaApi()
     {

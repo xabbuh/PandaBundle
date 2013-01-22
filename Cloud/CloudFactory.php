@@ -13,8 +13,8 @@ namespace Xabbuh\PandaBundle\Cloud;
 
 use Xabbuh\PandaBundle\Account\AccountManager;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
-use Xabbuh\PandaClient\PandaApi;
-use Xabbuh\PandaClient\PandaRestClient;
+use Xabbuh\PandaClient\Api;
+use Xabbuh\PandaClient\RestClient;
 
 /**
  * Factory for creating cloud instances.
@@ -54,13 +54,13 @@ class CloudFactory
         } else {
             $account = $this->accountManager->getAccount($accountKey);
         }
-        $restClient = new PandaRestClient(
+        $restClient = new RestClient(
             $cloudId,
             $account->getAccessKey(),
             $account->getSecretKey(),
             $account->getApiHost()
         );
-        $api = new PandaApi($restClient);
+        $api = new Api($restClient);
         return new Cloud($api, $this->transformerFactory);
     }
 }
