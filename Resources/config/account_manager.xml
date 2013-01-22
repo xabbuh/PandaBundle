@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="xabbuh_panda.account_manager" class="Xabbuh\PandaBundle\Account\AccountManager">
+        <service id="xabbuh_panda.account_manager" class="%xabbuh_panda.account.manager.class%">
             <argument>%xabbuh_panda.account.default%</argument>
         </service>
     </services>
