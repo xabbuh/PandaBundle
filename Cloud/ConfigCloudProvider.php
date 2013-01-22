@@ -21,7 +21,7 @@ use Xabbuh\PandaBundle\Account\AccountManager;
 class ConfigCloudProvider implements CloudProviderInterface
 {
     /**
-     * @var CloudManager
+     * @var CloudManagerInterface
      */
     private $cloudManager;
 
@@ -36,7 +36,7 @@ class ConfigCloudProvider implements CloudProviderInterface
     private $cloudConfig = array();
 
 
-    public function __construct(CloudManager $cloudManager, CloudFactory $cloudFactory, array $cloudConfig)
+    public function __construct(CloudManagerInterface $cloudManager, CloudFactory $cloudFactory, array $cloudConfig)
     {
         $this->cloudManager = $cloudManager;
         $this->cloudFactory = $cloudFactory;

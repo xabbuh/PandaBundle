@@ -18,20 +18,32 @@ use Xabbuh\PandaBundle\Account\AccountProviderInterface;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class AccountManager
+class AccountManager implements AccountManagerInterface
 {
+    /**
+     * The default account's configuration key
+     * @var string
+     */
     private $defaultAccountKey;
 
+    /**
+     * The accounts being managed
+     * @var array
+     */
     private $accounts = array();
 
+    /**
+     * Constructor.
+     *
+     * @param $defaultAccountKey Default account's configuration key
+     */
     public function __construct($defaultAccountKey)
     {
         $this->defaultAccountKey = $defaultAccountKey;
     }
+
     /**
-     * Register an account provider.
-     *
-     * @param AccountProviderInterface $provider The provider being registered
+     * {@inheritDoc}
      */
     public function registerProvider(AccountProviderInterface $provider)
     {
@@ -39,10 +51,7 @@ class AccountManager
     }
 
     /**
-     * Register an account on this manager.
-     *
-     * @param $key Assign the account to this key
-     * @param Account $account Account to register
+     * {@inheritDoc}
      */
     public function registerAccount($key, Account $account)
     {
@@ -50,11 +59,7 @@ class AccountManager
     }
 
     /**
-     * Get the account for a key.
-     *
-     * @param $key The internal key
-     * @return \Xabbuh\PandaBundle\Account\Account
-     * @throws \InvalidArgumentException if no account for the given key exists
+     * {@inheritDoc}
      */
     public function getAccount($key)
     {
@@ -65,9 +70,7 @@ class AccountManager
     }
 
     /**
-     * Get the application's default account
-     *
-     * @return Account
+     * {@inheritDoc}
      */
     public function getDefaultAccount()
     {

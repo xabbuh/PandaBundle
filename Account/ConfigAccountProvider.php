@@ -12,7 +12,7 @@
 namespace Xabbuh\PandaBundle\Account;
 
 use Xabbuh\PandaBundle\Account\Account;
-use Xabbuh\PandaBundle\Account\AccountManager;
+use Xabbuh\PandaBundle\Account\AccountManagerInterface;
 
 /**
  * Provider for accounts configured in the application's configuration.
@@ -25,7 +25,7 @@ class ConfigAccountProvider implements AccountProviderInterface
 
     private $accountManager;
 
-    public function __construct(AccountManager $accountManager, array $accounts)
+    public function __construct(AccountManagerInterface $accountManager, array $accounts)
     {
         $this->accounts = $accounts;
         $this->accountManager = $accountManager;

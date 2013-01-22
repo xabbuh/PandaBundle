@@ -11,7 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Cloud;
 
-use Xabbuh\PandaBundle\Account\AccountManager;
+use Xabbuh\PandaBundle\Account\AccountManagerInterface;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaClient\Api;
 use Xabbuh\PandaClient\RestClient;
@@ -21,10 +21,10 @@ use Xabbuh\PandaClient\RestClient;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class CloudFactory
+class CloudFactory implements CloudFactoryInterface
 {
     /**
-     * @var \Xabbuh\PandaBundle\Account\AccountManager
+     * @var \Xabbuh\PandaBundle\Account\AccountManagerInterface
      */
     private $accountManager;
 
@@ -34,18 +34,14 @@ class CloudFactory
     private $transformerFactory;
 
 
-    public function __construct(AccountManager $accountManager, TransformerFactory $transformerFactory)
+    public function __construct(AccountManagerInterface $accountManager, TransformerFactory $transformerFactory)
     {
         $this->accountManager = $accountManager;
         $this->transformerFactory = $transformerFactory;
     }
 
     /**
-     * Create a cloud instance for a cloud given by its id and panda account.
-     *
-     * @param $cloudId The cloud id
-     * @param $accountKey The internal account key (pass null to use the default account)
-     * @return Cloud The generated instance
+     * {@inheritDoc}
      */
     public function get($cloudId, $accountKey = null)
     {

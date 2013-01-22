@@ -19,7 +19,7 @@ use Xabbuh\PandaBundle\Cloud\CloudProviderInterface;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class CloudManager
+class CloudManager implements CloudManagerInterface
 {
     private $defaultCloudKey;
 
@@ -31,9 +31,7 @@ class CloudManager
     }
 
     /**
-     * Register a cloud provider.
-     *
-     * @param CloudProviderInterface $provider The provider being registered
+     * {@inheritDoc}
      */
     public function registerProvider(CloudProviderInterface $provider)
     {
@@ -41,10 +39,7 @@ class CloudManager
     }
 
     /**
-     * Register a cloud on this manager.
-     *
-     * @param $key Assign the cloud to this key
-     * @param Cloud $cloud Cloud to register
+     * {@inheritDoc}
      */
     public function registerCloud($key, Cloud $cloud)
     {
@@ -52,11 +47,7 @@ class CloudManager
     }
 
     /**
-     * Get the cloud for a key.
-     *
-     * @param $key The internal key
-     * @return Cloud
-     * @throws \InvalidArgumentException if no account for the given key exists
+     * {@inheritDoc}
      */
     public function getCloud($key)
     {
@@ -67,9 +58,7 @@ class CloudManager
     }
 
     /**
-     * Get the application's default cloud
-     *
-     * @return Cloud
+     * {@inheritDoc}
      */
     public function getDefaultCloud()
     {
@@ -77,12 +66,7 @@ class CloudManager
     }
 
     /**
-     * Get all managed clouds.
-     *
-     * An associative array is returned where the internal keys is associated
-     * the configured cloud.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function getClouds()
     {
