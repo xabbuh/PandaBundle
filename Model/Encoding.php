@@ -191,6 +191,14 @@ class Encoding
         $this->files->removeElement($file);
     }
 
+    public function setFiles(array $files)
+    {
+        $this->files->clear();
+        foreach ($files as $file) {
+            $this->files->add($file);
+        }
+    }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
