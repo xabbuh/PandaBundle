@@ -18,7 +18,7 @@ use Xabbuh\PandaBundle\Model\Encoding;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class EncodingTransformer
+class EncodingTransformer extends BaseTransformer
 {
     /**
      * Convert a JSON encoded string into an Encoding object.
@@ -57,23 +57,7 @@ class EncodingTransformer
     private function fromObject(\stdClass $object)
     {
         $encoding = new Encoding();
-        $encoding->setId($object->id);
-        $encoding->setVideoId($object->video_id);
-        $encoding->setExtname($object->extname);
-        $encoding->setPath($object->path);
-        $encoding->setProfileId($object->profile_id);
-        $encoding->setProfileName($object->profile_name);
-        $encoding->setStatus($object->status);
-        $encoding->setEncodingProgress($object->encoding_progress);
-        $encoding->setWidth($object->width);
-        $encoding->setHeight($object->height);
-        $encoding->setStartedEncodingAt($object->started_encoding_at);
-        $encoding->setEncodingTime($object->encoding_time);
-        foreach ($object->files as $file) {
-            $encoding->addFile($file);
-        }
-        $encoding->setCreatedAt($object->created_at);
-        $encoding->setUpdatedAt($object->updated_at);
+        $this->setModelProperties($encoding, $object);
         return $encoding;
     }
 }

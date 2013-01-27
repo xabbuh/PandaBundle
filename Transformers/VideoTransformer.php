@@ -44,7 +44,7 @@ use Xabbuh\PandaBundle\Model\Video;
  * 
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class VideoTransformer
+class VideoTransformer extends BaseTransformer
 {
     /**
      * Transform the JSON representation of a video into a Video model object.
@@ -83,26 +83,7 @@ class VideoTransformer
     private function fromObject(\stdClass $object)
     {
         $video = new Video();
-        $video->setId($object->id);
-        $video->setCreatedAt($object->created_at);
-        $video->setUpdatedAt($object->updated_at);
-        $video->setOriginalFilename($object->original_filename);
-        $video->setExtname($object->extname);
-        $video->setSourceUrl($object->source_url);
-        $video->setDuration($object->duration);
-        $video->setWidth($object->width);
-        $video->setHeight($object->height);
-        $video->setFileSize($object->file_size);
-        $video->setVideoBitrate($object->video_bitrate);
-        $video->setAudioBitrate($object->audio_bitrate);
-        $video->setVideoCodec($object->video_codec);
-        $video->setAudioCodec($object->audio_codec);
-        $video->setFps($object->fps);
-        $video->setAudioChannels($object->audio_channels);
-        $video->setAudioSampleRate($object->audio_sample_rate);
-        $video->setStatus($object->status);
-        $video->setMimeType($object->mime_type);
-        $video->setPath($object->path);
+        $this->setModelProperties($video, $object);
         return $video;
     }
 }

@@ -18,7 +18,7 @@ use Xabbuh\PandaBundle\Model\Profile;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ProfileTransformer
+class ProfileTransformer extends BaseTransformer
 {
     /**
      * Transform a JSON representation of a profile into a Profile object.
@@ -61,17 +61,7 @@ class ProfileTransformer
     private function fromObject(\stdClass $object)
     {
         $profile = new Profile();
-        $profile->setId($object->id);
-        $profile->setTitle($object->title);
-        $profile->setName($object->name);
-        $profile->setExtname($object->extname);
-        $profile->setWidth($object->width);
-        $profile->setHeight($object->height);
-        $profile->setAudioBitrate($object->audio_bitrate);
-        $profile->setVideoBitrate($object->video_bitrate);
-        $profile->setAspectMode($object->aspect_mode);
-        $profile->setCreatedAt($object->created_at);
-        $profile->setUpdatedAt($object->updated_at);
+        $this->setModelProperties($profile, $object);
         return $profile;
     }
 }
