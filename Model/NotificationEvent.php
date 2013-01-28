@@ -25,6 +25,14 @@ class NotificationEvent
     
     public function __construct($event, $active)
     {
+        // check for valid event names
+        if (
+            $event != "video-created" && $event != "video-encoded" &&
+            $event != "encoding-progress" && $event != "encoding-completed"
+        ) {
+            throw new \InvalidArgumentException("Unknown notification event $event");
+        }
+
         $this->event = $event;
         $this->active = $active;
     }
