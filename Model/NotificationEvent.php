@@ -25,6 +25,9 @@ class NotificationEvent
     
     public function __construct($event, $active)
     {
+        // normalise event names
+        $event = strtr($event, "_", "-");
+
         // check for valid event names
         if (
             $event != "video-created" && $event != "video-encoded" &&
