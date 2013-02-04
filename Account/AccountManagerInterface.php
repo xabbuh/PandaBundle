@@ -26,18 +26,18 @@ interface AccountManagerInterface
     public function registerProvider(AccountProviderInterface $provider);
 
     /**
-     * Register an account on this manager.
+     * Register an Account on this manager.
      *
-     * @param $key Assign the account to this key
+     * @param string $key Map this key to the Account being registered
      * @param Account $account Account to register
      */
     public function registerAccount($key, Account $account);
 
     /**
-     * Get the account for a key.
+     * Get the Account for a key.
      *
-     * @param $key The internal key
-     * @return \Xabbuh\PandaBundle\Account\Account
+     * @param string $key The internal key
+     * @return \Xabbuh\PandaBundle\Account\Account The requested Account
      * @throws \InvalidArgumentException if no account for the given key exists
      */
     public function getAccount($key);

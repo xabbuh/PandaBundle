@@ -79,7 +79,7 @@ class Cloud
     /**
      * Delete a video.
      *
-     * @param $videoId The video being deleted
+     * @param string $videoId The video being deleted
      * @return string The server response
      */
     public function deleteVideo($videoId)
@@ -128,7 +128,7 @@ class Cloud
     /**
      * Retrieve informations for a profile.
      *
-     * @param $profileId The id of the profile being fetched
+     * @param string $profileId The id of the profile being fetched
      * @return \Xabbuh\PandaBundle\Model\Profile The profile
      */
     public function getProfile($profileId)
@@ -140,7 +140,7 @@ class Cloud
     /**
      * Receive encodings filtered by video from the server.
      *
-     * @param $videoId Id of the video to filter by
+     * @param string $videoId Id of the video to filter by
      * @param array $filter Optional additional filters
      * @return array A collection of Encoding objects
      */
@@ -166,8 +166,8 @@ class Cloud
     /**
      * Change cloud data.
      *
-     * @param $cloudId
-     * @param array $data
+     * @param string $cloudId Id of the Cloud being modified
+     * @param array $data The Cloud's new data
      * @return string The server response
      */
     public function setCloud($cloudId, array $data)

@@ -35,7 +35,7 @@ class AccountManager implements AccountManagerInterface
     /**
      * Constructor.
      *
-     * @param $defaultAccountKey Default account's configuration key
+     * @param string $defaultAccountKey Default account's configuration key
      */
     public function __construct($defaultAccountKey)
     {

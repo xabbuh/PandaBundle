@@ -17,18 +17,20 @@ use Xabbuh\PandaClient\Api;
 use Xabbuh\PandaClient\RestClient;
 
 /**
- * Factory for creating cloud instances.
+ * Factory for creating Cloud instances.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
 class CloudFactory implements CloudFactoryInterface
 {
     /**
+     * The account manager being used to manage all configured Accounts
      * @var \Xabbuh\PandaBundle\Account\AccountManagerInterface
      */
     private $accountManager;
 
     /**
+     * Factory for creating model transformers
      * @var \Xabbuh\PandaBundle\Services\TransformerFactory
      */
     private $transformerFactory;

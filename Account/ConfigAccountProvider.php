@@ -21,8 +21,16 @@ use Xabbuh\PandaBundle\Account\AccountManagerInterface;
  */
 class ConfigAccountProvider implements AccountProviderInterface
 {
+    /**
+     * The accounts provided by this ConfigAccountProvider
+     * @var array
+     */
     private $accounts = array();
 
+    /**
+     * The account manager to which this provider is registered
+     * @var AccountManagerInterface
+     */
     private $accountManager;
 
     public function __construct(AccountManagerInterface $accountManager, array $accounts)

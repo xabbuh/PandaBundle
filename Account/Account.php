@@ -18,12 +18,32 @@ namespace Xabbuh\PandaBundle\Account;
  */
 class Account
 {
+    /**
+     * The access key
+     * @var string
+     */
     private $accessKey;
 
+    /**
+     * The secret key
+     * @var string
+     */
     private $secretKey;
 
+    /**
+     * The api host
+     * @var string
+     */
     private $apiHost;
 
+
+    /**
+     * Constructs an Account with the given authorisation data.
+     *
+     * @param string $accessKey The access key
+     * @param string $secretKey The secret key
+     * @param string $apiHost The api host
+     */
     public function __construct($accessKey, $secretKey, $apiHost)
     {
         $this->accessKey = $accessKey;
@@ -31,16 +51,31 @@ class Account
         $this->apiHost = $apiHost;
     }
 
+    /**
+     * Returns the access key.
+     *
+     * @return string
+     */
     public function getAccessKey()
     {
         return $this->accessKey;
     }
 
+    /**
+     * Returns the secret key.
+     *
+     * @return string
+     */
     public function getSecretKey()
     {
         return $this->secretKey;
     }
 
+    /**
+     * Returns the api host.
+     *
+     * @return string
+     */
     public function getApiHost()
     {
         return $this->apiHost;

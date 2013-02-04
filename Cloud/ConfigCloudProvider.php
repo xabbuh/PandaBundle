@@ -21,21 +21,31 @@ use Xabbuh\PandaBundle\Account\AccountManager;
 class ConfigCloudProvider implements CloudProviderInterface
 {
     /**
+     * The cloud manager to which the Clouds are being registered
      * @var CloudManagerInterface
      */
     private $cloudManager;
 
     /**
+     * The CloudFactory
      * @var CloudFactory
      */
     private $cloudFactory;
 
     /**
+     * Local Cloud configuration
      * @var array
      */
     private $cloudConfig = array();
 
 
+    /**
+     * Constructs the ConfigCloudProvider.
+     *
+     * @param CloudManagerInterface $cloudManager Cloud manager to register Clouds to
+     * @param CloudFactory $cloudFactory Factory for creating cloud instances
+     * @param array $cloudConfig The app's Cloud configuration
+     */
     public function __construct(CloudManagerInterface $cloudManager, CloudFactory $cloudFactory, array $cloudConfig)
     {
         $this->cloudManager = $cloudManager;

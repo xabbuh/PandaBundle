@@ -28,7 +28,7 @@ interface CloudManagerInterface
     /**
      * Register a cloud on this manager.
      *
-     * @param $key Assign the cloud to this key
+     * @param string $key Assign the cloud to this key
      * @param Cloud $cloud Cloud to register
      */
     public function registerCloud($key, Cloud $cloud);

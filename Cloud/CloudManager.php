@@ -21,10 +21,23 @@ use Xabbuh\PandaBundle\Cloud\CloudProviderInterface;
  */
 class CloudManager implements CloudManagerInterface
 {
+    /**
+     * Key to which the default Cloud is being mapped
+     * @var string
+     */
     private $defaultCloudKey;
 
+    /**
+     * The Clouds being managed by this CloudManager
+     * @var array
+     */
     private $clouds = array();
 
+    /**
+     * Constructs the CloudManager.
+     *
+     * @param string $defaultCloudName Internal key mapped to the default Cloud
+     */
     public function __construct($defaultCloudName)
     {
         $this->defaultCloudKey = $defaultCloudName;
