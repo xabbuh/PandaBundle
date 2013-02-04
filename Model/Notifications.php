@@ -46,6 +46,8 @@ class Notifications
     
     public function getNotificationEvent($eventName)
     {
+        // normalise the event name
+        $eventName = strtr($eventName, "_", "-");
         if (isset($this->events[$eventName])) {
             return $this->events[$eventName];
         } else {

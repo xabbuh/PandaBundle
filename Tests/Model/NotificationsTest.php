@@ -63,23 +63,25 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that an exception is thrown if a requested event is not registered.
+     * Test that event names are normalised when requested.
      */
-    public function testGetNonExistingEvent()
+    public function testEventNameNormalisation()
     {
         $notifications = new Notifications();
-        $this->setExpectedException("InvalidArgumentException");
-        $notifications->getNotificationEvent("video_created");
+        $videoCreatedEvent = new NotificationEvent("video-created", true);
+        $notifications->addNotificationEvent($videoCreatedEvent);
+        $this->assertEquals(
+            $videoCreatedEvent,
+            $notifications->getNotificationEvent("video_created")
+        );
     }
 
     /**
      * Test that an exception is thrown if a requested event is not registered.
      */
-    public function testGetNonExistingEventWithUnderscoreEventName()
+    public function testGetNonExistingEvent()
     {
         $notifications = new Notifications();
-        $videoCreatedEvent = new NotificationEvent("video_created", true);
-        $notifications->addNotificationEvent($videoCreatedEvent);
         $this->setExpectedException("InvalidArgumentException");
         $notifications->getNotificationEvent("video_created");
     }
