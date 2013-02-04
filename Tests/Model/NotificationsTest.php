@@ -38,7 +38,6 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
     public function testEvents()
     {
         $notifications = new Notifications();
-        $this->assertNull($notifications->getNotificationEvent("video-created"));
         $videoCreatedEvent = new NotificationEvent("video-created", true);
         $notifications->addNotificationEvent($videoCreatedEvent);
         $this->assertEquals(
@@ -50,8 +49,38 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
             $videoCreatedEvent2,
             $notifications->getNotificationEvent("video-created")
         );
-        $this->assertNull($notifications->getNotificationEvent("video-encoded"));
-        $notifications->removeNotificationEvent($videoCreatedEvent2);
-        $this->assertNull($notifications->getNotificationEvent("video-created"));
+        try {
+            $notifications->getNotificationEvent("video-encoded");
+        } catch (\InvalidArgumentException $e) {
+            try {
+                $notifications->removeNotificationEvent($videoCreatedEvent2);
+                $notifications->getNotificationEvent("video-created");
+            } catch (\InvalidArgumentException $e) {
+                return ;
+            }
+        }
+        $this->fail("Expected InvalidArgumentException to be thrown.");
+    }
+
+    /**
+     * Test that an exception is thrown if a requested event is not registered.
+     */
+    public function testGetNonExistingEvent()
+    {
+        $notifications = new Notifications();
+        $this->setExpectedException("InvalidArgumentException");
+        $notifications->getNotificationEvent("video_created");
+    }
+
+    /**
+     * Test that an exception is thrown if a requested event is not registered.
+     */
+    public function testGetNonExistingEventWithUnderscoreEventName()
+    {
+        $notifications = new Notifications();
+        $videoCreatedEvent = new NotificationEvent("video_created", true);
+        $notifications->addNotificationEvent($videoCreatedEvent);
+        $this->setExpectedException("InvalidArgumentException");
+        $notifications->getNotificationEvent("video_created");
     }
 }

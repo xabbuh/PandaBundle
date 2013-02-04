@@ -49,7 +49,7 @@ class Notifications
         if (isset($this->events[$eventName])) {
             return $this->events[$eventName];
         } else {
-            return null;
+            throw new \InvalidArgumentException("Event $eventName is not registered");
         }
     }
 }
