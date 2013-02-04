@@ -35,10 +35,11 @@ class Controller extends ContainerAware
      * given is <em>GET</em>, the default <em>path</em> is <em>/videos.json</em>.
      * All remaining url parameters are treated as parameters for the api
      * request.
-     * 
+     *
+     * @param string $cloud Cloud to use for performing API requests
      * @return \Symfony\Component\HttpFoundation\JsonResponse The response
      */
-    public function signAction()
+    public function signAction($cloud)
     {
         $request = $this->container->get("request");
         $params = $request->query->all();
@@ -54,8 +55,9 @@ class Controller extends ContainerAware
         } else {
             $path = "/videos.json";
         }
-        $client = $this->container->get("xabbuh_panda.client");
-        $content = $client->signParams($method, $path, $params);
+        $cloudManager = $this->container->get("xabbuh_panda.cloud_manager");
+        $restClient = $cloudManager->getCloud($cloud)->getPandaApi()->getRestClient();
+        $content = $restClient->signParams($method, $path, $params);
         return new JsonResponse($content);
     }
     
