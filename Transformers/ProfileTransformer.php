@@ -41,15 +41,11 @@ class ProfileTransformer extends BaseTransformer
     public function fromJSONCollection($jsonString)
     {
         $json = json_decode($jsonString);
-        if (is_array($json)) {
-            $profiles = array();
-            foreach ($json as $object) {
-                $profiles[] = $this->fromObject($object);
-            }
-            return $profiles;
-        } else {
-            return $this->fromObject($json);
+        $profiles = array();
+        foreach ($json as $object) {
+            $profiles[] = $this->fromObject($object);
         }
+        return $profiles;
     }
 
     /**
