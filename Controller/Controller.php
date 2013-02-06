@@ -97,6 +97,9 @@ class Controller extends ContainerAware
                 $event = new EncodingCompleteEvent($videoId, $encodingId);
                 $eventDispatcher->dispatch("xabbuh_panda.encoding_complete", $event);
                 break;
+            default:
+                return new Response("Invalid or missing event name.", 400);
+                break;
         }
         
         // return an empty 200 OK response
