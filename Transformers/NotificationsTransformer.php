@@ -28,21 +28,36 @@ class NotificationsTransformer
      * model object.
      * 
      * @param string $jsonString The string in json format being transformed
-     * @return Xabbuh\PandaBundle\Model\Notifications The notifications
+     * @return \Xabbuh\PandaBundle\Model\Notifications The notifications
      */
     public function fromJSON($jsonString)
     {
         $json = json_decode($jsonString);
         $notifications = new Notifications();
-        $notifications->setUrl($json->url);
-        $notifications->addNotificationEvent(
-            new NotificationEvent("video_created", $json->events->video_created));
-        $notifications->addNotificationEvent(
-            new NotificationEvent("video_encoded", $json->events->video_encoded));
-        $notifications->addNotificationEvent(
-            new NotificationEvent("encoding_progress", $json->events->encoding_progress));
-        $notifications->addNotificationEvent(
-            new NotificationEvent("encoding_completed", $json->events->encoding_completed));
+
+        if (isset($json->url)) {
+            $notifications->setUrl($json->url);
+        }
+        if (isset($json->events->video_created)) {
+            $notifications->addNotificationEvent(
+                new NotificationEvent("video_created", $json->events->video_created));
+        }
+
+        if (isset($json->events->video_encoded)) {
+            $notifications->addNotificationEvent(
+                new NotificationEvent("video_encoded", $json->events->video_encoded));
+        }
+
+        if (isset($json->events->encoding_progress)) {
+            $notifications->addNotificationEvent(
+                new NotificationEvent("encoding_progress", $json->events->encoding_progress));
+        }
+
+        if (isset($json->events->encoding_completed)) {
+            $notifications->addNotificationEvent(
+                new NotificationEvent("encoding_completed", $json->events->encoding_completed));
+        }
+
         return $notifications;
     }
     
@@ -55,37 +70,43 @@ class NotificationsTransformer
     public function toRequestParams(Notifications $notifications)
     {
         $params = new ParameterBag();
+
         if ($notifications->getUrl() != null) {
             $params->set("url", $notifications->getUrl());
         }
-        $videoCreatedEvent = $notifications->getNotificationEvent("video_created");
-        if ($videoCreatedEvent) {
+
+        if ($notifications->hasNotificationEvent("video-created")) {
+            $videoCreatedEvent = $notifications->getNotificationEvent("video_created");
             $params->set(
                 "events[video_created]",
                 $videoCreatedEvent->isActive() ? "true" : "false"
             );
         }
-        $videoEncodedEvent = $notifications->getNotificationEvent("video_encoded");
-        if ($videoEncodedEvent) {
+
+        if ($notifications->hasNotificationEvent("video-encoded")) {
+            $videoEncodedEvent = $notifications->getNotificationEvent("video_encoded");
             $params->set(
                 "events[video_encoded]",
                 $videoEncodedEvent->isActive() ? "true" : "false"
             );
         }
-        $encodingProgressEvent = $notifications->getNotificationEvent("encoding_progress");
-        if ($encodingProgressEvent) {
+
+        if ($notifications->hasNotificationEvent("encoding-progress")) {
+            $encodingProgressEvent = $notifications->getNotificationEvent("encoding_progress");
             $params->set(
                 "events[encoding_progress]",
                 $encodingProgressEvent->isActive() ? "true" : "false"
             );
         }
-        $encodingCompletedEvent = $notifications->getNotificationEvent("encoding_completed");
-        if ($encodingCompletedEvent) {
+
+        if ($notifications->hasNotificationEvent("encoding-completed")) {
+            $encodingCompletedEvent = $notifications->getNotificationEvent("encoding_completed");
             $params->set(
                 "events[encoding_completed]",
                 $encodingCompletedEvent->isActive() ? "true" : "false"
             );
         }
+
         return $params;
     }
 }

@@ -43,12 +43,19 @@ class Notifications
             unset($this->events[$event->getEvent()]);
         }
     }
+
+    public function hasNotificationEvent($eventName)
+    {
+        // normalise the event name
+        $eventName = strtr($eventName, "_", "-");
+        return isset($this->events[$eventName]);
+    }
     
     public function getNotificationEvent($eventName)
     {
         // normalise the event name
         $eventName = strtr($eventName, "_", "-");
-        if (isset($this->events[$eventName])) {
+        if ($this->hasNotificationEvent($eventName)) {
             return $this->events[$eventName];
         } else {
             throw new \InvalidArgumentException("Event $eventName is not registered");
