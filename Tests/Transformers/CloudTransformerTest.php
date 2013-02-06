@@ -23,7 +23,7 @@ class CloudTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * Test the CloudTransformer::fromJson() method.
      */
-    public function testFromJson()
+    public function testFromJSON()
     {
         $jsonString = '{
           "id": "e122090f4e506ae9ee266c3eb78a8b67",
