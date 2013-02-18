@@ -137,6 +137,14 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode("video_uploader_extension")
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode("class")
+                            ->defaultValue("Xabbuh\\PandaBundle\\Form\\Extension\\VideoUploaderExtension")
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
         
         return $treeBuilder;

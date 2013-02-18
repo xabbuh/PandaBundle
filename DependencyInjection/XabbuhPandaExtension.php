@@ -30,15 +30,46 @@ class XabbuhPandaExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
         
         // set services class names parameters
-        $container->setParameter("xabbuh_panda.account.manager.class", $config["account"]["manager"]["class"]);
-        $container->setParameter("xabbuh_panda.account.config_provider.class", $config["account"]["config_provider"]["class"]);
-        $container->setParameter("xabbuh_panda.cloud.manager.class", $config["cloud"]["manager"]["class"]);
-        $container->setParameter("xabbuh_panda.cloud.factory.class", $config["cloud"]["factory"]["class"]);
-        $container->setParameter("xabbuh_panda.cloud.config_provider.class", $config["cloud"]["config_provider"]["class"]);
-        $container->setParameter("xabbuh_panda.client.api.class", $config["client"]["api"]["class"]);
-        $container->setParameter("xabbuh_panda.client.rest.class", $config["client"]["rest"]["class"]);
-        $container->setParameter("xabbuh_panda.controller.class", $config["controller"]["class"]);
-        $container->setParameter("xabbuh_panda.transformer.class", $config["transformer"]["class"]);
+        $container->setParameter(
+            "xabbuh_panda.account.manager.class",
+            $config["account"]["manager"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.account.config_provider.class",
+            $config["account"]["config_provider"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.cloud.manager.class",
+            $config["cloud"]["manager"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.cloud.factory.class",
+            $config["cloud"]["factory"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.cloud.config_provider.class",
+            $config["cloud"]["config_provider"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.client.api.class",
+            $config["client"]["api"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.client.rest.class",
+            $config["client"]["rest"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.controller.class",
+            $config["controller"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.transformer.class",
+            $config["transformer"]["class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.video_uploader_extension.class",
+            $config["video_uploader_extension"]["class"]
+        );
 
         $container->setParameter("xabbuh_panda.account.default", $config["default_account"]);
         $container->setParameter("xabbuh_panda.cloud.default", $config["default_cloud"]);
@@ -50,6 +81,7 @@ class XabbuhPandaExtension extends Extension
         $loader->load("cloud_factory.xml");
         $loader->load("controller.xml");
         $loader->load("transformers.xml");
+        $loader->load("video_uploader_extension.xml");
 
         $this->loadConfigAccountProvider($config["accounts"], $container, $loader);
         $this->loadConfigCloudProvider($config["clouds"], $container, $loader);
