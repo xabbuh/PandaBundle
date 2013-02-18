@@ -23,6 +23,10 @@ interface AccountProviderInterface
      *
      * This method is called by the account manager after the provider is
      * registered.
+     *
+     * @param AccountManagerInterface $accountManager The account manager
+     * which the account provider was registered to (see also {@link
+     * AccountManagerInterface::register()})
      */
-    public function initialise();
+    public function initialise(AccountManagerInterface $accountManager);
 }

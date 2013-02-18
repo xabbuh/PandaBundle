@@ -48,7 +48,7 @@ class CloudManager implements CloudManagerInterface
      */
     public function registerProvider(CloudProviderInterface $provider)
     {
-        $provider->initialise();
+        $provider->initialise($this);
     }
 
     /**

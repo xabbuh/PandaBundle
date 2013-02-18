@@ -27,25 +27,23 @@ class ConfigAccountProvider implements AccountProviderInterface
      */
     private $accounts = array();
 
-    /**
-     * The account manager to which this provider is registered
-     * @var AccountManagerInterface
-     */
-    private $accountManager;
 
-    public function __construct(AccountManagerInterface $accountManager, array $accounts)
+    /**
+     * @param array $accounts List of configured accounts that are provided
+     * by this account provider
+     */
+    public function __construct(array $accounts)
     {
         $this->accounts = $accounts;
-        $this->accountManager = $accountManager;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function initialise()
+    public function initialise(AccountManagerInterface $accountManager)
     {
         foreach ($this->accounts as $name => $account) {
-            $this->accountManager->registerAccount(
+            $accountManager->registerAccount(
                 $name,
                 new Account(
                     $account["access_key"],

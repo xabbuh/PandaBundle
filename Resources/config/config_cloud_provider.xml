@@ -5,7 +5,6 @@
 
     <services>
         <service id="xabbuh_panda.config_cloud_provider" class="%xabbuh_panda.cloud.config_provider.class%">
-            <argument type="service" id="xabbuh_panda.cloud_manager"/>
             <argument type="service" id="xabbuh_panda.cloud_factory"/>
             <tag name="xabbuh_panda.cloud_provider"/>
         </service>

@@ -23,6 +23,8 @@ interface CloudProviderInterface
      *
      * This method is called by the cloud manager after the provider is
      * registered.
+     *
+     * @param CloudManagerInterface $cloudManager Cloud manager to register Clouds to
      */
-    public function initialise();
+    public function initialise(CloudManagerInterface $cloudManager);
 }

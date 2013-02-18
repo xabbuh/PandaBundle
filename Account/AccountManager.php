@@ -47,7 +47,7 @@ class AccountManager implements AccountManagerInterface
      */
     public function registerProvider(AccountProviderInterface $provider)
     {
-        $provider->initialise();
+        $provider->initialise($this);
     }
 
     /**

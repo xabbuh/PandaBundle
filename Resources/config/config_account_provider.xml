@@ -5,7 +5,6 @@
 
     <services>
         <service id="xabbuh_panda.config_account_provider" class="%xabbuh_panda.account.config_provider.class%">
-            <argument type="service" id="xabbuh_panda.account_manager"/>
             <tag name="xabbuh_panda.account_provider"/>
         </service>
     </services>
