@@ -41,7 +41,7 @@ class Controller extends ContainerAware
      */
     public function signAction($cloud)
     {
-        $request = $this->container->get("request");
+        $request = $this->getRequest();
         $params = $request->query->all();
         if(isset($params["method"])) {
             $method = $params["method"];
@@ -68,7 +68,7 @@ class Controller extends ContainerAware
      */
     public function notifyAction()
     {
-        $request = $this->container->get("request");
+        $request = $this->getRequest();
         $params = $request->request;
         
         // dispatch notification events depending on the given event
@@ -104,5 +104,15 @@ class Controller extends ContainerAware
         
         // return an empty 200 OK response
         return new Response("");
+    }
+
+    /**
+     * Get the current request
+     *
+     * @return \Symfony\Component\HttpFoundation\Request The request
+     */
+    private function getRequest()
+    {
+        return $this->container->get("request");
     }
 }
