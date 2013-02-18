@@ -24,17 +24,39 @@ class Profile
 
     private $name;
 
+    private $presetName;
+
     private $extname;
 
     private $width;
 
     private $height;
 
-    private $audioBitrate;
+    private $upscale;
+
+    private $aspectMode;
+
+    private $twoPass;
 
     private $videoBitrate;
 
-    private $aspectMode;
+    private $fps;
+
+    private $keyframeInterval;
+
+    private $keyframeRate;
+
+    private $audioBitrate;
+
+    private $audioSampleRate;
+
+    private $audioChannels;
+
+    private $clipLength;
+
+    private $clipOffset;
+
+    private $frameCount;
 
     private $command;
 
@@ -73,6 +95,16 @@ class Profile
         $this->name = $name;
     }
 
+    public function getPresetName()
+    {
+        return $this->presetName;
+    }
+
+    public function setPresetName($presetName)
+    {
+        $this->presetName = $presetName;
+    }
+
     public function getExtname()
     {
         return $this->extname;
@@ -103,14 +135,34 @@ class Profile
         $this->height = $height;
     }
 
-    public function getAudioBitrate()
+    public function getUpscale()
     {
-        return $this->audioBitrate;
+        return $this->upscale;
     }
 
-    public function setAudioBitrate($audioBitrate)
+    public function setUpscale($upscale)
     {
-        $this->audioBitrate = $audioBitrate;
+        $this->upscale = $upscale;
+    }
+
+    public function getAspectMode()
+    {
+        return $this->aspectMode;
+    }
+
+    public function setAspectMode($aspectMode)
+    {
+        $this->aspectMode = $aspectMode;
+    }
+
+    public function getTwoPass()
+    {
+        return $this->twoPass;
+    }
+
+    public function setTwoPass($twoPass)
+    {
+        $this->twoPass = $twoPass;
     }
 
     public function getVideoBitrate()
@@ -123,14 +175,94 @@ class Profile
         $this->videoBitrate = $videoBitrate;
     }
 
-    public function getAspectMode()
+    public function getFps()
     {
-        return $this->aspectMode;
+        return $this->fps;
     }
 
-    public function setAspectMode($aspectMode)
+    public function setFps($fps)
     {
-        $this->aspectMode = $aspectMode;
+        $this->fps = $fps;
+    }
+
+    public function getKeyframeInterval()
+    {
+        return $this->keyframeInterval;
+    }
+
+    public function setKeyframeInterval($keyframeInterval)
+    {
+        $this->keyframeInterval = $keyframeInterval;
+    }
+
+    public function getKeyframeRate()
+    {
+        return $this->keyframeRate;
+    }
+
+    public function setKeyframeRate($keyframeRate)
+    {
+        $this->keyframeRate = $keyframeRate;
+    }
+
+    public function getAudioBitrate()
+    {
+        return $this->audioBitrate;
+    }
+
+    public function setAudioBitrate($audioBitrate)
+    {
+        $this->audioBitrate = $audioBitrate;
+    }
+
+    public function getAudioSampleRate()
+    {
+        return $this->audioSampleRate;
+    }
+
+    public function setAudioSampleRate($audioSampleRate)
+    {
+        $this->audioSampleRate = $audioSampleRate;
+    }
+
+    public function getAudioChannels()
+    {
+        return $this->audioChannels;
+    }
+
+    public function setAudioChannels($audioChannels)
+    {
+        $this->audioChannels = $audioChannels;
+    }
+
+    public function getClipLength()
+    {
+        return $this->clipLength;
+    }
+
+    public function setClipLength($clipLength)
+    {
+        $this->clipLength = $clipLength;
+    }
+
+    public function getClipOffset()
+    {
+        return $this->clipOffset;
+    }
+
+    public function setClipOffset($clipOffset)
+    {
+        $this->clipOffset = $clipOffset;
+    }
+
+    public function getFrameCount()
+    {
+        return $this->frameCount;
+    }
+
+    public function setFrameCount($frameCount)
+    {
+        $this->frameCount = $frameCount;
     }
 
     public function getCommand()
