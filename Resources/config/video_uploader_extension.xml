@@ -5,6 +5,7 @@
     <services>
         <service id="xabbuh_panda.video_uploader_extension"
                  class="%xabbuh_panda.video_uploader_extension.class%">
+            <argument type="service" id="router"/>
             <tag name="form.type_extension" alias="file"/>
         </service>
     </services>

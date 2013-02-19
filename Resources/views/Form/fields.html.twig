@@ -1,0 +1,39 @@
+{% block file_row %}
+    {% spaceless %}
+        {% if panda_uploader %}
+            {{ block("panda_uploader_widget") }}
+        {% else %}
+            <div>
+                {{ form_label(form) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block panda_uploader_widget %}
+    <div class="panda-uploader-widget">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {% set type = "hidden" %}
+        {{ block("form_widget_simple") }}
+        {{ block("browse_button_widget") }}
+        {{ block("cancel_button_widget") }}
+        {{ block("progress_bar_widget") }}
+    </div>
+{% endblock %}
+
+{% block browse_button_widget %}
+    <div class="browse-button" id="{{ browse_button_id }}">{{ browse_button_label }}</div>
+{% endblock %}
+
+{% block cancel_button_widget %}
+    <div class="cancel-button" id="{{ cancel_button_id }}">{{ cancel_button_label }}</div>
+{% endblock %}
+
+{% block progress_bar_widget %}
+    <div class="progress-bar" id="{{ progress_bar_id }}">
+        0%
+    </div>
+{% endblock %}
