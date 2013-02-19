@@ -55,10 +55,36 @@ class Controller extends ContainerAware
         } else {
             $path = "/videos.json";
         }
-        $cloudManager = $this->container->get("xabbuh_panda.cloud_manager");
+        $cloudManager = $this->getCloudManager();
         $restClient = $cloudManager->getCloud($cloud)->getPandaApi()->getRestClient();
         $content = $restClient->signParams($method, $path, $params);
         return new JsonResponse($content);
+    }
+
+    /**
+     * Authorize a file upload.
+     *
+     * The name of the file to upload and its size are passed as POST parameters.
+     * The response contains a JSON encoded object. It includes a property
+     * upload_url to which the caller should send its video file.
+     *
+     * @param $cloud Cloud to use for performing API requests
+     * @return \Symfony\Component\HttpFoundation\JsonResponse The response
+     */
+    public function authoriseUploadAction($cloud)
+    {
+        $request = $this->getRequest();
+        $payload = json_decode($request->request->get("payload"));
+        $cloudManager = $this->getCloudManager();
+        $restClient = $cloudManager->getCloud($cloud)->getPandaApi()->getRestClient();
+        $upload = json_decode($restClient->post(
+            "/videos/upload.json",
+            array(
+                "file_name" => $payload->filename,
+                "file_size" => $payload->filesize
+            )
+        ));
+        return new JsonResponse(array("upload_url" => $upload->location));
     }
     
     /**
@@ -114,5 +140,15 @@ class Controller extends ContainerAware
     private function getRequest()
     {
         return $this->container->get("request");
+    }
+
+    /**
+     * Get the configured cloud manager.
+     *
+     * @return \Xabbuh\PandaBundle\Cloud\CloudManagerInterface The cloud manager
+     */
+    private function getCloudManager()
+    {
+        return $this->container->get("xabbuh_panda.cloud_manager");
     }
 }

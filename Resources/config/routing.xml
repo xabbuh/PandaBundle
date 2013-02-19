@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <routes xmlns="http://symfony.com/schema/routing"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="xabbuh_panda_sign" pattern="/sign/{cloud}">
         <default key="_controller">xabbuh_panda.controller:signAction</default>
         <requirement key="_method">GET</requirement>
         <requirement key="cloud">[a-zA-Z_-]+</requirement>
+    </route>
+    <route id="xabbuh_panda_authorise_upload" pattern="/authorise_upload/{cloud}">
+        <default key="_controller">xabbuh_panda.controller:authoriseUploadAction</default>
+        <requirement key="_method">POST</requirement>
     </route>
     <route id="xabbuh_panda_notify" pattern="/notify">
         <default key="_controller">xabbuh_panda.controller:notifyAction</default>
