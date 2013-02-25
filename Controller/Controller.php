@@ -81,7 +81,8 @@ class Controller extends ContainerAware
             "/videos/upload.json",
             array(
                 "file_name" => $payload->filename,
-                "file_size" => $payload->filesize
+                "file_size" => $payload->filesize,
+                "use_all_profiles" => true
             )
         ));
         return new JsonResponse(array("upload_url" => $upload->location));
