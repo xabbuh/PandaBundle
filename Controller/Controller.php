@@ -76,15 +76,12 @@ class Controller extends ContainerAware
         $request = $this->getRequest();
         $payload = json_decode($request->request->get("payload"));
         $cloudManager = $this->getCloudManager();
-        $restClient = $cloudManager->getCloud($cloud)->getPandaApi()->getRestClient();
-        $upload = json_decode($restClient->post(
-            "/videos/upload.json",
-            array(
-                "file_name" => $payload->filename,
-                "file_size" => $payload->filesize,
-                "use_all_profiles" => true
-            )
-        ));
+        $upload = $cloudManager->getCloud($cloud)->registerUpload(
+            $payload->filename,
+            $payload->filesize,
+            null,
+            true
+        );
         return new JsonResponse(array("upload_url" => $upload->location));
     }
     

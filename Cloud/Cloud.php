@@ -115,6 +115,27 @@ class Cloud
     }
 
     /**
+     * Register an upload session for a specific file.
+     *
+     * @param string $filename The name of the file to transfer
+     * @param string $filesize The size of the file in bytes
+     * @param array $profiles Array of profile names for which encodings will
+     * be created (by default no encodings will be created)
+     * @param bool $useAllProfiles If true create encodings for all profiles
+     * (is only taken in account if the list of profile names is null)
+     * @return \stdClass An object containing the id of the video after uploading
+     * and a URL to which the file needs to be pushed.
+     */
+    public function registerUpload($filename, $filesize, array $profiles = null, $useAllProfiles = false) {
+        return json_decode($this->pandaApi->registerUpload(
+            $filename,
+            $filesize,
+            $profiles,
+            $useAllProfiles)
+        );
+    }
+
+    /**
      * Retrieve all profiles.
      *
      * @return array The list of profiles
