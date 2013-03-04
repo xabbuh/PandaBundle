@@ -129,6 +129,32 @@ class ControllerTest extends WebTestCase
     }
 
     /**
+     * Tests the response of the authorise upload action.
+     */
+    public function testAuthoriseUploadAction()
+    {
+        $payload = new \stdClass();
+        $payload->filename = "video.mp4";
+        $payload->filesize = 1722340;
+        $payload->content_type = "application/octet-stream";
+
+        $client = static::createClient();
+        $container = $client->getContainer();
+        $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
+        $client->request(
+            "POST",
+            "/authorise_upload/$defaultCloud",
+            array("payload" => json_encode($payload))
+        );
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals("application/json", $response->headers->get("Content-Type"));
+        $decodedJson = json_decode($response->getContent());
+        $this->assertTrue($decodedJson instanceof \stdClass);
+        $this->assertTrue(isset($decodedJson->upload_url));
+    }
+
+    /**
      * Test the dispatching of VideoCreatedEvents.
      */
     public function testNotifyEncodingComplete()
