@@ -32,15 +32,23 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     private $router;
 
+    /**
+     * General options to configure the display of widget components
+     * @var array
+     */
+    private $defaultOptions;
+
 
     /**
      * Constructor.
      *
      * @param \Symfony\Component\Routing\Router $router The router
+     * @param array $defaultOptions Default display options for widget objects
      */
-    public function __construct(Router $router)
+    public function __construct(Router $router, array $defaultOptions)
     {
         $this->router = $router;
+        $this->defaultOptions = $defaultOptions;
     }
 
     /**
@@ -56,7 +64,16 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array("panda_widget", "panda_widget_version", "cloud"));
+        $resolver->setOptional(
+            array(
+                "panda_widget",
+                "panda_widget_version",
+                "cloud",
+                "multiple_files",
+                "cancel_button",
+                "progress_bar"
+            )
+        );
         $resolver->setAllowedValues(
             array("panda_widget_version" => array(1, 2))
         );
@@ -89,14 +106,29 @@ class VideoUploaderExtension extends AbstractTypeExtension
                 "xabbuh_panda_authorise_upload",
                 array("cloud" => $options["cloud"])
             );
+            if (isset($options["multiple_files"])) {
+                $view->vars["attr"]["multiple_files"] = var_export($options["multiple_files"], true);
+            } else {
+                $view->vars["attr"]["multiple_files"] = var_export($this->defaultOptions["multiple_files"], true);
+            }
             $view->vars["attr"]["browse-button-id"] = $browseButtonId;
             $view->vars["attr"]["cancel-button-id"] = $cancelButtonId;
             $view->vars["attr"]["progress-bar-id"] = $progressBarId;
 
             $view->vars["browse_button_id"] = $browseButtonId;
             $view->vars["browse_button_label"] = "Browse";
+            if (isset($options["cancel_button"])) {
+                $view->vars["cancel_button"] = $options["cancel_button"];
+            } else {
+                $view->vars["cancel_button"] = $this->defaultOptions["cancel_button"];
+            }
             $view->vars["cancel_button_id"] = $cancelButtonId;
             $view->vars["cancel_button_label"] = "Cancel";
+            if (isset($options["progress_bar"])) {
+                $view->vars["progress_bar"] = $options["progress_bar"];
+            } else {
+                $view->vars["progress_bar"] = $this->defaultOptions["progress_bar"];
+            }
             $view->vars["progress_bar_id"] = $progressBarId;
         } else {
             $view->vars["panda_uploader"] = false;

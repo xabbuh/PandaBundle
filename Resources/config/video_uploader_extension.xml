@@ -6,6 +6,11 @@
         <service id="xabbuh_panda.video_uploader_extension"
                  class="%xabbuh_panda.video_uploader_extension.class%">
             <argument type="service" id="router"/>
+            <argument type="collection">
+                <argument key="multiple_files">%xabbuh_panda.video_uploader.multiple_files%</argument>
+                <argument key="cancel_button">%xabbuh_panda.video_uploader.cancel_button%</argument>
+                <argument key="progress_bar">%xabbuh_panda.video_uploader.progress_bar%</argument>
+            </argument>
             <tag name="form.type_extension" alias="file"/>
         </service>
     </services>

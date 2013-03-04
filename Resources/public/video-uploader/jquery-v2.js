@@ -5,6 +5,7 @@ $(document).ready(function() {
         var cancelButtonId = $(this).attr("cancel-button-id");
         var progressBarId = $(this).attr("progress-bar-id");
         var progressBar = $("#" + progressBarId);
+        var allowMultipleFiles = $(this).attr("multiple_files");
 
         var currentFile = null;
 
@@ -12,6 +13,7 @@ $(document).ready(function() {
             "buttonId": browseButtonId,
             "authorizeUrl": authoriseUrl,
             "progressBarId": progressBarId,
+            "allowSelectMultipleFiles": allowMultipleFiles,
             "onStart": function(file) {
                 progressBar.show();
                 currentFile = file;

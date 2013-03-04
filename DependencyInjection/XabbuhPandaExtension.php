@@ -70,6 +70,18 @@ class XabbuhPandaExtension extends Extension
             "xabbuh_panda.video_uploader_extension.class",
             $config["video_uploader_extension"]["class"]
         );
+        $container->setParameter(
+            "xabbuh_panda.video_uploader.multiple_files",
+            $config["video_uploader"]["multiple_files"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.video_uploader.cancel_button",
+            $config["video_uploader"]["cancel_button"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.video_uploader.progress_bar",
+            $config["video_uploader"]["progress_bar"]
+        );
 
         $container->setParameter("xabbuh_panda.account.default", $config["default_account"]);
         $container->setParameter("xabbuh_panda.cloud.default", $config["default_cloud"]);

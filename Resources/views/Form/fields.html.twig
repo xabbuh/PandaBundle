@@ -29,11 +29,15 @@
 {% endblock %}
 
 {% block cancel_button_widget %}
-    <div class="cancel-button" id="{{ cancel_button_id }}">{{ cancel_button_label }}</div>
+    {% if cancel_button %}
+        <div class="cancel-button" id="{{ cancel_button_id }}">{{ cancel_button_label }}</div>
+    {% endif %}
 {% endblock %}
 
 {% block progress_bar_widget %}
-    <div class="progress-bar" id="{{ progress_bar_id }}">
-        0%
-    </div>
+    {% if progress_bar %}
+        <div class="progress-bar" id="{{ progress_bar_id }}">
+            0%
+        </div>
+    {% endif %}
 {% endblock %}

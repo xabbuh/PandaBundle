@@ -145,6 +145,20 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode("video_uploader")
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode("multiple_files")
+                            ->defaultValue(false)
+                        ->end()
+                        ->booleanNode("cancel_button")
+                            ->defaultValue(true)
+                        ->end()
+                        ->booleanNode("progress_bar")
+                            ->defaultValue(true)
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
         
         return $treeBuilder;
