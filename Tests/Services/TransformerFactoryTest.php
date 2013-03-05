@@ -20,9 +20,37 @@ use Xabbuh\PandaBundle\Services\TransformerFactory;
  */
 class TransformerFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test that appropriate instances are returned for registered
+     * transformer class names.
+     */
     public function testGetTransformer()
     {
         $transformerFactory = new TransformerFactory();
+
+        // first, register transformer class names
+        $transformerFactory->registerTransformer(
+            "Cloud",
+            "Xabbuh\\PandaBundle\\Transformers\\CloudTransformer"
+        );
+        $transformerFactory->registerTransformer(
+            "Encoding",
+            "Xabbuh\\PandaBundle\\Transformers\\EncodingTransformer"
+        );
+        $transformerFactory->registerTransformer(
+            "Notifications",
+            "Xabbuh\\PandaBundle\\Transformers\\NotificationsTransformer"
+        );
+        $transformerFactory->registerTransformer(
+            "Profile",
+            "Xabbuh\\PandaBundle\\Transformers\\ProfileTransformer"
+        );
+        $transformerFactory->registerTransformer(
+            "Video",
+            "Xabbuh\\PandaBundle\\Transformers\\VideoTransformer"
+        );
+
+        // then check that appropriate instances are returned by the factory
         $this->assertTrue(is_object($transformerFactory->get("Cloud")));
         $this->assertEquals(
             "Xabbuh\\PandaBundle\\Transformers\\CloudTransformer",
@@ -48,5 +76,17 @@ class TransformerFactoryTest extends \PHPUnit_Framework_TestCase
             "Xabbuh\\PandaBundle\\Transformers\\VideoTransformer",
             get_class($transformerFactory->get("Video"))
         );
+    }
+
+    /**
+     * Test that an exception is thrown if a transformer is requested for
+     * a model without a registered transformer.
+     */
+    public function testInvalidArgumentExceptionWhenRetrieving()
+    {
+        $this->setExpectedException("\\InvalidArgumentException");
+
+        $transformerFactory = new TransformerFactory();
+        $transformerFactory->get("Cloud");
     }
 }

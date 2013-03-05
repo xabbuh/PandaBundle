@@ -63,8 +63,28 @@ class XabbuhPandaExtension extends Extension
             $config["controller"]["class"]
         );
         $container->setParameter(
-            "xabbuh_panda.transformer.class",
-            $config["transformer"]["class"]
+            "xabbuh_panda.transformer.factory.class",
+            $config["transformer"]["factory_class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.transformer.model.cloud.class",
+            $config["transformer"]["cloud_transformer_class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.transformer.model.encoding.class",
+            $config["transformer"]["encoding_transformer_class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.transformer.model.notifications.class",
+            $config["transformer"]["notifications_transformer_class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.transformer.model.profile.class",
+            $config["transformer"]["profile_transformer_class"]
+        );
+        $container->setParameter(
+            "xabbuh_panda.transformer.model.video.class",
+            $config["transformer"]["video_transformer_class"]
         );
         $container->setParameter(
             "xabbuh_panda.video_uploader_extension.class",

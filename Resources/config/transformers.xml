@@ -4,6 +4,27 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.class%"/>
+        <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.factory.class%">
+            <call method="registerTransformer">
+                <argument type="string">Cloud</argument>
+                <argument type="string">%xabbuh_panda.transformer.model.cloud.class%</argument>
+            </call>
+            <call method="registerTransformer">
+                <argument type="string">Encoding</argument>
+                <argument type="string">%xabbuh_panda.transformer.model.encoding.class%</argument>
+            </call>
+            <call method="registerTransformer">
+                <argument type="string">Notifications</argument>
+                <argument type="string">%xabbuh_panda.transformer.model.notifications.class%</argument>
+            </call>
+            <call method="registerTransformer">
+                <argument type="string">Profile</argument>
+                <argument type="string">%xabbuh_panda.transformer.model.profile.class%</argument>
+            </call>
+            <call method="registerTransformer">
+                <argument type="string">Video</argument>
+                <argument type="string">%xabbuh_panda.transformer.model.video.class%</argument>
+            </call>
+        </service>
     </services>
 </container>
