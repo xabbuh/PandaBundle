@@ -134,6 +134,90 @@ class Cloud
             $useAllProfiles)
         );
     }
+    /**
+     * Receive encodings from the server.
+     *
+     * Filters can be any set of key-value-pairs:
+     * <ul>
+     *   <li>status: one of 'success', 'fail' or 'processing' to filter by status</li>
+     *   <li>profile_id: filter encodings by profile id</li>
+     *   <li>profile_name: filter encodings by profile names</li>
+     *   <li>video_id: filter by video id
+     * </ul>
+     *
+     * @param array $filter Optional set of filters
+     * @return \Xabbuh\PandaBundle\Model\Encoding[] A collection of Encoding objects
+     */
+    public function getEncodings(array $filter = array())
+    {
+        $transformer = $this->transformerFactory->get("Encoding");
+        $response = $this->pandaApi->getEncodings($filter);
+        return $transformer->fromJSONCollection($response);
+    }
+
+    /**
+     * Receive encodings filtered by status from the server.
+     *
+     * @see PandaApi::getEncodings()
+     * @param string $status Status to filter by (one of 'success', 'fail' or 'processing')
+     * @param array $filter Additional optional filters (see
+     *     {@link PandaApi::getEncodings() PandaApi::getEncodings()} for a description
+     *     of the filters which can be used)
+     * @return \Xabbuh\PandaBundle\Model\Encoding[] A collection of Encoding objects
+     */
+    public function getEncodingsWithStatus($status, array $filter = array())
+    {
+        $filter["status"] = $status;
+        return $this->getEncodings($filter);
+    }
+
+    /**
+     * Receive encodings filtered by a profile id from the server.
+     *
+     * @see PandaApi::getEncodings()
+     * @param string $profileId Id of the profile to filter by
+     * @param array $filter Additional optional filters (see
+     *     {@link PandaApi::getEncodings() PandaApi::getEncodings()} for a description
+     *     of the filters which can be used)
+     * @return \Xabbuh\PandaBundle\Model\Encoding[] A collection of Encoding objects
+     */
+    public function getEncodingsForProfile($profileId, array $filter = array())
+    {
+        $filter["profile_id"] = $profileId;
+        return $this->getEncodings($filter);
+    }
+
+    /**
+     * Receive encodings filtered by profile name from the server.
+     *
+     * @see PandaApi::getEncodings()
+     * @param string $profileName Name of the profile to filter by
+     * @param array $filter Additional optional filters (see
+     *     {@link PandaApi::getEncodings() PandaApi::getEncodings()} for a description
+     *     of the filters which can be used)
+     * @return \Xabbuh\PandaBundle\Model\Encoding[] A collection of Encoding objects
+     */
+    public function getEncodingsForProfileByName($profileName, array $filter = array())
+    {
+        $filter["profile_name"] = $profileName;
+        return $this->getEncodings($filter);
+    }
+
+    /**
+     * Receive encodings filtered by video from the server.
+     *
+     * @see PandaApi::getEncodings()
+     * @param string $videoId Id of the video to filter by
+     * @param array $filter Additional optional filters (see
+     *     {@link PandaApi::getEncodings() PandaApi::getEncodings()} for a description
+     *     of the filters which can be used)
+     * @return \Xabbuh\PandaBundle\Model\Encoding[] A collection of Encoding objects
+     */
+    public function getEncodingsForVideo($videoId, array $filter = array())
+    {
+        $filter["video_id"] = $videoId;
+        return $this->getEncodings($filter);
+    }
 
     /**
      * Retrieve all profiles.
@@ -157,20 +241,6 @@ class Cloud
         $transformer = $this->transformerFactory->get("Profile");
         return $transformer->fromJSON($this->pandaApi->getProfile($profileId));
     }
-    
-    /**
-     * Receive encodings filtered by video from the server.
-     *
-     * @param string $videoId Id of the video to filter by
-     * @param array $filter Optional additional filters
-     * @return array A collection of Encoding objects
-     */
-    public function getEncodingsForVideo($videoId, array $filter = null)
-    {
-        $response = $this->pandaApi->getEncodingsForVideo($videoId);
-        $transformer = $this->transformerFactory->get("Encoding");
-        return $transformer->fromJSONCollection($response);
-    }
 
     /**
      * Fetch the cloud's data from the panda server.
@@ -189,11 +259,14 @@ class Cloud
      *
      * @param string $cloudId Id of the Cloud being modified
      * @param array $data The Cloud's new data
-     * @return string The server response
+     * @return \Xabbuh\PandaBundle\Model\Cloud The Cloud data (changes
+     * already reflected)
      */
     public function setCloud($cloudId, array $data)
     {
-        return $this->pandaApi->setCloud($cloudId, $data);
+        $transformer = $this->transformerFactory->get("Cloud");
+        $response = $this->pandaApi->setCloud($cloudId, $data);
+        return $transformer->fromJSON($response);
     }
     
     /**
