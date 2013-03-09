@@ -123,6 +123,149 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetVideosForPaginationWithDefaultParameters()
+    {
+        $returnValue = '{ "videos": [{
+              "id":"d891d9a45c698d587831466f236c6c6c",
+              "original_filename":"test.mp4",
+              "extname":".mp4",
+              "path":"d891d9a45c698d587831466f236c6c6c",
+              "video_codec":"h264",
+              "audio_codec":"aac",
+              "height":240,
+              "width":300,
+              "fps":29,
+              "duration":14000,
+              "file_size": 39458349,
+              "created_at":"2009/10/13 19:11:26 +0100",
+              "updated_at":"2009/10/13 19:11:26 +0100"
+            },
+            {
+              "id":"130466751aaaac1f88eb7e31c93ce40c",
+              "source_url": "http://example.com/test2.mp4",
+              "extname":".mp4",
+              "path":"130466751aaaac1f88eb7e31c93ce40c",
+              "video_codec":"h264",
+              "audio_codec":"aac",
+              "height":640,
+              "width":360
+            }],
+        "page": 1,
+        "per_page": 100,
+        "total": 17
+        }';
+        $this->api->expects($this->once())
+            ->method("getVideosForPagination")
+            ->will($this->returnValue($returnValue));
+        $result = $this->cloud->getVideosForPagination();
+        $this->assertTrue(is_object($result));
+        $this->assertEquals(1, $result->page);
+        $this->assertEquals(100, $result->per_page);
+        $this->assertEquals(17, $result->total);
+        $this->assertTrue(is_array($result->videos));
+        $this->assertEquals(2, count($result->videos));
+        foreach ($result->videos as $video) {
+            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+        }
+    }
+
+    public function testGetVideosForPaginationWithPageParameter()
+    {
+        $returnValue = '{ "videos": [{
+              "id":"d891d9a45c698d587831466f236c6c6c",
+              "original_filename":"test.mp4",
+              "extname":".mp4",
+              "path":"d891d9a45c698d587831466f236c6c6c",
+              "video_codec":"h264",
+              "audio_codec":"aac",
+              "height":240,
+              "width":300,
+              "fps":29,
+              "duration":14000,
+              "file_size": 39458349,
+              "created_at":"2009/10/13 19:11:26 +0100",
+              "updated_at":"2009/10/13 19:11:26 +0100"
+            },
+            {
+              "id":"130466751aaaac1f88eb7e31c93ce40c",
+              "source_url": "http://example.com/test2.mp4",
+              "extname":".mp4",
+              "path":"130466751aaaac1f88eb7e31c93ce40c",
+              "video_codec":"h264",
+              "audio_codec":"aac",
+              "height":640,
+              "width":360
+            }],
+        "page": 5,
+        "per_page": 100,
+        "total": 17
+        }';
+        $this->api->expects($this->once())
+            ->method("getVideosForPagination")
+            ->with($this->equalTo(5))
+            ->will($this->returnValue($returnValue));
+        $result = $this->cloud->getVideosForPagination(5);
+        $this->assertTrue(is_object($result));
+        $this->assertEquals(5, $result->page);
+        $this->assertEquals(100, $result->per_page);
+        $this->assertEquals(17, $result->total);
+        $this->assertTrue(is_array($result->videos));
+        $this->assertEquals(2, count($result->videos));
+        foreach ($result->videos as $video) {
+            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+        }
+    }
+
+    public function testGetVideosForPaginationWithPageAndPerPageParameters()
+    {
+        $returnValue = '{ "videos": [{
+              "id":"d891d9a45c698d587831466f236c6c6c",
+              "original_filename":"test.mp4",
+              "extname":".mp4",
+              "path":"d891d9a45c698d587831466f236c6c6c",
+              "video_codec":"h264",
+              "audio_codec":"aac",
+              "height":240,
+              "width":300,
+              "fps":29,
+              "duration":14000,
+              "file_size": 39458349,
+              "created_at":"2009/10/13 19:11:26 +0100",
+              "updated_at":"2009/10/13 19:11:26 +0100"
+            },
+            {
+              "id":"130466751aaaac1f88eb7e31c93ce40c",
+              "source_url": "http://example.com/test2.mp4",
+              "extname":".mp4",
+              "path":"130466751aaaac1f88eb7e31c93ce40c",
+              "video_codec":"h264",
+              "audio_codec":"aac",
+              "height":640,
+              "width":360
+            }],
+        "page": 7,
+        "per_page": 25,
+        "total": 17
+        }';
+        $this->api->expects($this->once())
+            ->method("getVideosForPagination")
+            ->with(
+                $this->equalTo(7),
+                $this->equalTo(25)
+            )
+            ->will($this->returnValue($returnValue));
+        $result = $this->cloud->getVideosForPagination(7, 25);
+        $this->assertTrue(is_object($result));
+        $this->assertEquals(7, $result->page);
+        $this->assertEquals(25, $result->per_page);
+        $this->assertEquals(17, $result->total);
+        $this->assertTrue(is_array($result->videos));
+        $this->assertEquals(2, count($result->videos));
+        foreach ($result->videos as $video) {
+            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+        }
+    }
+
     public function testDeleteVideo()
     {
         $videoId = md5(uniqid());

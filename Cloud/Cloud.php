@@ -77,6 +77,32 @@ class Cloud
     }
 
     /**
+     * Retrieve a part of all videos for pagination.
+     *
+     * This method returns an object with the following four properties:
+     * <ul>
+     * <li>videos: an array of Video model objects</li>
+     * <li>page: the current page</li>
+     * <li>per_page: number of videos per page (as requested)</li>
+     * <li>total: total number of videos</li>
+     * </ul>
+     *
+     * @param int $page The current page
+     * @param int $per_page Number of videos per page
+     * @return \stdClass The result object
+     */
+    public function getVideosForPagination($page = 1, $per_page = 100)
+    {
+        $transformer = $this->transformerFactory->get("Video");
+        $response = $this->pandaApi->getVideosForPagination($page, $per_page);
+        $json = json_decode($response);
+        foreach ($json->videos as $index => $video) {
+            $json->videos[$index] = $transformer->fromObject($video);
+        }
+        return $json;
+    }
+
+    /**
      * Delete a video.
      *
      * @param string $videoId The video being deleted
