@@ -80,7 +80,7 @@ class VideoTransformer extends BaseTransformer
      * @param \stdClass $object The object being transformed
      * @return \Xabbuh\PandaBundle\Model\Video The transformed Video
      */
-    private function fromObject(\stdClass $object)
+    public function fromObject(\stdClass $object)
     {
         $video = new Video();
         $this->setModelProperties($video, $object);
