@@ -12,7 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Xabbuh\PandaBundle\DependencyInjection\ProviderCompilerPass;
+use Xabbuh\PandaBundle\DependencyInjection\Compiler\ProviderPass;
 
 /**
  * Test the compiler pass that registers services as account or cloud
@@ -20,7 +20,7 @@ use Xabbuh\PandaBundle\DependencyInjection\ProviderCompilerPass;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
+class ProviderPassTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Symfony\Component\DependencyInjection\Definition
@@ -74,7 +74,7 @@ class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilderMock->expects($this->any())
             ->method("findTaggedServiceIds")
             ->will($this->returnValue(array()));
-        $pass = new ProviderCompilerPass();
+        $pass = new ProviderPass();
         $pass->process($this->containerBuilderMock);
     }
 
@@ -97,7 +97,7 @@ class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilderMock->expects($this->any())
             ->method("findTaggedServiceIds")
             ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderCompilerPass();
+        $pass = new ProviderPass();
         $pass->process($this->containerBuilderMock);
     }
 
@@ -123,7 +123,7 @@ class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilderMock->expects($this->any())
             ->method("findTaggedServiceIds")
             ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderCompilerPass();
+        $pass = new ProviderPass();
         $pass->process($this->containerBuilderMock);
     }
 
@@ -146,7 +146,7 @@ class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilderMock->expects($this->any())
             ->method("findTaggedServiceIds")
             ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderCompilerPass();
+        $pass = new ProviderPass();
         $pass->process($this->containerBuilderMock);
     }
 
@@ -172,7 +172,7 @@ class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilderMock->expects($this->any())
             ->method("findTaggedServiceIds")
             ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderCompilerPass();
+        $pass = new ProviderPass();
         $pass->process($this->containerBuilderMock);
     }
 
@@ -196,7 +196,7 @@ class ProviderCompilerClassTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilderMock->expects($this->any())
             ->method("findTaggedServiceIds")
             ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderCompilerPass();
+        $pass = new ProviderPass();
         $pass->process($this->containerBuilderMock);
     }
 }

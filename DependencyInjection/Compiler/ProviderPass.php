@@ -9,7 +9,7 @@
 * file that was distributed with this source code.
 */
 
-namespace Xabbuh\PandaBundle\DependencyInjection;
+namespace Xabbuh\PandaBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ProviderCompilerPass implements CompilerPassInterface
+class ProviderPass implements CompilerPassInterface
 {
     /**
      * {@inheritDoc}
