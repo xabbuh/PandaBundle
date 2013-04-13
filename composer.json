@@ -1,5 +1,8 @@
 {
     "name": "xabbuh/panda-bundle",
+    "description": "integration of the Panda encoding services into the Symfony2 Framework",
+    "keywords": ["Panda", "video encoding", "REST", "client", "Symfony", "bundle"],
+    "homepage": "https://github.com/xabbuh/XabbuhPandaBundle",
     "autoload": {
         "psr-0": { "Xabbuh\\PandaBundle": "" }
     },
