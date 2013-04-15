@@ -11,6 +11,8 @@
 
 namespace Xabbuh\PandaBundle\Transformers;
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 /**
  * Common functions for all transformer classes.
  *
@@ -56,5 +58,31 @@ abstract class BaseTransformer
                 );
             }
         }
+    }
+
+    /**
+     * Convert a php object into a parameter bag which can be used for http requests/responses.
+     *
+     * @param mixed $object The object being converted
+     * @return \Symfony\Component\HttpFoundation\ParameterBag The request parameters
+     */
+    public function toRequestParams($object)
+    {
+        if (!is_object($object)) {
+            throw new \InvalidArgumentException("Only objects can be converted to request parameters");
+        }
+
+        $params = new ParameterBag();
+        foreach (get_class_methods(get_class($object)) as $method) {
+            if (substr($method, 0, 3) == "get") {
+                $property = strtolower(preg_replace(
+                    "/([a-z])([A-Z])/",
+                    "\$1_\$2",
+                    substr($method, 3)
+                ));
+                $params->set($property, $object->$method());
+            }
+        }
+        return $params;
     }
 }
