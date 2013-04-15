@@ -32,13 +32,33 @@ class Encoding
 
     private $profileName;
 
-    private $status;
-
-    private $encodingProgress;
+    private $duration;
 
     private $width;
 
     private $height;
+
+    private $fileSize;
+
+    private $videoBitrate;
+
+    private $audioBitrate;
+
+    private $audioCodec;
+
+    private $videoCodec;
+
+    private $fps;
+
+    private $audioChannels;
+
+    private $audioSampleRate;
+
+    private $status;
+
+    private $mimeType;
+
+    private $encodingProgress;
 
     private $startedEncodingAt;
 
@@ -116,6 +136,94 @@ class Encoding
         $this->profileName = $profileName;
     }
 
+    public function getDuration() {
+        return $this->duration;
+    }
+
+    public function setDuration($duration) {
+        $this->duration = $duration;
+    }
+
+    public function getWidth() {
+        return $this->width;
+    }
+
+    public function setWidth($width) {
+        $this->width = $width;
+    }
+
+    public function getHeight() {
+        return $this->height;
+    }
+
+    public function setHeight($height) {
+        $this->height = $height;
+    }
+
+    public function getFileSize() {
+        return $this->fileSize;
+    }
+
+    public function setFileSize($fileSize) {
+        $this->fileSize = $fileSize;
+    }
+
+    public function getVideoBitrate() {
+        return $this->videoBitrate;
+    }
+
+    public function setVideoBitrate($videoBitrate) {
+        $this->videoBitrate = $videoBitrate;
+    }
+
+    public function getAudioBitrate() {
+        return $this->audioBitrate;
+    }
+
+    public function setAudioBitrate($audioBitrate) {
+        $this->audioBitrate = $audioBitrate;
+    }
+
+    public function getAudioCodec() {
+        return $this->audioCodec;
+    }
+
+    public function setAudioCodec($audioCodec) {
+        $this->audioCodec = $audioCodec;
+    }
+
+    public function getVideoCodec() {
+        return $this->videoCodec;
+    }
+
+    public function setVideoCodec($videoCodec) {
+        $this->videoCodec = $videoCodec;
+    }
+
+    public function getFps() {
+        return $this->fps;
+    }
+
+    public function setFps($fps) {
+        $this->fps = $fps;
+    }
+
+    public function getAudioChannels() {
+        return $this->audioChannels;
+    }
+
+    public function setAudioChannels($audioChannels) {
+        $this->audioChannels = $audioChannels;
+    }
+
+    public function getAudioSampleRate() {
+        return $this->audioSampleRate;
+    }
+
+    public function setAudioSampleRate($audioSampleRate) {
+        $this->audioSampleRate = $audioSampleRate;
+    }
+
     public function getStatus()
     {
         return $this->status;
@@ -136,26 +244,6 @@ class Encoding
         $this->encodingProgress = $encodingProgress;
     }
 
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    public function setWidth($width)
-    {
-        $this->width = $width;
-    }
-
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    public function setHeight($height)
-    {
-        $this->height = $height;
-    }
-
     public function getStartedEncodingAt()
     {
         return $this->startedEncodingAt;
@@ -174,6 +262,16 @@ class Encoding
     public function setEncodingTime($encodingTime)
     {
         $this->encodingTime = $encodingTime;
+    }
+
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
     }
 
     public function getFiles()
