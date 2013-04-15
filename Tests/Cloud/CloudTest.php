@@ -39,8 +39,8 @@ class CloudTest extends \PHPUnit_Framework_TestCase
     protected static $transformerFactory;
 
     /**
-     * The ApiInterface implementation being tested
-     * @var \Xabbuh\PandaClient\Api
+     * The Cloud implementation being tested
+     * @var \Xabbuh\PandaBundle\Cloud\Cloud
      */
     protected $cloud;
 
