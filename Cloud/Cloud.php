@@ -13,6 +13,7 @@ namespace Xabbuh\PandaBundle\Cloud;
 
 use Symfony\Component\DependencyInjection\Container;
 use Xabbuh\PandaBundle\Model\Notifications;
+use Xabbuh\PandaBundle\Model\Profile;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaClient\ApiInterface;
 
@@ -257,7 +258,7 @@ class Cloud
     }
 
     /**
-     * Retrieve informations for a profile.
+     * Retrieve information for a profile.
      *
      * @param string $profileId The id of the profile being fetched
      * @return \Xabbuh\PandaBundle\Model\Profile The profile
@@ -266,6 +267,61 @@ class Cloud
     {
         $transformer = $this->transformerFactory->get("Profile");
         return $transformer->fromJSON($this->pandaApi->getProfile($profileId));
+    }
+
+    /**
+     * Create a profile.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Profile $profile The new profile's data
+     * @return \Xabbuh\PandaBundle\Model\Profile The new profile
+     */
+    public function addProfile(Profile $profile)
+    {
+        $transformer = $this->transformerFactory->get("Profile");
+        $data = $transformer->toRequestParams($profile)->all();
+        $response = $this->pandaApi->addProfile($data);
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Create a profile based on a given preset.
+     *
+     * @param string $presetName Name of the preset to use
+     * @return \Xabbuh\PandaBundle\Model\Profile The new profile
+     */
+    public function addProfileFromPreset($presetName)
+    {
+        $transformer = $this->transformerFactory->get("Profile");
+        $response = $this->pandaApi->addProfileFromPreset($presetName);
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Change the data of a profile.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Profile $data The profile's new data
+     * @return \Xabbuh\PandaBundle\Model\Profile The modified profile
+     */
+    public function setProfile(Profile $profile)
+    {
+        $transformer = $this->transformerFactory->get("Profile");
+        $params = $transformer->toRequestParams($profile);
+        $response = $this->pandaApi->setProfile(
+            $profile->getId(),
+            $params->all()
+        );
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Delete a profile.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Profile $profile The profile being removed
+     * @return string The server response
+     */
+    public function deleteProfile(Profile $profile)
+    {
+        return $this->pandaApi->deleteProfile($profile->getId());
     }
 
     /**

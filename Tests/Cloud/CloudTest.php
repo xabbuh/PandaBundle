@@ -14,6 +14,7 @@ namespace Xabbuh\PandaBundle\Tests\Cloud;
 use Xabbuh\PandaBundle\Cloud\Cloud;
 use Xabbuh\PandaBundle\Model\NotificationEvent;
 use Xabbuh\PandaBundle\Model\Notifications;
+use Xabbuh\PandaBundle\Model\Profile;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaBundle\Transformers\CloudTransformer;
 use Xabbuh\PandaBundle\Transformers\EncodingTransformer;
@@ -1190,6 +1191,124 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals("2009/10/14 18:36:30 +0000", $profile->getCreatedAt());
         $this->assertEquals("2009/10/14 19:38:42 +0000", $profile->getUpdatedAt());
+    }
+
+    public function testAddProfile()
+    {
+        $profile = new Profile();
+        $profile->setId("40d9f8711d64aaa74f88462e9274f39a");
+        $profile->setTitle("The best custom profile");
+        $profile->setExtname(".mp4");
+        $profile->setWidth(320);
+        $profile->setHeight(240);
+        $profile->setAudioBitrate(128);
+        $profile->setVideoBitrate(500);
+        $profile->setCreatedAt("2009/10/14 18:36:30 +0000");
+        $profile->setUpdatedAt("2009/10/14 19:38:42 +0000");
+        $returnValue = '{
+           "id":"40d9f8711d64aaa74f88462e9274f39a",
+           "title":"H264 (MP4)",
+           "name": "h264",
+           "extname":".mp4",
+           "width":320,
+           "height":240,
+           "audio_bitrate": 128,
+           "video_bitrate": 500,
+           "aspect_mode": "letterbox",
+           "command":"ffmpeg -i $input_file$ -c:a libfaac $audio_bitrate$ -c:v libx264 $video_bitrate$ -preset medium $filters$ -y $output_file$",
+           "created_at":"2009/10/14 18:36:30 +0000",
+           "updated_at":"2009/10/14 19:38:42 +0000"
+        }';
+        $this->api->expects($this->once())
+            ->method("addProfile")
+            ->with($this->isType("array"))
+            ->will($this->returnValue($returnValue));
+        $profile = $this->cloud->addProfile($profile);
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Profile",
+            get_class($profile)
+        );
+        $this->assertEquals("40d9f8711d64aaa74f88462e9274f39a", $profile->getId());
+        $this->assertEquals("H264 (MP4)", $profile->getTitle());
+        $this->assertEquals("h264", $profile->getName());
+        $this->assertEquals(".mp4", $profile->getExtname());
+    }
+
+    public function testAddProfileFromPreset()
+    {
+        $returnValue = '{
+          "id":"40d9f8711d64aaa74f88462e9274f39a",
+          "title": "H264 (MP4)",
+          "name": "h264",
+          "extname":".mp4",
+          "width":480,
+          "height":320,
+          "audio_bitrate": 128,
+          "video_bitrate": 500,
+          "preset_name": "h264",
+          "created_at":"2009/10/14 18:36:30 +0000",
+          "updated_at":"2009/10/14 19:38:42 +0000"
+        }';
+        $this->api->expects($this->once())
+            ->method("addProfileFromPreset")
+            ->with($this->equalTo("h264"))
+            ->will($this->returnValue($returnValue));
+        $profile = $this->cloud->addProfileFromPreset("h264");
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Profile",
+            get_class($profile)
+        );
+        $this->assertEquals("40d9f8711d64aaa74f88462e9274f39a", $profile->getId());
+        $this->assertEquals("H264 (MP4)", $profile->getTitle());
+        $this->assertEquals("h264", $profile->getName());
+        $this->assertEquals(".mp4", $profile->getExtname());
+    }
+
+    public function testSetProfile()
+    {
+        $profile = new Profile();
+        $profile->setId("40d9f8711d64aaa74f88462e9274f39a");
+        $profile->setTitle("The best custom profile");
+        $profile->setExtname(".mp4");
+        $profile->setWidth(320);
+        $profile->setHeight(240);
+        $profile->setAudioBitrate(128);
+        $profile->setVideoBitrate(500);
+        $profile->setCreatedAt("2009/10/14 18:36:30 +0000");
+        $profile->setUpdatedAt("2009/10/14 19:38:42 +0000");
+        $returnValue = '{
+              "id":"40d9f8711d64aaa74f88462e9274f39a",
+              "title":"The best custom profile",
+              "extname":".mp4",
+              "width":320,
+              "height":240,
+              "audio_bitrate":128,
+              "video_bitrate":500,
+              "created_at":"2009/10/14 18:36:30 +0000",
+              "updated_at":"2009/10/14 19:38:42 +0000"
+            }
+        ';
+        $this->api->expects($this->once())
+            ->method("setProfile")
+            ->with(
+                $this->equalTo($profile->getId()),
+                $this->isType("array")
+            )
+            ->will($this->returnValue($returnValue));
+        $modifiedProfile = $this->cloud->setProfile($profile);
+        $this->assertEquals($profile, $modifiedProfile);
+    }
+
+    public function testDeleteProfile()
+    {
+        $profile = new Profile();
+        $profile->setId("40d9f8711d64aaa74f88462e9274f39a");
+        $this->api->expects($this->once())
+            ->method("deleteProfile")
+            ->with($this->equalTo($profile->getId()))
+            ->will($this->returnValue("status: 200"))
+        ;
+        $this->assertEquals("status: 200", $this->cloud->deleteProfile($profile));
     }
 
     public function testGetCloudData()
