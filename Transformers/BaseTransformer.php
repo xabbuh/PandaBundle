@@ -18,25 +18,15 @@ namespace Xabbuh\PandaBundle\Transformers;
  */
 abstract class BaseTransformer
 {
-    const METHOD_TYPE_GET = 1;
-
-    const METHOD_TYPE_SET = 2;
-
-
     /**
      * Get the getter or setter method name for a particular property.
      *
      * @param string $propertyName The property name in underscore style
-     * @param int $methodType Method type (BaseTransformer::METHOD_TYPE_GET or BaseTransformer::METHOD_TYPE_SET)
      * @return string The generated method name in camel case style
      */
-    protected function getMethodName($propertyName, $methodType)
+    protected function getMethodName($propertyName)
     {
-        if ($methodType == self::METHOD_TYPE_GET) {
-            $methodName = "get";
-        } else if ($methodType == self::METHOD_TYPE_SET) {
-            $methodName = "set";
-        }
+        $methodName = "set";
 
         while (($pos = strpos($propertyName, "_")) !== false) {
             $tmp = substr($propertyName, 0, $pos);
@@ -57,7 +47,7 @@ abstract class BaseTransformer
     protected function setModelProperties($model, \stdClass $object)
     {
         foreach ($object as $name => $value) {
-            $methodName = $this->getMethodName($name, self::METHOD_TYPE_SET);
+            $methodName = $this->getMethodName($name);
             if (method_exists($model, $methodName)) {
                 $model->$methodName($value);
             } else {
