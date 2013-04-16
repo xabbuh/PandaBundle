@@ -18,7 +18,7 @@ use Xabbuh\PandaBundle\Model\Cloud;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class CloudTransformer
+class CloudTransformer extends BaseTransformer
 {
     /**
      * Transform a JSON encoded string into a Cloud model object.

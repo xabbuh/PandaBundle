@@ -43,7 +43,7 @@ class TransformerFactory
      * Returns the transformer for a model.
      *
      * @param string $model The model for which the transformer instance is returned
-     * @return \stdClass The transformer instance
+     * @return \Xabbuh\PandaBundle\Transformers\BaseTransformer The transformer instance
      * @throws \InvalidArgumentException if no transformer is registered for the model
      */
     public function get($model)

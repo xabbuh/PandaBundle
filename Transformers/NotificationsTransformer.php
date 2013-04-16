@@ -21,7 +21,7 @@ use Xabbuh\PandaBundle\Model\Notifications;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de> 
  */
-class NotificationsTransformer
+class NotificationsTransformer extends BaseTransformer
 {
     /**
      * Transform the JSON representation of notifications into a Notifications
