@@ -375,17 +375,4 @@ class Cloud
         $response = $this->pandaApi->setNotifications($params->all());
         return $transformer->fromJSON($response);
     }
-    
-    /**
-     * Generates the signature for an API requests based on its parameters.
-     * 
-     * @param string $method The HTTP method
-     * @param string $path The request path
-     * @param array $params Request parameters
-     * @return string The generated signature
-     */
-    public function signature($method, $path, array $params)
-    {
-        return $this->pandaApi->getRestClient()->signature($method, $path, $params);
-    }
 }
