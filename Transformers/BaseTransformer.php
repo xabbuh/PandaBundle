@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Transformers;
 
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Xabbuh\PandaBundle\Model\ModelInterface;
 
 /**
  * Common functions for all transformer classes.
@@ -42,11 +43,11 @@ abstract class BaseTransformer
      * Read the properties from one object and set the properties of the
      * model respectively.
      *
-     * @param $model The model which properties are being set
-     * @param \stdClass $object The object from where the property values are read
+     * @param \Xabbuh\PandaBundle\Model\ModelInterface $model The model which properties are being set
+     * @param \stdClass $object The object from where the property values are being read
      * @throws \InvalidArgumentException if a property of $object doesn't exist in $model
      */
-    protected function setModelProperties($model, \stdClass $object)
+    protected function setModelProperties(ModelInterface $model, \stdClass $object)
     {
         foreach ($object as $name => $value) {
             $methodName = $this->getMethodName($name);
@@ -63,15 +64,11 @@ abstract class BaseTransformer
     /**
      * Convert a php object into a parameter bag which can be used for http requests/responses.
      *
-     * @param mixed $object The object being converted
+     * @param \Xabbuh\PandaBundle\Model\ModelInterface $object The object being converted
      * @return \Symfony\Component\HttpFoundation\ParameterBag The request parameters
      */
-    public function toRequestParams($object)
+    public function toRequestParams(ModelInterface $object)
     {
-        if (!is_object($object)) {
-            throw new \InvalidArgumentException("Only objects can be converted to request parameters");
-        }
-
         $params = new ParameterBag();
         foreach (get_class_methods(get_class($object)) as $method) {
             if (substr($method, 0, 3) == "get") {

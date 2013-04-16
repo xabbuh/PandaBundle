@@ -16,7 +16,8 @@ namespace Xabbuh\PandaBundle\Model;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Video {
+class Video implements ModelInterface
+{
     private $id;
     
     private $createdAt;

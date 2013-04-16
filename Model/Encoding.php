@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Encoding
+class Encoding implements ModelInterface
 {
     private $id;
 

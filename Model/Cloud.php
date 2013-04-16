@@ -16,7 +16,7 @@ namespace Xabbuh\PandaBundle\Model;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Cloud
+class Cloud implements ModelInterface
 {
     private $id;
 
