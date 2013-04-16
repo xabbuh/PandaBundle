@@ -36,7 +36,7 @@ class ProfileTransformer extends BaseTransformer
      * array of Profile objects.
      *
      * @param string $jsonString The JSON string being transformed
-     * @return array The transformed Profiles
+     * @return \Xabbuh\PandaBundle\Model\Profile[] The transformed Profiles
      */
     public function fromJSONCollection($jsonString)
     {

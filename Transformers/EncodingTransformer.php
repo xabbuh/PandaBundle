@@ -36,7 +36,7 @@ class EncodingTransformer extends BaseTransformer
      * objects.
      *
      * @param string $jsonString The JSON string being transformed
-     * @return array The transformed Encodings
+     * @return \Xabbuh\PandaBundle\Model\Encoding[] The transformed Encodings
      */
     public function fromJSONCollection($jsonString)
     {

@@ -50,7 +50,7 @@ class VideoTransformer extends BaseTransformer
      * Transform the JSON representation of a video into a Video model object.
      * 
      * @param string $jsonString JSON representation of a video
-     * @return Xabbuh\PandaBundle\Model\Video The generated model object
+     * @return \Xabbuh\PandaBundle\Model\Video The generated model object
      */
     public function fromJSON($jsonString)
     {
@@ -62,7 +62,7 @@ class VideoTransformer extends BaseTransformer
      * of Video objects.
      *
      * @param string $jsonString The JSON string being transformed
-     * @return array The transformed Videos
+     * @return \Xabbuh\PandaBundle\Model\Video[] The transformed Videos
      */
     public function fromJSONCollection($jsonString)
     {

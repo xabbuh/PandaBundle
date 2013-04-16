@@ -24,7 +24,7 @@ class CloudTransformer
      * Transform a JSON encoded string into a Cloud model object.
      *
      * @param string $jsonString The JSON encoded string being transformed
-     * @return Cloud The generated Cloud
+     * @return \Xabbuh\PandaBundle\Model\Cloud The generated Cloud
      */
     public function fromJSON($jsonString)
     {
