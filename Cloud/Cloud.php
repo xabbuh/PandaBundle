@@ -68,7 +68,7 @@ class Cloud
     /**
      * Retrieve a collection of videos from the server.
      *
-     * @return array Array of Videos
+     * @return \Xabbuh\PandaBundle\Model\Video[] Array of Videos
      */
     public function getVideos()
     {
@@ -249,7 +249,7 @@ class Cloud
     /**
      * Retrieve all profiles.
      *
-     * @return array The list of profiles
+     * @return \Xabbuh\PandaBundle\Model\Profile[] The list of profiles
      */
     public function getProfiles()
     {
