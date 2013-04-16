@@ -17,7 +17,7 @@ namespace Xabbuh\PandaBundle\Model;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Notifications
+class Notifications implements ModelInterface
 {
     private $url;
     
