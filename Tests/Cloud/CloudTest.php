@@ -12,9 +12,11 @@
 namespace Xabbuh\PandaBundle\Tests\Cloud;
 
 use Xabbuh\PandaBundle\Cloud\Cloud;
+use Xabbuh\PandaBundle\Model\Encoding;
 use Xabbuh\PandaBundle\Model\NotificationEvent;
 use Xabbuh\PandaBundle\Model\Notifications;
 use Xabbuh\PandaBundle\Model\Profile;
+use Xabbuh\PandaBundle\Model\Video;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaBundle\Transformers\CloudTransformer;
 use Xabbuh\PandaBundle\Transformers\EncodingTransformer;
@@ -1095,6 +1097,207 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             "ab658d9599ca70966cfd0f53c186712b",
             $encodings[1]->getId()
         );
+    }
+
+    public function testGetEncoding()
+    {
+        $encodingId = md5(uniqid());
+        $returnValue = '{
+          "id":"' . $encodingId . '",
+          "video_id":"d891d9a45c698d587831466f236c6c6c",
+          "extname":".mp4",
+          "path":"2f8760b7e0d4c7dbe609b5872be9bc3b",
+          "profile_id":"40d9f8711d64aaa74f88462e9274f39a",
+          "profile_name":"h264",
+          "status":"success",
+          "encoding_progress":99,
+          "height":240,
+          "width":300,
+          "started_encoding_at":"2009/10/13 21:28:45 +0000",
+          "encoding_time":9000,
+          "files":["2f8760b7e0d4c7dbe609b5872be9bc3b.mp4"],
+          "created_at":"2009/10/13 20:58:29 +0000",
+          "updated_at":"2009/10/13 21:30:34 +0000"
+        }';
+        $this->api->expects($this->once())
+            ->method("getEncoding")
+            ->with($this->equalTo($encodingId))
+            ->will($this->returnValue($returnValue));
+        $encoding = $this->cloud->getEncoding($encodingId);
+        $this->assertTrue(is_object($encoding));
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            get_class($encoding)
+        );
+        $this->assertEquals($encodingId, $encoding->getId());
+    }
+
+    public function testCreateEncoding()
+    {
+        $videoId = md5(uniqid());
+        $profileId = md5(uniqid());
+        $encodingId = md5(uniqid());
+        $video = new Video();
+        $video->setId($videoId);
+        $profile = new Profile();
+        $profile->setId($profileId);
+
+        $returnValue = '{
+          "id":"' . $encodingId . '",
+          "video_id":"' . $videoId . '",
+          "extname":".mp4",
+          "path":"2f8760b7e0d4c7dbe609b5872be9bc3b",
+          "profile_id":"' . $profileId . '",
+          "profile_name":"h264",
+          "status":"processing",
+          "encoding_progress":0,
+          "height":240,
+          "width":300,
+          "started_encoding_at":"",
+          "encoding_time":0,
+          "files":[],
+          "created_at":"2009/10/13 20:58:29 +0000",
+          "updated_at":"2009/10/13 21:30:34 +0000"
+        }';
+        $this->api->expects($this->once())
+            ->method("createEncoding")
+            ->with(
+                $this->equalTo($videoId),
+                $this->equalTo($profileId)
+            )
+            ->will($this->returnValue($returnValue));
+        $encoding = $this->cloud->createEncoding($video, $profile);
+        $this->assertTrue(is_object($encoding));
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            get_class($encoding)
+        );
+        $this->assertEquals($encodingId, $encoding->getId());
+        $this->assertEquals($videoId, $encoding->getVideoId());
+        $this->assertEquals($profileId, $encoding->getProfileId());
+    }
+
+    public function testCreateEncodingWithProfileId()
+    {
+        $videoId = md5(uniqid());
+        $profileId = md5(uniqid());
+        $encodingId = md5(uniqid());
+        $video = new Video();
+        $video->setId($videoId);
+
+        $returnValue = '{
+          "id":"' . $encodingId . '",
+          "video_id":"' . $videoId . '",
+          "extname":".mp4",
+          "path":"2f8760b7e0d4c7dbe609b5872be9bc3b",
+          "profile_id":"' . $profileId . '",
+          "profile_name":"h264",
+          "status":"processing",
+          "encoding_progress":0,
+          "height":240,
+          "width":300,
+          "started_encoding_at":"",
+          "encoding_time":0,
+          "files":[],
+          "created_at":"2009/10/13 20:58:29 +0000",
+          "updated_at":"2009/10/13 21:30:34 +0000"
+        }';
+        $this->api->expects($this->once())
+            ->method("createEncoding")
+            ->with(
+                $this->equalTo($videoId),
+                $this->equalTo($profileId)
+            )
+            ->will($this->returnValue($returnValue));
+        $encoding = $this->cloud->createEncodingWithProfileId($video, $profileId);
+        $this->assertTrue(is_object($encoding));
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            get_class($encoding)
+        );
+        $this->assertEquals($encodingId, $encoding->getId());
+        $this->assertEquals($videoId, $encoding->getVideoId());
+        $this->assertEquals($profileId, $encoding->getProfileId());
+    }
+
+    public function testCreateEncodingWithProfileName()
+    {
+        $videoId = md5(uniqid());
+        $profileId = md5(uniqid());
+        $profileName = "h264";
+        $encodingId = md5(uniqid());
+        $video = new Video();
+        $video->setId($videoId);
+
+        $returnValue = '{
+          "id":"' . $encodingId . '",
+          "video_id":"' . $videoId . '",
+          "extname":".mp4",
+          "path":"2f8760b7e0d4c7dbe609b5872be9bc3b",
+          "profile_id":"' . $profileId . '",
+          "profile_name":"h264",
+          "status":"processing",
+          "encoding_progress":0,
+          "height":240,
+          "width":300,
+          "started_encoding_at":"",
+          "encoding_time":0,
+          "files":[],
+          "created_at":"2009/10/13 20:58:29 +0000",
+          "updated_at":"2009/10/13 21:30:34 +0000"
+        }';
+        $this->api->expects($this->once())
+            ->method("createEncodingWithProfileName")
+            ->with(
+                $this->equalTo($videoId),
+                $this->equalTo($profileName)
+            )
+            ->will($this->returnValue($returnValue));
+        $encoding = $this->cloud->createEncodingWithProfileName($video, $profileName);
+        $this->assertTrue(is_object($encoding));
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            get_class($encoding)
+        );
+        $this->assertEquals($encodingId, $encoding->getId());
+        $this->assertEquals($videoId, $encoding->getVideoId());
+        $this->assertEquals($profileId, $encoding->getProfileId());
+    }
+
+    public function testCancelEncoding()
+    {
+        $encoding = new Encoding();
+        $encoding->setId(md5(uniqid()));
+        $this->api->expects($this->once())
+            ->method("cancelEncoding")
+            ->with($this->equalTo($encoding->getId()))
+            ->will($this->returnValue("status: 200"));
+        $response = $this->cloud->cancelEncoding($encoding);
+        $this->assertEquals("status: 200", $response);
+    }
+
+    public function testRetryEncoding()
+    {
+        $encoding = new Encoding();
+        $encoding->setId(md5(uniqid()));
+        $this->api->expects($this->once())
+            ->method("retryEncoding")
+            ->with($this->equalTo($encoding->getId()))
+            ->will($this->returnValue("status: 200"));
+        $response = $this->cloud->retryEncoding($encoding);
+        $this->assertEquals("status: 200", $response);
+    }
+
+    public function testDeleteEncoding()
+    {
+        $encoding = new Encoding();
+        $encoding->setId(md5(uniqid()));
+        $this->api->expects($this->once())
+            ->method("deleteEncoding")
+            ->with($this->equalTo($encoding->getId()))
+            ->will($this->returnValue("status: 200"));
+        $response = $this->cloud->deleteEncoding($encoding);
+        $this->assertEquals("status: 200", $response);
     }
 
     public function testGetProfiles()

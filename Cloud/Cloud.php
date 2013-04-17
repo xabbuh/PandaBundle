@@ -12,8 +12,10 @@
 namespace Xabbuh\PandaBundle\Cloud;
 
 use Symfony\Component\DependencyInjection\Container;
+use Xabbuh\PandaBundle\Model\Encoding;
 use Xabbuh\PandaBundle\Model\Notifications;
 use Xabbuh\PandaBundle\Model\Profile;
+use Xabbuh\PandaBundle\Model\Video;
 use Xabbuh\PandaBundle\Services\TransformerFactory;
 use Xabbuh\PandaClient\ApiInterface;
 
@@ -244,6 +246,103 @@ class Cloud
     {
         $filter["video_id"] = $videoId;
         return $this->getEncodings($filter);
+    }
+
+    /**
+     * Get an encoding's data.
+     *
+     * @param string $encodingId Id of the encoding
+     * @return \Xabbuh\PandaBundle\Model\Encoding The encoding
+     */
+    public function getEncoding($encodingId)
+    {
+        $transformer = $this->transformerFactory->get("Encoding");
+        $response = $this->pandaApi->getEncoding($encodingId);
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Create an encoding based on a profile.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Video $video The video being encoded
+     * @param \Xabbuh\PandaBundle\Model\Profile $profile The profile used to encode the video
+     * @return \Xabbuh\PandaBundle\Model\Encoding The new encoding
+     */
+    public function createEncoding(Video $video, Profile $profile)
+    {
+        $transformer = $this->transformerFactory->get("Encoding");
+        $response = $this->pandaApi->createEncoding(
+            $video->getId(),
+            $profile->getId()
+        );
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Create an encoding based on a profile.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Video $video The video being encoded
+     * @param string $profileId Id of the profile used to encode the video
+     * @return \Xabbuh\PandaBundle\Model\Encoding The new encoding
+     */
+    public function createEncodingWithProfileId(Video $video, $profileId)
+    {
+        $transformer = $this->transformerFactory->get("Encoding");
+        $response = $this->pandaApi->createEncoding(
+            $video->getId(),
+            $profileId
+        );
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Create an encoding for the profile with the given name.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Video $video The video being encoded
+     * @param string $profileName Name of the profile used to encode the video
+     * @return \Xabbuh\PandaBundle\Model\Encoding The new encoding
+     */
+    public function createEncodingWithProfileName(Video $video, $profileName)
+    {
+        $transformer = $this->transformerFactory->get("Encoding");
+        $response = $this->pandaApi->createEncodingWithProfileName(
+            $video->getId(),
+            $profileName
+        );
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Cancel an encoding.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Encoding $encoding The encoding being canceled
+     * @return string The server response
+     */
+    public function cancelEncoding(Encoding $encoding)
+    {
+        return $this->pandaApi->cancelEncoding($encoding->getId());
+    }
+
+    /**
+     * Retry a failed encoding.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Encoding $encoding The failed encoding
+     * @return string The server response
+     */
+    public function retryEncoding($encoding)
+    {
+        return $this->pandaApi->retryEncoding($encoding->getId());
+    }
+
+    /**
+     * Delete an encoding.
+     *
+     * @param \Xabbuh\PandaBundle\Model\Encoding $encoding The encoding being deleted
+     * @return string The server response
+     */
+    public function deleteEncoding(Encoding $encoding)
+    {
+        return $this->pandaApi->deleteEncoding($encoding->getId());
     }
 
     /**
