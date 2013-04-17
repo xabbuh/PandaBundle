@@ -43,6 +43,8 @@ class VideoTest extends \PHPUnit_Framework_TestCase
         $video->setMimeType("video/mp4");
         $video->setDuration(14000);
         $video->setFileSize(39458349);
+        $video->setErrorClass("Aborted");
+        $video->setErrorMessage("User aborted transcoding");
         $video->setCreatedAt("2009/10/13 20:58:29 +0000");
         $video->setUpdatedAt("2009/10/13 21:30:34 +0000");
 
@@ -63,6 +65,8 @@ class VideoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("video/mp4", $video->getMimeType());
         $this->assertEquals(14000, $video->getDuration());
         $this->assertEquals(39458349, $video->getFileSize());
+        $this->assertEquals("Aborted", $video->getErrorClass());
+        $this->assertEquals("User aborted transcoding", $video->getErrorMessage());
         $this->assertEquals("2009/10/13 20:58:29 +0000", $video->getCreatedAt());
         $this->assertEquals("2009/10/13 21:30:34 +0000", $video->getUpdatedAt());
     }
