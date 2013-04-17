@@ -57,6 +57,10 @@ class Video implements ModelInterface
     private $mimeType;
     
     private $path;
+
+    private $errorMessage;
+
+    private $errorClass;
     
 
     public function getId() {
@@ -217,5 +221,25 @@ class Video implements ModelInterface
 
     public function setPath($path) {
         $this->path = $path;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+
+    public function setErrorMessage($errorMessage)
+    {
+        $this->errorMessage = $errorMessage;
+    }
+
+    public function getErrorClass()
+    {
+        return $this->errorClass;
+    }
+
+    public function setErrorClass($errorClass)
+    {
+        $this->errorClass = $errorClass;
     }
 }
