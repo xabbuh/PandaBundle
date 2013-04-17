@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Transformers;
 
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Xabbuh\PandaBundle\Model\ModelInterface;
 use Xabbuh\PandaBundle\Model\NotificationEvent;
 use Xabbuh\PandaBundle\Model\Notifications;
 
@@ -64,47 +65,49 @@ class NotificationsTransformer extends BaseTransformer
     /**
      * Transform a Notifications object into a ParameterBag of request parameters.
      * 
-     * @param \Xabbuh\PandaBundle\Model\Notifications $notifications The notifications to transform
+     * @param \Xabbuh\PandaBundle\Model\ModelInterface $notifications The notifications to transform
      * @return \Symfony\Component\HttpFoundation\ParameterBag The request parameters
      */
-    public function toRequestParams(Notifications $notifications)
+    public function toRequestParams(ModelInterface $notifications)
     {
         $params = new ParameterBag();
 
-        if ($notifications->getUrl() != null) {
-            $params->set("url", $notifications->getUrl());
-        }
+        if ($notifications instanceof Notifications) {
+            if ($notifications->getUrl() != null) {
+                $params->set("url", $notifications->getUrl());
+            }
 
-        if ($notifications->hasNotificationEvent("video-created")) {
-            $videoCreatedEvent = $notifications->getNotificationEvent("video_created");
-            $params->set(
-                "events[video_created]",
-                $videoCreatedEvent->isActive() ? "true" : "false"
-            );
-        }
+            if ($notifications->hasNotificationEvent("video-created")) {
+                $videoCreatedEvent = $notifications->getNotificationEvent("video_created");
+                $params->set(
+                    "events[video_created]",
+                    $videoCreatedEvent->isActive() ? "true" : "false"
+                );
+            }
 
-        if ($notifications->hasNotificationEvent("video-encoded")) {
-            $videoEncodedEvent = $notifications->getNotificationEvent("video_encoded");
-            $params->set(
-                "events[video_encoded]",
-                $videoEncodedEvent->isActive() ? "true" : "false"
-            );
-        }
+            if ($notifications->hasNotificationEvent("video-encoded")) {
+                $videoEncodedEvent = $notifications->getNotificationEvent("video_encoded");
+                $params->set(
+                    "events[video_encoded]",
+                    $videoEncodedEvent->isActive() ? "true" : "false"
+                );
+            }
 
-        if ($notifications->hasNotificationEvent("encoding-progress")) {
-            $encodingProgressEvent = $notifications->getNotificationEvent("encoding_progress");
-            $params->set(
-                "events[encoding_progress]",
-                $encodingProgressEvent->isActive() ? "true" : "false"
-            );
-        }
+            if ($notifications->hasNotificationEvent("encoding-progress")) {
+                $encodingProgressEvent = $notifications->getNotificationEvent("encoding_progress");
+                $params->set(
+                    "events[encoding_progress]",
+                    $encodingProgressEvent->isActive() ? "true" : "false"
+                );
+            }
 
-        if ($notifications->hasNotificationEvent("encoding-completed")) {
-            $encodingCompletedEvent = $notifications->getNotificationEvent("encoding_completed");
-            $params->set(
-                "events[encoding_completed]",
-                $encodingCompletedEvent->isActive() ? "true" : "false"
-            );
+            if ($notifications->hasNotificationEvent("encoding-completed")) {
+                $encodingCompletedEvent = $notifications->getNotificationEvent("encoding_completed");
+                $params->set(
+                    "events[encoding_completed]",
+                    $encodingCompletedEvent->isActive() ? "true" : "false"
+                );
+            }
         }
 
         return $params;
