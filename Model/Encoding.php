@@ -318,7 +318,7 @@ class Encoding implements ModelInterface
 
     public function setErrorClass($errorClass)
     {
-        $this->errorClas = $errorClass;
+        $this->errorClass = $errorClass;
     }
 
     public function getCreatedAt()
