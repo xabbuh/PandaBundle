@@ -66,6 +66,10 @@ class Encoding implements ModelInterface
 
     private $files = array();
 
+    private $errorMessage;
+
+    private $errorClass;
+
     private $createdAt;
 
     private $updatedAt;
@@ -295,6 +299,26 @@ class Encoding implements ModelInterface
         foreach ($files as $file) {
             $this->files->add($file);
         }
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+
+    public function setErrorMessage($errorMessage)
+    {
+        $this->errorMessage = $errorMessage;
+    }
+
+    public function getErrorClass()
+    {
+        return $this->errorClass;
+    }
+
+    public function setErrorClass($errorClass)
+    {
+        $this->errorClas = $errorClass;
     }
 
     public function getCreatedAt()
