@@ -3,6 +3,13 @@
     "description": "integration of the Panda encoding services into the Symfony2 Framework",
     "keywords": ["Panda", "video encoding", "REST", "client", "Symfony", "bundle"],
     "homepage": "https://github.com/xabbuh/XabbuhPandaBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Flothmann",
+            "homepage": "https://github.com/xabbuh"
+        }
+    ],
     "autoload": {
         "psr-0": { "Xabbuh\\PandaBundle": "" }
     },
