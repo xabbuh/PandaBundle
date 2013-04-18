@@ -269,15 +269,82 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetVideo()
+    {
+        $videoId = md5(uniqid());
+        $returnValue = '{
+          "id":"' . $videoId . '",
+          "original_filename":"test.mp4",
+          "extname":".mp4",
+          "path":"d891d9a45c698d587831466f236c6c6c",
+          "video_codec":"h264",
+          "audio_codec":"aac",
+          "height":240,
+          "width":300,
+          "fps":29,
+          "duration":14000,
+          "file_size": 39458349,
+          "created_at":"2009/10/13 19:11:26 +0100",
+          "updated_at":"2009/10/13 19:11:26 +0100"
+        }';
+        $this->api->expects($this->once())
+            ->method("getVideo")
+            ->with($this->equalTo($videoId))
+            ->will($this->returnValue($returnValue));
+        $video = $this->cloud->getVideo($videoId);
+        $this->assertTrue(is_object($video));
+        $this->assertEquals(
+            "Xabbuh\\PandaBundle\\Model\\Video",
+            get_class($video)
+        );
+        $this->assertEquals($videoId, $video->getId());
+    }
+
+    public function testGetMetadata()
+    {
+        $videoId = md5(uniqid());
+        $returnValue = '{
+          "image_height":208,
+          "audio_format":"mp4a",
+          "selection_time":"0 s",
+          "track_layer":0,
+          "poster_time":"0 s",
+          "video_frame_rate":30.0,
+          "duration":"19.35 s",
+          "media_create_date":"Tue Jan 28 20:59:44 +0000 1913",
+          "audio_sample_rate":48000,
+          "compressor_id":"avc1",
+          "graphics_mode":"srcCopy",
+          "audio_channels":2,
+          "media_header_version":0,
+          "track_modify_date":"Tue Jan 28 20:59:39 +0000 1913",
+          "preferred_volume":"100.00%",
+          "mime_type":"video/mp4",
+          "file_size":"1435 kB",
+          "create_date":"Tue Jan 28 20:59:39 +0000 1913",
+          "rotation":0
+        }';
+        $this->api->expects($this->once())
+            ->method("getVideoMetadata")
+            ->with($this->equalTo($videoId))
+            ->will($this->returnValue($returnValue));
+        $metadata = $this->cloud->getVideoMetadata($videoId);
+        $this->assertTrue(is_array($metadata));
+        $this->assertEquals(208, $metadata["image_height"]);
+        $this->assertEquals("mp4a", $metadata["audio_format"]);
+        $this->assertEquals("0 s", $metadata["selection_time"]);
+    }
+
     public function testDeleteVideo()
     {
         $videoId = md5(uniqid());
+        $video = new Video();
+        $video->setId($videoId);
         $this->api->expects($this->once())
             ->method("deleteVideo")
             ->with($this->equalTo($videoId))
-            ->will($this->returnValue("status: 200"))
-        ;
-        $this->assertEquals("status: 200", $this->cloud->deleteVideo($videoId));
+            ->will($this->returnValue("status: 200"));
+        $this->assertEquals("status: 200", $this->cloud->deleteVideo($video));
     }
 
     public function testEncodeVideoByUrl()

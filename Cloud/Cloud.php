@@ -106,14 +106,39 @@ class Cloud
     }
 
     /**
+     * Fetch data of a video.
+     *
+     * @param string $videoId The video id
+     * @return \Xabbuh\PandaBundle\Model\Video The video
+     */
+    public function getVideo($videoId)
+    {
+        $transformer = $this->transformerFactory->get("Video");
+        $response = $this->pandaApi->getVideo($videoId);
+        return $transformer->fromJSON($response);
+    }
+
+    /**
+     * Fetch metadata of a video.
+     *
+     * @param string $videoId The video id
+     * @return array Associative array of video metadata
+     */
+    public function getVideoMetadata($videoId)
+    {
+        $response = $this->pandaApi->getVideoMetadata($videoId);
+        return get_object_vars(json_decode($response));
+    }
+
+    /**
      * Delete a video.
      *
-     * @param string $videoId The video being deleted
+     * @param \Xabbuh\PandaBundle\Model\Video $video The video being deleted
      * @return string The server response
      */
-    public function deleteVideo($videoId)
+    public function deleteVideo(Video $video)
     {
-        return $this->pandaApi->deleteVideo($videoId);
+        return $this->pandaApi->deleteVideo($video->getId());
     }
     
     /**
