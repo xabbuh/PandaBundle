@@ -16,5 +16,10 @@
     "require": {
         "xabbuh/panda-client": "*"
     },
-    "target-dir": "Xabbuh/PandaBundle"
+    "target-dir": "Xabbuh/PandaBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
