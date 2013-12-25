@@ -14,7 +14,17 @@
         "psr-0": { "Xabbuh\\PandaBundle": "" }
     },
     "require": {
-        "xabbuh/panda-client": "*"
+        "doctrine/common": "~2.0",
+        "symfony/config": "~2.2",
+        "symfony/console": "~2.2",
+        "symfony/dependency-injection": "~2.2",
+        "symfony/event-dispatcher": "~2.2",
+        "symfony/form": "~2.2",
+        "symfony/http-foundation": "~2.2",
+        "symfony/http-kernel": "~2.2",
+        "symfony/options-resolver": "~2.2",
+        "symfony/routing": "~2.2",
+        "xabbuh/panda-client": "~1.0@dev"
     },
     "target-dir": "Xabbuh/PandaBundle",
     "extra": {
