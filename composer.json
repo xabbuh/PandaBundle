@@ -26,6 +26,9 @@
         "symfony/routing": "~2.2",
         "xabbuh/panda-client": "~1.0@dev"
     },
+    "require-dev": {
+        "symfony/framework-bundle": "~2.2"
+    },
     "target-dir": "Xabbuh/PandaBundle",
     "extra": {
         "branch-alias": {
