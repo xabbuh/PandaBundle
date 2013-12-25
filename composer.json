@@ -27,6 +27,7 @@
         "xabbuh/panda-client": "~1.0@dev"
     },
     "require-dev": {
+        "symfony/finder": "~2.2",
         "symfony/framework-bundle": "~2.2"
     },
     "target-dir": "Xabbuh/PandaBundle",
