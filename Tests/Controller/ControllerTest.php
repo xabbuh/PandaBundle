@@ -45,7 +45,7 @@ class ControllerTest extends WebTestCase
         try {
             self::getKernelClass();
         } catch (\RuntimeException $e) {
-            $this->markTestIncomplete('missing kernel configuration');
+            $this->markTestSkipped('missing kernel configuration');
         }
 
         $this->event = null;
