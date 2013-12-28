@@ -36,7 +36,6 @@ class ControllerTest extends WebTestCase
      */
     public $eventCounter;
 
-
     /**
      * {@inheritDoc}
      */
@@ -59,6 +58,11 @@ class ControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $container = $client->getContainer();
+
+        if (!$container->hasParameter('xabbuh_panda.cloud.default')) {
+            $this->markTestSkipped('default cloud name has to be configured');
+        }
+
         $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
 
         $client->request("GET", "/sign/$defaultCloud");
@@ -83,6 +87,11 @@ class ControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $container = $client->getContainer();
+
+        if (!$container->hasParameter('xabbuh_panda.cloud.default')) {
+            $this->markTestSkipped('default cloud name has to be configured');
+        }
+
         $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
 
         $timestamp = date("c");
@@ -146,6 +155,11 @@ class ControllerTest extends WebTestCase
 
         $client = static::createClient();
         $container = $client->getContainer();
+
+        if (!$container->hasParameter('xabbuh_panda.cloud.default')) {
+            $this->markTestSkipped('default cloud name has to be configured');
+        }
+
         $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
         $client->request(
             "POST",
