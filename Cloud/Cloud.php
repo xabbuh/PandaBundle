@@ -11,12 +11,11 @@
 
 namespace Xabbuh\PandaBundle\Cloud;
 
-use Symfony\Component\DependencyInjection\Container;
-use Xabbuh\PandaBundle\Model\Encoding;
-use Xabbuh\PandaBundle\Model\Notifications;
-use Xabbuh\PandaBundle\Model\Profile;
-use Xabbuh\PandaBundle\Model\Video;
-use Xabbuh\PandaBundle\Services\TransformerFactory;
+use Xabbuh\PandaClient\Model\Encoding;
+use Xabbuh\PandaClient\Model\Notifications;
+use Xabbuh\PandaClient\Model\Profile;
+use Xabbuh\PandaClient\Model\Video;
+use Xabbuh\PandaClient\Transformer\TransformerFactory;
 use Xabbuh\PandaClient\ApiInterface;
 
 /**

@@ -1,28 +1,28 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Tests\Cloud;
 
 use Xabbuh\PandaBundle\Cloud\Cloud;
-use Xabbuh\PandaBundle\Model\Encoding;
-use Xabbuh\PandaBundle\Model\NotificationEvent;
-use Xabbuh\PandaBundle\Model\Notifications;
-use Xabbuh\PandaBundle\Model\Profile;
-use Xabbuh\PandaBundle\Model\Video;
-use Xabbuh\PandaBundle\Services\TransformerFactory;
-use Xabbuh\PandaBundle\Transformers\CloudTransformer;
-use Xabbuh\PandaBundle\Transformers\EncodingTransformer;
-use Xabbuh\PandaBundle\Transformers\NotificationsTransformer;
-use Xabbuh\PandaBundle\Transformers\ProfileTransformer;
-use Xabbuh\PandaBundle\Transformers\VideoTransformer;
+use Xabbuh\PandaClient\Model\Encoding;
+use Xabbuh\PandaClient\Model\NotificationEvent;
+use Xabbuh\PandaClient\Model\Notifications;
+use Xabbuh\PandaClient\Model\Profile;
+use Xabbuh\PandaClient\Model\Video;
+use Xabbuh\PandaClient\Transformer\CloudTransformer;
+use Xabbuh\PandaClient\Transformer\EncodingTransformer;
+use Xabbuh\PandaClient\Transformer\NotificationsTransformer;
+use Xabbuh\PandaClient\Transformer\ProfileTransformer;
+use Xabbuh\PandaClient\Transformer\TransformerFactory;
+use Xabbuh\PandaClient\Transformer\VideoTransformer;
 
 /**
  * Tests for the Cloud class.
@@ -37,13 +37,13 @@ class CloudTest extends \PHPUnit_Framework_TestCase
     protected $api;
 
     /**
-     * @var \Xabbuh\PandaBundle\Services\TransformerFactory
+     * @var TransformerFactory
      */
     protected static $transformerFactory;
 
     /**
      * The Cloud implementation being tested
-     * @var \Xabbuh\PandaBundle\Cloud\Cloud
+     * @var Cloud
      */
     protected $cloud;
 
@@ -122,7 +122,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($collection));
         $this->assertEquals(2, count($collection));
         foreach ($collection as $video) {
-            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+            $this->assertEquals('Xabbuh\PandaClient\Model\Video', get_class($video));
         }
     }
 
@@ -168,7 +168,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result->videos));
         $this->assertEquals(2, count($result->videos));
         foreach ($result->videos as $video) {
-            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+            $this->assertEquals('Xabbuh\PandaClient\Model\Video', get_class($video));
         }
     }
 
@@ -215,7 +215,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result->videos));
         $this->assertEquals(2, count($result->videos));
         foreach ($result->videos as $video) {
-            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+            $this->assertEquals('Xabbuh\PandaClient\Model\Video', get_class($video));
         }
     }
 
@@ -265,7 +265,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result->videos));
         $this->assertEquals(2, count($result->videos));
         foreach ($result->videos as $video) {
-            $this->assertEquals("Xabbuh\\PandaBundle\Model\\Video", get_class($video));
+            $this->assertEquals('Xabbuh\PandaClient\Model\Video', get_class($video));
         }
     }
 
@@ -294,7 +294,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $video = $this->cloud->getVideo($videoId);
         $this->assertTrue(is_object($video));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Video",
+            'Xabbuh\PandaClient\Model\Video',
             get_class($video)
         );
         $this->assertEquals($videoId, $video->getId());
@@ -537,7 +537,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -545,7 +545,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -598,7 +598,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -606,7 +606,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -661,7 +661,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -669,7 +669,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -737,7 +737,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -745,7 +745,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -803,7 +803,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -811,7 +811,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -875,7 +875,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -883,7 +883,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -940,7 +940,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -948,7 +948,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -1013,7 +1013,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -1021,7 +1021,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -1077,7 +1077,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -1085,7 +1085,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -1149,7 +1149,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($encodings));
         $this->assertEquals(2, count($encodings));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[0])
         );
         $this->assertEquals(
@@ -1157,7 +1157,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $encodings[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encodings[1])
         );
         $this->assertEquals(
@@ -1193,7 +1193,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $encoding = $this->cloud->getEncoding($encodingId);
         $this->assertTrue(is_object($encoding));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encoding)
         );
         $this->assertEquals($encodingId, $encoding->getId());
@@ -1236,7 +1236,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $encoding = $this->cloud->createEncoding($video, $profile);
         $this->assertTrue(is_object($encoding));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encoding)
         );
         $this->assertEquals($encodingId, $encoding->getId());
@@ -1279,7 +1279,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $encoding = $this->cloud->createEncodingWithProfileId($video, $profileId);
         $this->assertTrue(is_object($encoding));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encoding)
         );
         $this->assertEquals($encodingId, $encoding->getId());
@@ -1323,7 +1323,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $encoding = $this->cloud->createEncodingWithProfileName($video, $profileName);
         $this->assertTrue(is_object($encoding));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Encoding",
+            'Xabbuh\PandaClient\Model\Encoding',
             get_class($encoding)
         );
         $this->assertEquals($encodingId, $encoding->getId());
@@ -1403,7 +1403,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($profiles));
         $this->assertEquals(2, count($profiles));
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Profile",
+            'Xabbuh\PandaClient\Model\Profile',
             get_class($profiles[0])
         );
         $this->assertEquals(
@@ -1411,7 +1411,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             $profiles[0]->getId()
         );
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Profile",
+            'Xabbuh\PandaClient\Model\Profile',
             get_class($profiles[1])
         );
         $this->assertEquals(
@@ -1443,7 +1443,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
         $profile = $this->cloud->getProfile($id);
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Profile",
+            'Xabbuh\PandaClient\Model\Profile',
             get_class($profile)
         );
         $this->assertEquals("40d9f8711d64aaa74f88462e9274f39a", $profile->getId());
@@ -1495,7 +1495,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
         $profile = $this->cloud->addProfile($profile);
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Profile",
+            'Xabbuh\PandaClient\Model\Profile',
             get_class($profile)
         );
         $this->assertEquals("40d9f8711d64aaa74f88462e9274f39a", $profile->getId());
@@ -1525,7 +1525,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
         $profile = $this->cloud->addProfileFromPreset("h264");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Profile",
+            'Xabbuh\PandaClient\Model\Profile',
             get_class($profile)
         );
         $this->assertEquals("40d9f8711d64aaa74f88462e9274f39a", $profile->getId());
@@ -1664,31 +1664,31 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
         $notifications = $this->cloud->getNotifications();
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Notifications",
+            'Xabbuh\PandaClient\Model\Notifications',
             get_class($notifications)
         );
         $this->assertNull($notifications->getUrl());
         $videoCreatedEvent = $notifications->getNotificationEvent("video-created");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($videoCreatedEvent)
         );
         $this->assertFalse($videoCreatedEvent->isActive());
         $videoEncodedEvent = $notifications->getNotificationEvent("video-encoded");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($videoEncodedEvent)
         );
         $this->assertFalse($videoEncodedEvent->isActive());
         $encodingProgressEvent = $notifications->getNotificationEvent("encoding-progress");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($encodingProgressEvent)
         );
         $this->assertFalse($encodingProgressEvent->isActive());
         $encodingCompletedEvent = $notifications->getNotificationEvent("encoding-completed");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($encodingCompletedEvent)
         );
         $this->assertFalse($encodingCompletedEvent->isActive());
@@ -1737,7 +1737,7 @@ class CloudTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
         $notifications = $this->cloud->setNotifications($notifications);
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\Notifications",
+            'Xabbuh\PandaClient\Model\Notifications',
             get_class($notifications)
         );
         $this->assertEquals(
@@ -1746,25 +1746,25 @@ class CloudTest extends \PHPUnit_Framework_TestCase
         );
         $videoCreatedEvent = $notifications->getNotificationEvent("video-created");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($videoCreatedEvent)
         );
         $this->assertFalse($videoCreatedEvent->isActive());
         $videoEncodedEvent = $notifications->getNotificationEvent("video-encoded");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($videoEncodedEvent)
         );
         $this->assertTrue($videoEncodedEvent->isActive());
         $encodingProgressEvent = $notifications->getNotificationEvent("encoding-progress");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($encodingProgressEvent)
         );
         $this->assertFalse($encodingProgressEvent->isActive());
         $encodingCompletedEvent = $notifications->getNotificationEvent("encoding-completed");
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Model\\NotificationEvent",
+            'Xabbuh\PandaClient\Model\NotificationEvent',
             get_class($encodingCompletedEvent)
         );
         $this->assertFalse($encodingCompletedEvent->isActive());
