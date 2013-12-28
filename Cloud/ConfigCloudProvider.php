@@ -11,8 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Cloud;
 
-use Xabbuh\PandaBundle\Account\AccountManager;
-
 /**
  * Provider for clouds configured in the application's configuration.
  *

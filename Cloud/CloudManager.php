@@ -11,9 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Cloud;
 
-use Xabbuh\PandaBundle\Cloud\Cloud;
-use Xabbuh\PandaBundle\Cloud\CloudProviderInterface;
-
 /**
  * Manager of all clouds which can be used in the application.
  *

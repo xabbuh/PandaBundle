@@ -11,9 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Account;
 
-use Xabbuh\PandaBundle\Account\Account;
-use Xabbuh\PandaBundle\Account\AccountManagerInterface;
-
 /**
  * Provider for accounts configured in the application's configuration.
  *
