@@ -1,15 +1,16 @@
 <?xml version="1.0" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
     <parameters>
-        <parameter key="xabbuh_panda.transformer.factory.class">Xabbuh\PandaBundle\Services\TransformerFactory</parameter>
-        <parameter key="xabbuh_panda.transformer.model.cloud.class">Xabbuh\PandaBundle\Transformers\CloudTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.encoding.class">Xabbuh\PandaBundle\Transformers\EncodingTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.notifications.class">Xabbuh\PandaBundle\Transformers\NotificationsTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.profile.class">Xabbuh\PandaBundle\Transformers\ProfileTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.video.class">Xabbuh\PandaBundle\Transformers\VideoTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.factory.class">Xabbuh\PandaClient\Transformer\TransformerFactory</parameter>
+        <parameter key="xabbuh_panda.transformer.model.cloud.class">Xabbuh\PandaClient\Transformer\CloudTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.model.encoding.class">Xabbuh\PandaClient\Transformer\EncodingTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.model.notifications.class">Xabbuh\PandaClient\Transformer\NotificationsTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.model.profile.class">Xabbuh\PandaClient\Transformer\ProfileTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.model.video.class">Xabbuh\PandaClient\Transformer\VideoTransformer</parameter>
     </parameters>
     <services>
         <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.factory.class%">

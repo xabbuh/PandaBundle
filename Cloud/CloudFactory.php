@@ -1,23 +1,23 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Cloud;
 
-use Xabbuh\PandaBundle\Account\AccountManagerInterface;
-use Xabbuh\PandaBundle\Services\TransformerFactory;
-use Xabbuh\PandaClient\Api;
-use Xabbuh\PandaClient\RestClient;
+use Xabbuh\PandaClient\Api\AccountManagerInterface;
+use Xabbuh\PandaClient\Api\Cloud;
+use Xabbuh\PandaClient\Api\RestClient;
+use Xabbuh\PandaClient\Transformer\TransformerFactory;
 
 /**
- * Factory for creating Cloud instances.
+ * Factory to create Cloud instances.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
@@ -25,19 +25,20 @@ class CloudFactory implements CloudFactoryInterface
 {
     /**
      * The account manager being used to manage all configured Accounts
-     * @var \Xabbuh\PandaBundle\Account\AccountManagerInterface
+     * @var AccountManagerInterface
      */
     private $accountManager;
 
     /**
      * Factory for creating model transformers
-     * @var \Xabbuh\PandaBundle\Services\TransformerFactory
+     * @var TransformerFactory
      */
     private $transformerFactory;
 
-
-    public function __construct(AccountManagerInterface $accountManager, TransformerFactory $transformerFactory)
-    {
+    public function __construct(
+        AccountManagerInterface $accountManager,
+        TransformerFactory $transformerFactory
+    ) {
         $this->accountManager = $accountManager;
         $this->transformerFactory = $transformerFactory;
     }
@@ -52,13 +53,9 @@ class CloudFactory implements CloudFactoryInterface
         } else {
             $account = $this->accountManager->getAccount($accountKey);
         }
-        $restClient = new RestClient(
-            $cloudId,
-            $account->getAccessKey(),
-            $account->getSecretKey(),
-            $account->getApiHost()
-        );
-        $api = new Api($restClient);
-        return new Cloud($api, $this->transformerFactory);
+
+        $restClient = new RestClient($cloudId, $account);
+
+        return new Cloud($restClient, $this->transformerFactory);
     }
 }
