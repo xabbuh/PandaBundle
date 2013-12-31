@@ -56,7 +56,7 @@ class Controller extends ContainerAware
             $path = "/videos.json";
         }
         $cloudManager = $this->getCloudManager();
-        $restClient = $cloudManager->getCloud($cloud)->getPandaApi()->getRestClient();
+        $restClient = $cloudManager->getCloud($cloud)->getRestClient();
         $content = $restClient->signParams($method, $path, $params);
         return new JsonResponse($content);
     }
