@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true" bootstrap="vendor/autoload.php">
+    <php>
+        <server name="KERNEL_DIR" value="Tests/App" />
+    </php>
     <testsuites>
         <testsuite name="Panda Encoding Services integration into the Symfony2 framework">
             <directory>./Tests</directory>
