@@ -14,7 +14,7 @@ namespace Xabbuh\PandaBundle\Cloud;
 use Xabbuh\PandaClient\Api\AccountManagerInterface;
 use Xabbuh\PandaClient\Api\Cloud;
 use Xabbuh\PandaClient\Api\RestClient;
-use Xabbuh\PandaClient\Transformer\TransformerFactory;
+use Xabbuh\PandaClient\Transformer\TransformerRegistryInterface;
 
 /**
  * Factory to create Cloud instances.
@@ -31,16 +31,16 @@ class CloudFactory implements CloudFactoryInterface
 
     /**
      * Factory for creating model transformers
-     * @var TransformerFactory
+     * @var TransformerRegistryInterface
      */
-    private $transformerFactory;
+    private $transformerRegistry;
 
     public function __construct(
         AccountManagerInterface $accountManager,
-        TransformerFactory $transformerFactory
+        TransformerRegistryInterface $transformerFactory
     ) {
         $this->accountManager = $accountManager;
-        $this->transformerFactory = $transformerFactory;
+        $this->transformerRegistry = $transformerFactory;
     }
 
     /**
@@ -56,6 +56,6 @@ class CloudFactory implements CloudFactoryInterface
 
         $restClient = new RestClient($cloudId, $account);
 
-        return new Cloud($restClient, $this->transformerFactory);
+        return new Cloud($restClient, $this->transformerRegistry);
     }
 }

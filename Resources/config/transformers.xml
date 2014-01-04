@@ -5,35 +5,35 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <parameters>
-        <parameter key="xabbuh_panda.transformer.factory.class">Xabbuh\PandaClient\Transformer\TransformerFactory</parameter>
-        <parameter key="xabbuh_panda.transformer.model.cloud.class">Xabbuh\PandaClient\Transformer\CloudTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.encoding.class">Xabbuh\PandaClient\Transformer\EncodingTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.notifications.class">Xabbuh\PandaClient\Transformer\NotificationsTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.profile.class">Xabbuh\PandaClient\Transformer\ProfileTransformer</parameter>
-        <parameter key="xabbuh_panda.transformer.model.video.class">Xabbuh\PandaClient\Transformer\VideoTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.registry.class">Xabbuh\PandaClient\Transformer\TransformerRegistry</parameter>
+        <parameter key="xabbuh_panda.transformer.cloud.class">Xabbuh\PandaClient\Transformer\CloudTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.encoding.class">Xabbuh\PandaClient\Transformer\EncodingTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.notifications.class">Xabbuh\PandaClient\Transformer\NotificationsTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.profile.class">Xabbuh\PandaClient\Transformer\ProfileTransformer</parameter>
+        <parameter key="xabbuh_panda.transformer.video.class">Xabbuh\PandaClient\Transformer\VideoTransformer</parameter>
     </parameters>
     <services>
-        <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.factory.class%">
-            <call method="registerTransformer">
-                <argument type="string">Cloud</argument>
-                <argument type="string">%xabbuh_panda.transformer.model.cloud.class%</argument>
+        <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.registry.class%">
+            <call method="setCloudTransformer">
+                <argument type="service" id="xabbuh_panda.transformer.cloud" />
             </call>
-            <call method="registerTransformer">
-                <argument type="string">Encoding</argument>
-                <argument type="string">%xabbuh_panda.transformer.model.encoding.class%</argument>
+            <call method="setEncodingTransformer">
+                <argument type="service" id="xabbuh_panda.transformer.encoding" />
             </call>
-            <call method="registerTransformer">
-                <argument type="string">Notifications</argument>
-                <argument type="string">%xabbuh_panda.transformer.model.notifications.class%</argument>
+            <call method="setNotificationsTransformer">
+                <argument type="service" id="xabbuh_panda.transformer.notifications" />
             </call>
-            <call method="registerTransformer">
-                <argument type="string">Profile</argument>
-                <argument type="string">%xabbuh_panda.transformer.model.profile.class%</argument>
+            <call method="setProfileTransformer">
+                <argument type="service" id="xabbuh_panda.transformer.profile" />
             </call>
-            <call method="registerTransformer">
-                <argument type="string">Video</argument>
-                <argument type="string">%xabbuh_panda.transformer.model.video.class%</argument>
+            <call method="setVideoTransformer">
+                <argument type="service" id="xabbuh_panda.transformer.video" />
             </call>
         </service>
+        <service id="xabbuh_panda.transformer.cloud" class="%xabbuh_panda.transformer.cloud.class%" public="false" />
+        <service id="xabbuh_panda.transformer.encoding" class="%xabbuh_panda.transformer.encoding.class%" public="false" />
+        <service id="xabbuh_panda.transformer.notifications" class="%xabbuh_panda.transformer.notifications.class%" public="false" />
+        <service id="xabbuh_panda.transformer.profile" class="%xabbuh_panda.transformer.profile.class%" public="false" />
+        <service id="xabbuh_panda.transformer.video" class="%xabbuh_panda.transformer.video.class%" public="false" />
     </services>
 </container>

@@ -70,28 +70,28 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
             $this->container->getParameter('xabbuh_panda.controller.class')
         );
         $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\TransformerFactory',
-            $this->container->getParameter('xabbuh_panda.transformer.factory.class')
+            'Xabbuh\PandaClient\Transformer\TransformerRegistry',
+            $this->container->getParameter('xabbuh_panda.transformer.registry.class')
         );
         $this->assertEquals(
             'Xabbuh\PandaClient\Transformer\CloudTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.model.cloud.class')
+            $this->container->getParameter('xabbuh_panda.transformer.cloud.class')
         );
         $this->assertEquals(
             'Xabbuh\PandaClient\Transformer\EncodingTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.model.encoding.class')
+            $this->container->getParameter('xabbuh_panda.transformer.encoding.class')
         );
         $this->assertEquals(
             'Xabbuh\PandaClient\Transformer\NotificationsTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.model.notifications.class')
+            $this->container->getParameter('xabbuh_panda.transformer.notifications.class')
         );
         $this->assertEquals(
             'Xabbuh\PandaClient\Transformer\ProfileTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.model.profile.class')
+            $this->container->getParameter('xabbuh_panda.transformer.profile.class')
         );
         $this->assertEquals(
             'Xabbuh\PandaClient\Transformer\VideoTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.model.video.class')
+            $this->container->getParameter('xabbuh_panda.transformer.video.class')
         );
         $this->assertEquals(
             'Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension',
