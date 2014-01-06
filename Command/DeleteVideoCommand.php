@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xabbuh\PandaBundle\Model\Video;
+use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
  * Delete a video on the command-line.

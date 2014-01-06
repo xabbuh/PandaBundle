@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xabbuh\PandaClient\Model\Encoding;
+use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
  * Command to restart an encoding.
