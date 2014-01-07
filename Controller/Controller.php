@@ -11,21 +11,45 @@
 
 namespace Xabbuh\PandaBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xabbuh\PandaBundle\Event\EncodingCompleteEvent;
 use Xabbuh\PandaBundle\Event\EncodingProgressEvent;
 use Xabbuh\PandaBundle\Event\VideoCreatedEvent;
 use Xabbuh\PandaBundle\Event\VideoEncodedEvent;
+use Xabbuh\PandaClient\Api\CloudManagerInterface;
 
 /**
  * XabbuhPandaBundle controllers.
  * 
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Controller extends ContainerAware
+class Controller
 {
+    /**
+     * @var CloudManagerInterface
+     */
+    private $cloudManager;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
+     * @param CloudManagerInterface    $cloudManager
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(
+        CloudManagerInterface $cloudManager,
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->cloudManager = $cloudManager;
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * Sign a set of given url parameters and return them as a JSON object.
      * 
@@ -36,28 +60,34 @@ class Controller extends ContainerAware
      * All remaining url parameters are treated as parameters for the api
      * request.
      *
-     * @param string $cloud Cloud to use for performing API requests
-     * @return \Symfony\Component\HttpFoundation\JsonResponse The response
+     * @param string  $cloud   Cloud to use for performing API requests
+     * @param Request $request The current request
+     *
+     * @return JsonResponse The response
      */
-    public function signAction($cloud)
+    public function signAction($cloud, Request $request)
     {
-        $request = $this->getRequest();
         $params = $request->query->all();
-        if(isset($params["method"])) {
-            $method = $params["method"];
-            unset($params["method"]);
+
+        if(isset($params['method'])) {
+            $method = $params['method'];
+            unset($params['method']);
         } else {
-            $method = "GET";
+            $method = 'GET';
         }
-        if(isset($params["path"])) {
-            $path = $params["path"];
-            unset($params["path"]);
+
+        if(isset($params['path'])) {
+            $path = $params['path'];
+            unset($params['path']);
         } else {
-            $path = "/videos.json";
+            $path = '/videos.json';
         }
-        $cloudManager = $this->getCloudManager();
-        $restClient = $cloudManager->getCloud($cloud)->getRestClient();
+
+        $restClient = $this->cloudManager
+            ->getCloud($cloud)
+            ->getRestClient();
         $content = $restClient->signParams($method, $path, $params);
+
         return new JsonResponse($content);
     }
 
@@ -68,85 +98,68 @@ class Controller extends ContainerAware
      * The response contains a JSON encoded object. It includes a property
      * upload_url to which the caller should send its video file.
      *
-     * @param $cloud Cloud to use for performing API requests
-     * @return \Symfony\Component\HttpFoundation\JsonResponse The response
+     * @param string  $cloud   Cloud to use for performing API requests
+     * @param Request $request The current request
+     *
+     * @return JsonResponse The response
      */
-    public function authoriseUploadAction($cloud)
+    public function authoriseUploadAction($cloud, Request $request)
     {
-        $request = $this->getRequest();
-        $payload = json_decode($request->request->get("payload"));
-        $cloudManager = $this->getCloudManager();
-        $upload = $cloudManager->getCloud($cloud)->registerUpload(
-            $payload->filename,
-            $payload->filesize,
-            null,
-            true
-        );
-        return new JsonResponse(array("upload_url" => $upload->location));
+        $payload = json_decode($request->request->get('payload'));
+        $upload = $this->cloudManager
+            ->getCloud($cloud)
+            ->registerUpload(
+                $payload->filename,
+                $payload->filesize,
+                null,
+                true
+            );
+
+        return new JsonResponse(array('upload_url' => $upload->location));
     }
     
     /**
      * Endpoint for notification requests.
+     *
+     * @param Request $request The current request
      * 
-     * @return \Symfony\Component\HttpFoundation\Response An empty response with status code 200
+     * @return Response An empty response with status code 200
      */
-    public function notifyAction()
+    public function notifyAction(Request $request)
     {
-        $request = $this->getRequest();
         $params = $request->request;
         
         // dispatch notification events depending on the given event
-        $eventDispatcher = $this->container->get("event_dispatcher");
-        $videoId = $params->get("video_id");
-        $eventName = $params->get("event");
+        $videoId = $params->get('video_id');
+        $eventName = $params->get('event');
         switch($eventName) {
-            case "video-created":
-                $encodingIds = $params->get("encoding_ids");
+            case 'video-created':
+                $encodingIds = $params->get('encoding_ids');
                 $event = new VideoCreatedEvent($videoId, $encodingIds);
-                $eventDispatcher->dispatch("xabbuh_panda.video_created", $event);
+                $this->eventDispatcher->dispatch('xabbuh_panda.video_created', $event);
                 break;
-            case "video-encoded":
-                $encodingIds = $params->get("encoding_ids");
+            case 'video-encoded':
+                $encodingIds = $params->get('encoding_ids');
                 $event = new VideoEncodedEvent($videoId, $encodingIds);
-                $eventDispatcher->dispatch("xabbuh_panda.video_encoded", $event);
+                $this->eventDispatcher->dispatch('xabbuh_panda.video_encoded', $event);
                 break;
-            case "encoding-progress":
-                $encodingId = $params->get("encoding_id");
-                $progress = $params->get("progress");
+            case 'encoding-progress':
+                $encodingId = $params->get('encoding_id');
+                $progress = $params->get('progress');
                 $event = new EncodingProgressEvent($videoId, $encodingId, $progress);
-                $eventDispatcher->dispatch("xabbuh_panda.encoding_progress", $event);
+                $this->eventDispatcher->dispatch('xabbuh_panda.encoding_progress', $event);
                 break;
-            case "encoding-complete":
-                $encodingId = $params->get("encoding_id");
+            case 'encoding-complete':
+                $encodingId = $params->get('encoding_id');
                 $event = new EncodingCompleteEvent($videoId, $encodingId);
-                $eventDispatcher->dispatch("xabbuh_panda.encoding_complete", $event);
+                $this->eventDispatcher->dispatch('xabbuh_panda.encoding_complete', $event);
                 break;
             default:
-                return new Response("Invalid or missing event name.", 400);
+                return new Response('Invalid or missing event name.', 400);
                 break;
         }
         
         // return an empty 200 OK response
-        return new Response("");
-    }
-
-    /**
-     * Get the current request
-     *
-     * @return \Symfony\Component\HttpFoundation\Request The request
-     */
-    private function getRequest()
-    {
-        return $this->container->get("request");
-    }
-
-    /**
-     * Get the configured cloud manager.
-     *
-     * @return \Xabbuh\PandaBundle\Cloud\CloudManagerInterface The cloud manager
-     */
-    private function getCloudManager()
-    {
-        return $this->container->get("xabbuh_panda.cloud_manager");
+        return new Response('');
     }
 }
