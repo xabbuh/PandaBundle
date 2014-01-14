@@ -11,5 +11,5 @@ env:
   - SYMFONY_VERSION="2.4.x"
 
 before_script:
-  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
+  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --dev --no-update
   - composer install
