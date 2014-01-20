@@ -5,6 +5,11 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <parameters>
+        <parameter key="xabbuh_panda.serializer.factory.class">Xabbuh\PandaClient\Serializer\Symfony\Serializer</parameter>
+        <parameter key="xabbuh_panda.serializer.cloud.class">Xabbuh\PandaClient\Serializer\Symfony\Serializer</parameter>
+        <parameter key="xabbuh_panda.serializer.encoding.class">Xabbuh\PandaClient\Serializer\Symfony\Serializer</parameter>
+        <parameter key="xabbuh_panda.serializer.profile.class">Xabbuh\PandaClient\Serializer\Symfony\Serializer</parameter>
+        <parameter key="xabbuh_panda.serializer.video.class">Xabbuh\PandaClient\Serializer\Symfony\Serializer</parameter>
         <parameter key="xabbuh_panda.transformer.registry.class">Xabbuh\PandaClient\Transformer\TransformerRegistry</parameter>
         <parameter key="xabbuh_panda.transformer.cloud.class">Xabbuh\PandaClient\Transformer\CloudTransformer</parameter>
         <parameter key="xabbuh_panda.transformer.encoding.class">Xabbuh\PandaClient\Transformer\EncodingTransformer</parameter>
@@ -12,6 +17,7 @@
         <parameter key="xabbuh_panda.transformer.profile.class">Xabbuh\PandaClient\Transformer\ProfileTransformer</parameter>
         <parameter key="xabbuh_panda.transformer.video.class">Xabbuh\PandaClient\Transformer\VideoTransformer</parameter>
     </parameters>
+
     <services>
         <service id="xabbuh_panda.transformer" class="%xabbuh_panda.transformer.registry.class%">
             <call method="setCloudTransformer">
@@ -30,10 +36,48 @@
                 <argument type="service" id="xabbuh_panda.transformer.video" />
             </call>
         </service>
-        <service id="xabbuh_panda.transformer.cloud" class="%xabbuh_panda.transformer.cloud.class%" public="false" />
-        <service id="xabbuh_panda.transformer.encoding" class="%xabbuh_panda.transformer.encoding.class%" public="false" />
+
+        <service id="xabbuh_panda.transformer.cloud" class="%xabbuh_panda.transformer.cloud.class%" public="false">
+            <call method="setSerializer">
+                <argument type="service" id="xabbuh_panda.serializer.cloud" />
+            </call>
+        </service>
+        <service id="xabbuh_panda.transformer.encoding" class="%xabbuh_panda.transformer.encoding.class%" public="false">
+            <call method="setSerializer">
+                <argument type="service" id="xabbuh_panda.serializer.encoding" />
+            </call>
+        </service>
         <service id="xabbuh_panda.transformer.notifications" class="%xabbuh_panda.transformer.notifications.class%" public="false" />
-        <service id="xabbuh_panda.transformer.profile" class="%xabbuh_panda.transformer.profile.class%" public="false" />
-        <service id="xabbuh_panda.transformer.video" class="%xabbuh_panda.transformer.video.class%" public="false" />
+        <service id="xabbuh_panda.transformer.profile" class="%xabbuh_panda.transformer.profile.class%" public="false">
+            <call method="setSerializer">
+                <argument type="service" id="xabbuh_panda.serializer.profile" />
+            </call>
+        </service>
+        <service id="xabbuh_panda.transformer.video" class="%xabbuh_panda.transformer.video.class%" public="false">
+            <call method="setSerializer">
+                <argument type="service" id="xabbuh_panda.serializer.video" />
+            </call>
+        </service>
+
+        <service id="xabbuh_panda.serializer.cloud"
+            class="%xabbuh_panda.serializer.cloud.class%"
+            factory-class="%xabbuh_panda.serializer.factory.class%"
+            factory-method="getCloudSerializer"
+            public="false" />
+        <service id="xabbuh_panda.serializer.encoding"
+            class="%xabbuh_panda.serializer.encoding.class%"
+            factory-class="%xabbuh_panda.serializer.factory.class%"
+            factory-method="getCloudSerializer"
+            public="false" />
+        <service id="xabbuh_panda.serializer.profile"
+            class="%xabbuh_panda.serializer.profile.class%"
+            factory-class="%xabbuh_panda.serializer.factory.class%"
+            factory-method="getCloudSerializer"
+            public="false" />
+        <service id="xabbuh_panda.serializer.video"
+            class="%xabbuh_panda.serializer.video.class%"
+            factory-class="%xabbuh_panda.serializer.factory.class%"
+            factory-method="getCloudSerializer"
+            public="false" />
     </services>
 </container>

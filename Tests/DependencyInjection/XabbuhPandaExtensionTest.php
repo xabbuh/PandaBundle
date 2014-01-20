@@ -30,13 +30,13 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
      * @var XabbuhPandaExtension
      */
     private $extension;
-    
+
     protected function setUp()
     {
         $this->container = new ContainerBuilder();
         $this->extension = new XabbuhPandaExtension();
     }
-    
+
     /**
      * Tests the extension without custom config options.
      */
@@ -158,5 +158,40 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
         $foobarCloud = $this->container->getDefinition('xabbuh_panda.without_account_cloud');
         $this->assertNull($foobarCloud->getArgument(1));
         $this->assertEquals('xabbuh_panda.cloud_factory', $fooCloud->getFactoryService());
+    }
+
+    public function testTransformerServices()
+    {
+        $this->extension->load(array(), $this->container);
+
+        $cloudTransformerId = 'xabbuh_panda.transformer.cloud';
+        $cloudTransformer = $this->container->findDefinition($cloudTransformerId);
+        $encodingTransformerId = 'xabbuh_panda.transformer.encoding';
+        $encodingTransformer = $this->container->findDefinition($encodingTransformerId);
+        $notificationsTransformerId = 'xabbuh_panda.transformer.notifications';
+        $profileTransformerId = 'xabbuh_panda.transformer.profile';
+        $profileTransformer = $this->container->findDefinition($profileTransformerId);
+        $videoTransformerId = 'xabbuh_panda.transformer.video';
+        $videoTransformer = $this->container->findDefinition($videoTransformerId);
+
+        // ensure that serializers are passed to the transformers
+        $this->assertEquals('xabbuh_panda.serializer.cloud', $cloudTransformer->getMethodCalls()[0][1][0]);
+        $this->assertEquals('xabbuh_panda.serializer.encoding', $encodingTransformer->getMethodCalls()[0][1][0]);
+        $this->assertEquals('xabbuh_panda.serializer.profile', $profileTransformer->getMethodCalls()[0][1][0]);
+        $this->assertEquals('xabbuh_panda.serializer.video', $videoTransformer->getMethodCalls()[0][1][0]);
+
+        $transformerRegistry = $this->container->findDefinition('xabbuh_panda.transformer');
+
+        // ensure that encoders are passed to the transformer registry
+        $this->assertEquals('setCloudTransformer', $transformerRegistry->getMethodCalls()[0][0]);
+        $this->assertEquals($cloudTransformerId, $transformerRegistry->getMethodCalls()[0][1][0]);
+        $this->assertEquals('setEncodingTransformer', $transformerRegistry->getMethodCalls()[1][0]);
+        $this->assertEquals($encodingTransformerId, $transformerRegistry->getMethodCalls()[1][1][0]);
+        $this->assertEquals('setNotificationsTransformer', $transformerRegistry->getMethodCalls()[2][0]);
+        $this->assertEquals($notificationsTransformerId, $transformerRegistry->getMethodCalls()[2][1][0]);
+        $this->assertEquals('setProfileTransformer', $transformerRegistry->getMethodCalls()[3][0]);
+        $this->assertEquals($profileTransformerId, $transformerRegistry->getMethodCalls()[3][1][0]);
+        $this->assertEquals('setVideoTransformer', $transformerRegistry->getMethodCalls()[4][0]);
+        $this->assertEquals($videoTransformerId, $transformerRegistry->getMethodCalls()[4][1][0]);
     }
 }
