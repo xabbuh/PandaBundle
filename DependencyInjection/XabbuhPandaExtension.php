@@ -112,4 +112,20 @@ class XabbuhPandaExtension extends Extension
             );
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNamespace()
+    {
+        return 'http://xabbuh.de/schema/dic/xabbuh/panda';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/schema';
+    }
 }

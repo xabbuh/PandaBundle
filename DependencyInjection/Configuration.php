@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\DependencyInjection;
 
@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * XabbuhPandaExtension configuration structure.
- * 
+ *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
 class Configuration implements ConfigurationInterface
@@ -27,45 +27,49 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root("xabbuh_panda");
-        
+        $rootNode = $treeBuilder->root('xabbuh_panda');
+
         $rootNode
+            ->fixXmlConfig('account')
+            ->fixXmlConfig('cloud')
             ->children()
-                ->scalarNode("default_account")->defaultValue("default")->end()
-                ->arrayNode("accounts")
-                    ->prototype("array")
+                ->scalarNode('default_account')->defaultValue('default')->end()
+                ->arrayNode('accounts')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
                         ->children()
-                            ->scalarNode("access_key")->isRequired()->end()
-                            ->scalarNode("secret_key")->isRequired()->end()
-                            ->scalarNode("api_host")->defaultValue("api.pandastream.com")->end()
+                            ->scalarNode('access_key')->isRequired()->end()
+                            ->scalarNode('secret_key')->isRequired()->end()
+                            ->scalarNode('api_host')->defaultValue('api.pandastream.com')->end()
                         ->end()
                     ->end()
                 ->end()
-                ->scalarNode("default_cloud")->defaultValue("default")->end()
-                ->arrayNode("clouds")
-                    ->prototype("array")
+                ->scalarNode('default_cloud')->defaultValue('default')->end()
+                ->arrayNode('clouds')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
                         ->children()
-                            ->scalarNode("id")->isRequired()->end()
-                            ->scalarNode("account")->end()
+                            ->scalarNode('id')->isRequired()->end()
+                            ->scalarNode('account')->end()
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode("video_uploader")
+                ->arrayNode('video_uploader')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode("multiple_files")
+                        ->booleanNode('multiple_files')
                             ->defaultValue(false)
                         ->end()
-                        ->booleanNode("cancel_button")
+                        ->booleanNode('cancel_button')
                             ->defaultValue(true)
                         ->end()
-                        ->booleanNode("progress_bar")
+                        ->booleanNode('progress_bar')
                             ->defaultValue(true)
                         ->end()
                     ->end()
                 ->end()
             ->end();
-        
+
         return $treeBuilder;
     }
 }

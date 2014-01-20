@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://xabbuh.de/schema/dic/xabbuh/panda"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://xabbuh.de/schema/dic/xabbuh/panda"
+    elementFormDefault="qualified"
+>
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="account" type="account" />
+            <xsd:element name="cloud" type="cloud" />
+            <xsd:element name="video-uploader"
+                type="video-uploader"
+                minOccurs="0"
+                maxOccurs="1" />
+        </xsd:choice>
+        <xsd:attribute name="default-account" type="xsd:string" />
+        <xsd:attribute name="default-cloud" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="account">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="access-key" type="xsd:string" use="required" />
+        <xsd:attribute name="secret-key" type="xsd:string" use="required" />
+        <xsd:attribute name="api-host" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="cloud">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="account" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="video-uploader">
+        <xsd:attribute name="multiple-files" type="xsd:boolean" />
+        <xsd:attribute name="cancel-button" type="xsd:boolean" />
+        <xsd:attribute name="progress-bar" type="xsd:boolean" />
+    </xsd:complexType>
+</xsd:schema>
