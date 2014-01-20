@@ -175,23 +175,75 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
         $videoTransformer = $this->container->findDefinition($videoTransformerId);
 
         // ensure that serializers are passed to the transformers
-        $this->assertEquals('xabbuh_panda.serializer.cloud', $cloudTransformer->getMethodCalls()[0][1][0]);
-        $this->assertEquals('xabbuh_panda.serializer.encoding', $encodingTransformer->getMethodCalls()[0][1][0]);
-        $this->assertEquals('xabbuh_panda.serializer.profile', $profileTransformer->getMethodCalls()[0][1][0]);
-        $this->assertEquals('xabbuh_panda.serializer.video', $videoTransformer->getMethodCalls()[0][1][0]);
+        $this->assertEquals(
+            'xabbuh_panda.serializer.cloud',
+            $this->getMethodArgument($cloudTransformer->getMethodCalls(), 0, 0)
+        );
+        $this->assertEquals(
+            'xabbuh_panda.serializer.encoding',
+            $this->getMethodArgument($encodingTransformer->getMethodCalls(), 0, 0)
+        );
+        $this->assertEquals(
+            'xabbuh_panda.serializer.profile',
+            $this->getMethodArgument($profileTransformer->getMethodCalls(), 0, 0)
+        );
+        $this->assertEquals(
+            'xabbuh_panda.serializer.video',
+            $this->getMethodArgument($videoTransformer->getMethodCalls(), 0, 0)
+        );
 
         $transformerRegistry = $this->container->findDefinition('xabbuh_panda.transformer');
 
         // ensure that encoders are passed to the transformer registry
-        $this->assertEquals('setCloudTransformer', $transformerRegistry->getMethodCalls()[0][0]);
-        $this->assertEquals($cloudTransformerId, $transformerRegistry->getMethodCalls()[0][1][0]);
-        $this->assertEquals('setEncodingTransformer', $transformerRegistry->getMethodCalls()[1][0]);
-        $this->assertEquals($encodingTransformerId, $transformerRegistry->getMethodCalls()[1][1][0]);
-        $this->assertEquals('setNotificationsTransformer', $transformerRegistry->getMethodCalls()[2][0]);
-        $this->assertEquals($notificationsTransformerId, $transformerRegistry->getMethodCalls()[2][1][0]);
-        $this->assertEquals('setProfileTransformer', $transformerRegistry->getMethodCalls()[3][0]);
-        $this->assertEquals($profileTransformerId, $transformerRegistry->getMethodCalls()[3][1][0]);
-        $this->assertEquals('setVideoTransformer', $transformerRegistry->getMethodCalls()[4][0]);
-        $this->assertEquals($videoTransformerId, $transformerRegistry->getMethodCalls()[4][1][0]);
+        $this->assertEquals(
+            'setCloudTransformer',
+            $this->getMethodName($transformerRegistry->getMethodCalls(), 0)
+        );
+        $this->assertEquals(
+            $cloudTransformerId,
+            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 0, 0)
+        );
+        $this->assertEquals(
+            'setEncodingTransformer',
+            $this->getMethodName($transformerRegistry->getMethodCalls(), 1)
+        );
+        $this->assertEquals(
+            $encodingTransformerId,
+            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 1, 0)
+        );
+        $this->assertEquals(
+            'setNotificationsTransformer',
+            $this->getMethodName($transformerRegistry->getMethodCalls(), 2)
+        );
+        $this->assertEquals(
+            $notificationsTransformerId,
+            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 2, 0)
+        );
+        $this->assertEquals(
+            'setProfileTransformer',
+            $this->getMethodName($transformerRegistry->getMethodCalls(), 3)
+        );
+        $this->assertEquals(
+            $profileTransformerId,
+            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 3, 0)
+        );
+        $this->assertEquals(
+            'setVideoTransformer',
+            $this->getMethodName($transformerRegistry->getMethodCalls(), 4)
+        );
+        $this->assertEquals(
+            $videoTransformerId,
+            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 4, 0)
+        );
+    }
+
+    private function getMethodName($methodCalls, $number)
+    {
+        return $methodCalls[$number][0];
+    }
+
+    private function getMethodArgument($methodCalls, $number, $argument)
+    {
+        return $methodCalls[$number][1][$argument];
     }
 }
