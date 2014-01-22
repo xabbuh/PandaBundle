@@ -20,7 +20,7 @@ use Xabbuh\PandaClient\Api\CloudManagerInterface;
 
 /**
  * XabbuhPandaBundle controllers.
- * 
+ *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
 class Controller
@@ -49,7 +49,7 @@ class Controller
 
     /**
      * Sign a set of given url parameters and return them as a JSON object.
-     * 
+     *
      * Specials keys are <em>method</em> and <em>path</em>. <em>method</em> is
      * the http method and <em>path</em> the url part of the api request for
      * which the signature is generated. The default <em>method</em> if not
@@ -80,10 +80,10 @@ class Controller
             $path = '/videos.json';
         }
 
-        $restClient = $this->cloudManager
+        $httpClient = $this->cloudManager
             ->getCloud($cloud)
-            ->getRestClient();
-        $content = $restClient->signParams($method, $path, $params);
+            ->getHttpClient();
+        $content = $httpClient->signParams($method, $path, $params);
 
         return new JsonResponse($content);
     }
@@ -114,12 +114,12 @@ class Controller
 
         return new JsonResponse(array('upload_url' => $upload->location));
     }
-    
+
     /**
      * Endpoint for notification requests.
      *
      * @param Request $request The current request
-     * 
+     *
      * @return Response An empty response with status code 200
      */
     public function notifyAction(Request $request)

@@ -13,7 +13,7 @@ namespace Xabbuh\PandaBundle\Cloud;
 
 use Xabbuh\PandaClient\Api\AccountManagerInterface;
 use Xabbuh\PandaClient\Api\Cloud;
-use Xabbuh\PandaClient\Api\RestClient;
+use Xabbuh\PandaClient\Api\HttpClient;
 use Xabbuh\PandaClient\Transformer\TransformerRegistryInterface;
 
 /**
@@ -54,8 +54,8 @@ class CloudFactory implements CloudFactoryInterface
             $account = $this->accountManager->getAccount($accountKey);
         }
 
-        $restClient = new RestClient($cloudId, $account);
+        $httpClient = new HttpClient($cloudId, $account);
 
-        return new Cloud($restClient, $this->transformerRegistry);
+        return new Cloud($httpClient, $this->transformerRegistry);
     }
 }
