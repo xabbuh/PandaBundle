@@ -48,14 +48,18 @@ class CloudFactory implements CloudFactoryInterface
      */
     public function get($cloudId, $accountKey = null)
     {
-        if ($accountKey == null) {
-            $account = $this->accountManager->getDefaultAccount();
-        } else {
-            $account = $this->accountManager->getAccount($accountKey);
-        }
+        $account = $this->accountManager->getAccount($accountKey);
 
-        $httpClient = new HttpClient($cloudId, $account);
+        $httpClient = new HttpClient();
+        $httpClient->setCloudId($cloudId);
+        $httpClient->setAccessKey($account->getAccessKey());
+        $httpClient->setSecretKey($account->getSecretKey());
+        $httpClient->setApiHost($account->getApiHost());
 
-        return new Cloud($httpClient, $this->transformerRegistry);
+        $cloud = new Cloud();
+        $cloud->setHttpClient($httpClient);
+        $cloud->setTransformers($this->transformerRegistry);
+
+        return $cloud;
     }
 }

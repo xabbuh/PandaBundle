@@ -9,7 +9,9 @@
     </parameters>
     <services>
         <service id="xabbuh_panda.account_manager" class="%xabbuh_panda.account.manager.class%">
-            <argument>%xabbuh_panda.account.default%</argument>
+            <call method="setDefaultAccount">
+                <argument>%xabbuh_panda.account.default%</argument>
+            </call>
         </service>
     </services>
 </container>

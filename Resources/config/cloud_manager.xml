@@ -9,7 +9,9 @@
     </parameters>
     <services>
         <service id="xabbuh_panda.cloud_manager" class="%xabbuh_panda.cloud.manager.class%">
-            <argument>%xabbuh_panda.cloud.default%</argument>
+            <call method="setDefaultCloud">
+                <argument>%xabbuh_panda.cloud.default%</argument>
+            </call>
         </service>
     </services>
 </container>
