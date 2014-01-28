@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xabbuh\PandaBundle\Event\EventFactory;
 use Xabbuh\PandaClient\Api\CloudManagerInterface;
+use Xabbuh\PandaClient\Util\Signing;
 
 /**
  * XabbuhPandaBundle controllers.
@@ -66,26 +67,26 @@ class Controller
     {
         $params = $request->query->all();
 
-        if(isset($params['method'])) {
+        if (isset($params['method'])) {
             $method = $params['method'];
             unset($params['method']);
         } else {
             $method = 'GET';
         }
 
-        if(isset($params['path'])) {
+        if (isset($params['path'])) {
             $path = $params['path'];
             unset($params['path']);
         } else {
             $path = '/videos.json';
         }
 
-        $httpClient = $this->cloudManager
-            ->getCloud($cloud)
-            ->getHttpClient();
-        $content = $httpClient->signParams($method, $path, $params);
+        $httpClient = $this->cloudManager->getCloud($cloud)->getHttpClient();
+        $cloudId = $httpClient->getCloudId();
+        $account = $httpClient->getAccount();
+        $signing = Signing::getInstance($cloudId, $account);
 
-        return new JsonResponse($content);
+        return new JsonResponse($signing->signParams($method, $path, $params));
     }
 
     /**

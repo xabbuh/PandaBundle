@@ -63,16 +63,17 @@ class ControllerTest extends WebTestCase
             $this->markTestSkipped('default cloud name has to be configured');
         }
 
-        $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
+        $defaultCloud = $container->getParameter('xabbuh_panda.cloud.default');
 
-        $client->request("GET", "/sign/$defaultCloud");
+        $client->request('GET', '/sign/'.$defaultCloud);
         $response = $client->getResponse();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals("application/json", $response->headers->get("content-type"));
+        $this->assertEquals('application/json', $response->headers->get('content-type'));
 
         $json = json_decode($response->getContent());
-        $this->assertEquals("stdClass", get_class($json));
+
+        $this->assertEquals('stdClass', get_class($json));
         $this->assertTrue(isset($json->cloud_id));
         $this->assertTrue(isset($json->access_key));
         $this->assertTrue(isset($json->timestamp));
@@ -92,25 +93,26 @@ class ControllerTest extends WebTestCase
             $this->markTestSkipped('default cloud name has to be configured');
         }
 
-        $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
+        $defaultCloud = $container->getParameter('xabbuh_panda.cloud.default');
 
-        $timestamp = date("c");
+        $timestamp = date('c');
 
         // firstly, request signature without specifying the request method
         // and url path of the request to be signed (this implies that GET
         // and /videos.json will be used as default values)
         $client->request(
-            "GET",
-            "/sign/$defaultCloud",
-            array("timestamp" => $timestamp)
+            'GET',
+            '/sign/'.$defaultCloud,
+            array('timestamp' => $timestamp)
         );
         $response1 = $client->getResponse();
 
         $this->assertTrue($response1->isSuccessful());
-        $this->assertEquals("application/json", $response1->headers->get("content-type"));
+        $this->assertEquals('application/json', $response1->headers->get('content-type'));
 
         $json1 = json_decode($response1->getContent());
-        $this->assertEquals("stdClass", get_class($json1));
+
+        $this->assertEquals('stdClass', get_class($json1));
         $this->assertTrue(isset($json1->cloud_id));
         $this->assertTrue(isset($json1->access_key));
         $this->assertTrue(isset($json1->timestamp));
@@ -119,21 +121,22 @@ class ControllerTest extends WebTestCase
         // do a second request where the request method (GET) and the url
         // path (/videos.json) are explicitly specified
         $client->request(
-            "GET",
-            "/sign/$defaultCloud",
+            'GET',
+            '/sign/'.$defaultCloud,
             array(
-                "method" => "GET",
-                "path" => "/videos.json",
-                "timestamp" => $timestamp
+                'method' => 'GET',
+                'path' => '/videos.json',
+                'timestamp' => $timestamp
             )
         );
         $response2 = $client->getResponse();
 
         $this->assertTrue($response2->isSuccessful());
-        $this->assertEquals("application/json", $response2->headers->get("content-type"));
+        $this->assertEquals('application/json', $response2->headers->get('content-type'));
 
         $json2 = json_decode($response2->getContent());
-        $this->assertEquals("stdClass", get_class($json2));
+
+        $this->assertEquals('stdClass', get_class($json2));
         $this->assertTrue(isset($json2->cloud_id));
         $this->assertTrue(isset($json2->access_key));
         $this->assertTrue(isset($json2->timestamp));
@@ -151,9 +154,9 @@ class ControllerTest extends WebTestCase
         $this->markTestIncomplete();
 
         $payload = new \stdClass();
-        $payload->filename = "video.mp4";
+        $payload->filename = 'video.mp4';
         $payload->filesize = 1722340;
-        $payload->content_type = "application/octet-stream";
+        $payload->content_type = 'application/octet-stream';
 
         $client = static::createClient();
         $container = $client->getContainer();
@@ -162,16 +165,19 @@ class ControllerTest extends WebTestCase
             $this->markTestSkipped('default cloud name has to be configured');
         }
 
-        $defaultCloud = $container->getParameter("xabbuh_panda.cloud.default");
+        $defaultCloud = $container->getParameter('xabbuh_panda.cloud.default');
         $client->request(
-            "POST",
-            "/authorise_upload/$defaultCloud",
-            array("payload" => json_encode($payload))
+            'POST',
+            '/authorise_upload/'.$defaultCloud,
+            array('payload' => json_encode($payload))
         );
         $response = $client->getResponse();
+
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals("application/json", $response->headers->get("Content-Type"));
+        $this->assertEquals('application/json', $response->headers->get('Content-Type'));
+
         $decodedJson = json_decode($response->getContent());
+
         $this->assertTrue($decodedJson instanceof \stdClass);
         $this->assertTrue(isset($decodedJson->upload_url));
     }
@@ -187,32 +193,32 @@ class ControllerTest extends WebTestCase
         // hook into the event dispatcher and fetch information
         // on dispatched events
         $self = $this;
-        $eventDispatcher = $container->get("event_dispatcher");
+        $eventDispatcher = $container->get('event_dispatcher');
         $eventDispatcher->addListener(
-            "xabbuh_panda.encoding_complete",
+            'xabbuh_panda.encoding_complete',
             function(EncodingCompleteEvent $event) use($self) {
                 $self->event = $event;
                 $self->eventCounter++;
             }
         );
 
-        $videoId = "a0d3cae9af93fb16b90e709ad5d9279b";
-        $encodingId = "56d6f222daab29ca8a1b278775e2eab4";
+        $videoId = 'a0d3cae9af93fb16b90e709ad5d9279b';
+        $encodingId = '56d6f222daab29ca8a1b278775e2eab4';
         $client->request(
-            "POST",
-            "/notify",
+            'POST',
+            '/notify',
             array(
-                "event" => "encoding-complete",
-                "video_id" => $videoId,
-                "encoding_id" => $encodingId
+                'event' => 'encoding-complete',
+                'video_id' => $videoId,
+                'encoding_id' => $encodingId
             )
         );
         $response = $client->getResponse();
+
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals(200, $response->getStatusCode());
-
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Event\\EncodingCompleteEvent",
+            'Xabbuh\PandaBundle\Event\EncodingCompleteEvent',
             get_class($this->event)
         );
         $this->assertEquals(1, $this->eventCounter);
@@ -231,34 +237,34 @@ class ControllerTest extends WebTestCase
         // hook into the event dispatcher and fetch information
         // on dispatched events
         $self = $this;
-        $eventDispatcher = $container->get("event_dispatcher");
+        $eventDispatcher = $container->get('event_dispatcher');
         $eventDispatcher->addListener(
-            "xabbuh_panda.encoding_progress",
+            'xabbuh_panda.encoding_progress',
             function(EncodingProgressEvent $event) use($self) {
                 $self->event = $event;
                 $self->eventCounter++;
             }
         );
 
-        $videoId = "a0d3cae9af93fb16b90e709ad5d9279b";
-        $encodingId = "56d6f222daab29ca8a1b278775e2eab4";
+        $videoId = 'a0d3cae9af93fb16b90e709ad5d9279b';
+        $encodingId = '56d6f222daab29ca8a1b278775e2eab4';
         $progress = 63;
         $client->request(
-            "POST",
-            "/notify",
+            'POST',
+            '/notify',
             array(
-                "event" => "encoding-progress",
-                "video_id" => $videoId,
-                "encoding_id" => $encodingId,
-                "progress" => 63
+                'event' => 'encoding-progress',
+                'video_id' => $videoId,
+                'encoding_id' => $encodingId,
+                'progress' => 63
             )
         );
         $response = $client->getResponse();
+
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals(200, $response->getStatusCode());
-
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Event\\EncodingProgressEvent",
+            'Xabbuh\PandaBundle\Event\EncodingProgressEvent',
             get_class($this->event)
         );
         $this->assertEquals(1, $this->eventCounter);
@@ -278,35 +284,35 @@ class ControllerTest extends WebTestCase
         // hook into the event dispatcher and fetch information
         // on dispatched events
         $self = $this;
-        $eventDispatcher = $container->get("event_dispatcher");
+        $eventDispatcher = $container->get('event_dispatcher');
         $eventDispatcher->addListener(
-            "xabbuh_panda.video_created",
+            'xabbuh_panda.video_created',
             function(VideoCreatedEvent $event) use($self) {
                 $self->event = $event;
                 $self->eventCounter++;
             }
         );
 
-        $videoId = "a0d3cae9af93fb16b90e709ad5d9279b";
+        $videoId = 'a0d3cae9af93fb16b90e709ad5d9279b';
         $encodingIds = array(
-            "56d6f222daab29ca8a1b278775e2eab4",
-            "efde127ce32482342aea58973ee39f23"
+            '56d6f222daab29ca8a1b278775e2eab4',
+            'efde127ce32482342aea58973ee39f23'
         );
         $client->request(
-            "POST",
-            "/notify",
+            'POST',
+            '/notify',
             array(
-                "event" => "video-created",
-                "video_id" => $videoId,
-                "encoding_ids" => $encodingIds
+                'event' => 'video-created',
+                'video_id' => $videoId,
+                'encoding_ids' => $encodingIds
             )
         );
         $response = $client->getResponse();
+
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals(200, $response->getStatusCode());
-
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Event\\VideoCreatedEvent",
+            'Xabbuh\PandaBundle\Event\VideoCreatedEvent',
             get_class($this->event)
         );
         $this->assertEquals(1, $this->eventCounter);
@@ -325,35 +331,35 @@ class ControllerTest extends WebTestCase
         // hook into the event dispatcher and fetch information
         // on dispatched events
         $self = $this;
-        $eventDispatcher = $container->get("event_dispatcher");
+        $eventDispatcher = $container->get('event_dispatcher');
         $eventDispatcher->addListener(
-            "xabbuh_panda.video_encoded",
+            'xabbuh_panda.video_encoded',
             function(VideoEncodedEvent $event) use($self) {
                 $self->event = $event;
                 $self->eventCounter++;
             }
         );
 
-        $videoId = "a0d3cae9af93fb16b90e709ad5d9279b";
+        $videoId = 'a0d3cae9af93fb16b90e709ad5d9279b';
         $encodingIds = array(
-            "56d6f222daab29ca8a1b278775e2eab4",
-            "efde127ce32482342aea58973ee39f23"
+            '56d6f222daab29ca8a1b278775e2eab4',
+            'efde127ce32482342aea58973ee39f23'
         );
         $client->request(
-            "POST",
-            "/notify",
+            'POST',
+            '/notify',
             array(
-                "event" => "video-encoded",
-                "video_id" => $videoId,
-                "encoding_ids" => $encodingIds
+                'event' => 'video-encoded',
+                'video_id' => $videoId,
+                'encoding_ids' => $encodingIds
             )
         );
         $response = $client->getResponse();
+
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals(200, $response->getStatusCode());
-
         $this->assertEquals(
-            "Xabbuh\\PandaBundle\\Event\\VideoEncodedEvent",
+            'Xabbuh\PandaBundle\Event\VideoEncodedEvent',
             get_class($this->event)
         );
         $this->assertEquals(1, $this->eventCounter);
@@ -368,8 +374,9 @@ class ControllerTest extends WebTestCase
     public function testNotifyWithoutEvent()
     {
         $client = static::createClient();
-        $client->request("POST", "/notify");
+        $client->request('POST', '/notify');
         $response = $client->getResponse();
+
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isClientError());
         $this->assertEquals(400, $response->getStatusCode());
@@ -382,8 +389,9 @@ class ControllerTest extends WebTestCase
     public function testNotifyWithInvalidEvent()
     {
         $client = static::createClient();
-        $client->request("POST", "/notify", array("event" => "video-complete"));
+        $client->request('POST', '/notify', array('event' => 'video-complete'));
         $response = $client->getResponse();
+
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isClientError());
         $this->assertEquals(400, $response->getStatusCode());
