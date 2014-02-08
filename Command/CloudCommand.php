@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Xabbuh\PandaBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Base class of all commands which act on panda clouds.
@@ -22,30 +31,34 @@ abstract class CloudCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->addOption(
-            "cloud",
-            "-c",
+            'cloud',
+            '-c',
             InputOption::VALUE_REQUIRED,
-            "Cloud on which the command is executed."
+            'Cloud on which the command is executed.'
         );
+    }
+
+    /**
+     * @return \Xabbuh\PandaClient\Api\CloudManager
+     */
+    protected function getCloudManager()
+    {
+        return $this->getContainer()->get('xabbuh_panda.cloud_manager');
     }
 
     /**
      * Get the cloud to work on.
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @return \Xabbuh\PandaBundle\Cloud\Cloud
+     *
+     * @return \Xabbuh\PandaClient\Api\Cloud
      */
     protected function getCloud(InputInterface $input)
     {
-        $key = $input->getOption("cloud");
-        $cm = $this->getContainer()->get("xabbuh_panda.cloud_manager");
-
-        if ($key == null) {
-            $cloud = $cm->getDefaultCloud();
-        } else {
-            $cloud = $cm->getCloud($key);
+        if (null === $input->getOption('cloud')) {
+            return $this->getCloudManager()->getDefaultCloud();
         }
 
-        return $cloud;
+        return $this->getCloudManager()->getCloud($input->getOption('cloud'));
     }
 }

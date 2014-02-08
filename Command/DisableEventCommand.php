@@ -1,21 +1,21 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Xabbuh\PandaBundle\Model\NotificationEvent;
-use Xabbuh\PandaBundle\Model\Notifications;
+use Xabbuh\PandaClient\Model\NotificationEvent;
+use Xabbuh\PandaClient\Model\Notifications;
 
 /**
  * Command for disabling notification events.
@@ -25,31 +25,29 @@ use Xabbuh\PandaBundle\Model\Notifications;
 class DisableEventCommand extends CloudCommand
 {
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     public function configure()
     {
-        $this->setName("panda:notifications:disable");
-        $this->setDescription("Disable a notification event");
+        $this->setName('panda:notifications:disable');
+        $this->setDescription('Disable a notification event');
         $this->addArgument(
-            "event",
+            'event',
             InputArgument::REQUIRED,
-            "The event being disabled"
+            'The event being disabled'
         );
 
         parent::configure();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $event = strtr($input->getArgument("event"), "-", "_");
-        $notificationEvent = new NotificationEvent($event, false);
+        $notificationEvent = new NotificationEvent($input->getArgument('event'), false);
         $notifications = new Notifications();
         $notifications->addNotificationEvent($notificationEvent);
-        $cloud = $this->getCloud($input);
-        $cloud->setNotifications($notifications);
+        $this->getCloud($input)->setNotifications($notifications);
     }
 }

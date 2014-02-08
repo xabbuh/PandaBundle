@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Command;
 
@@ -27,20 +27,20 @@ class ListVideosCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:video:list");
-        $this->setDescription("List all videos of a cloud");
+        $this->setName('panda:video:list');
+        $this->setDescription('List all videos of a cloud');
         $this->addOption(
-            "page",
+            'page',
             null,
             InputOption::VALUE_REQUIRED,
-            "Page to show",
+            'Page to show',
             1
         );
         $this->addOption(
-            "per-page",
+            'per-page',
             null,
             InputOption::VALUE_REQUIRED,
-            "Number of videos per page",
+            'Number of videos per page',
             10
         );
 
@@ -52,44 +52,47 @@ class ListVideosCommand extends CloudCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $page = (int)$input->getOption("page");
-        $perPage = (int)$input->getOption("per-page");
-        $cloud = $this->getCloud($input);
-        $result = $cloud->getVideosForPagination($page, $perPage);
+        $result = $this->getCloud($input)->getVideosForPagination(
+            $input->getOption('page'),
+            $input->getOption('per-page')
+        );
 
         $output->writeln(
             array(
                 sprintf(
-                    "Page %d of %d",
+                    'Page %d of %d',
                     $result->page,
                     ceil($result->total / $result->per_page)
                 ),
-                "Total number of videos: " . $result->total,
+                'Total number of videos: '.$result->total,
             )
         );
-        if (count($result->videos)> 0) {
+
+        if (count($result->videos) > 0) {
             $output->writeln(sprintf(
-                "% -32s    % -32s    %s",
-                "video id",
-                "encoding status",
-                "file name"
+                '% -32s    % -32s    %s',
+                'video id',
+                'encoding status',
+                'file name'
             ));
+
             foreach ($result->videos as $video) {
-                if ($video->getStatus() == "fail") {
+                if ($video->getStatus() == 'fail') {
                     $status = sprintf(
-                        "fail (%s)",
+                        'fail (%s)',
                         $video->getErrorMessage()
                     );
-                } else if ($video->getStatus() == "processing") {
+                } else if ($video->getStatus() == 'processing') {
                     $status = sprintf(
-                        "proccessing (%d%%)",
+                        'proccessing (%d%%)',
                         $video->getEncodingProgress()
                     );
                 } else {
-                    $status = "success";
+                    $status = 'success';
                 }
+
                 $output->writeln(sprintf(
-                    "% -32s    % -32s    %s",
+                    '% -32s    % -32s    %s',
                     $video->getId(),
                     $status,
                     $video->getOriginalFilename()

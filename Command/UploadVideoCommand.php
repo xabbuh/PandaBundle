@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Command;
 
@@ -27,12 +27,12 @@ class UploadVideoCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:video:upload");
-        $this->setDescription("Upload a video");
+        $this->setName('panda:video:upload');
+        $this->setDescription('Upload a video');
         $this->addArgument(
-            "filename",
+            'filename',
             InputArgument::REQUIRED,
-            "The file being uploaded"
+            'The file being uploaded'
         );
 
         parent::configure();
@@ -43,9 +43,8 @@ class UploadVideoCommand extends CloudCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $cloud = $this->getCloud($input);
-        $output->writeln("Starting file upload...");
-        $cloud->encodeVideoFile($input->getArgument("filename"));
-        $output->writeln("File successfully uploaded.");
+        $output->writeln('Starting file upload...');
+        $this->getCloud($input)->encodeVideoFile($input->getArgument('filename'));
+        $output->writeln('File successfully uploaded.');
     }
 }

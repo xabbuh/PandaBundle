@@ -26,8 +26,8 @@ class ListProfilesCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:profile:list");
-        $this->setDescription("List all profiles of a cloud");
+        $this->setName('panda:profile:list');
+        $this->setDescription('List all profiles of a cloud');
 
         parent::configure();
     }
@@ -37,11 +37,8 @@ class ListProfilesCommand extends CloudCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $cloud = $this->getCloud($input);
-        $profiles = $cloud->getProfiles();
-
-        foreach ($profiles as $profile) {
-            $output->writeln($profile->getId() . "    " . $profile->getTitle());
+        foreach ($this->getCloud($input)->getProfiles() as $profile) {
+            $output->writeln($profile->getId().'    '.$profile->getTitle());
         }
     }
 }

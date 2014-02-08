@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Command;
 
@@ -27,12 +27,12 @@ class VideoMetadataCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:video:metadata");
-        $this->setDescription("Fetch metadata for a video");
+        $this->setName('panda:video:metadata');
+        $this->setDescription('Fetch metadata for a video');
         $this->addArgument(
-            "video-id",
+            'video-id',
             InputArgument::REQUIRED,
-            "The id of the video"
+            'The id of the video'
         );
 
         parent::configure();
@@ -44,11 +44,11 @@ class VideoMetadataCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $cloud = $this->getCloud($input);
-        $metadata = $cloud->getVideoMetadata($input->getArgument("video-id"));
+        $metadata = $cloud->getVideoMetadata($input->getArgument('video-id'));
         foreach ($metadata as $key => $value) {
             $output->writeln(
                 sprintf(
-                    "% -25s %s",
+                    '% -25s %s',
                     $key,
                     $value
                 )

@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Command;
 
@@ -15,8 +15,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Xabbuh\PandaBundle\Model\Video;
 use Xabbuh\PandaClient\Exception\PandaException;
+use Xabbuh\PandaClient\Model\Video;
 
 /**
  * Command to create an encoding.
@@ -30,24 +30,24 @@ class CreateEncodingCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:encoding:create");
-        $this->setDescription("Create an encoding");
+        $this->setName('panda:encoding:create');
+        $this->setDescription('Create an encoding');
         $this->addArgument(
-            "video-id",
+            'video-id',
             InputArgument::REQUIRED,
-            "Id of the video being encoded"
+            'Id of the video being encoded'
         );
         $this->addOption(
-            "profile-id",
+            'profile-id',
             null,
             InputOption::VALUE_REQUIRED,
-            "Id of the profile"
+            'Id of the profile'
         );
         $this->addOption(
-            "profile-name",
+            'profile-name',
             null,
             InputOption::VALUE_REQUIRED,
-            "A profile's name"
+            'A profile\'s name'
         );
 
         parent::configure();
@@ -59,41 +59,39 @@ class CreateEncodingCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $cloud = $this->getCloud($input);
-            $video = new Video();
-            $video->setId($input->getArgument("video-id"));
-            $profileId = $input->getOption("profile-id");
-            $profileName = $input->getOption("profile-name");
-            if ($profileId != "" && $profileName == "") {
-                $encoding = $cloud->createEncodingWithProfileId(
-                    $video,
+            $profileId = $input->getOption('profile-id');
+            $profileName = $input->getOption('profile-name');
+
+            if ('' !== $profileId && '' === $profileName) {
+                $encoding = $this->getCloud($input)->createEncoding(
+                    $input->getArgument('video-id'),
                     $profileId
                 );
                 $output->writeln(
                     sprintf(
-                        "Successfully created encoding with id %s",
+                        'Successfully created encoding with id %s',
                         $encoding->getId()
                     )
                 );
-            } else if ($profileId == "" && $profileName != "") {
-                $encoding = $cloud->createEncodingWithProfileName(
-                    $video,
+            } elseif ($profileId == '' && $profileName != '') {
+                $encoding = $this->getCloud($input)->createEncodingWithProfileName(
+                    $input->getArgument('video-id'),
                     $profileName
                 );
                 $output->writeln(
                     sprintf(
-                        "Successfully created encoding with id %s",
+                        'Successfully created encoding with id %s',
                         $encoding->getId()
                     )
                 );
             } else {
                 $output->writeln(
-                    "Exactly one option of --profile-id or --profile-name must be given."
+                    'Exactly one option of --profile-id or --profile-name must be given.'
                 );
             }
         } catch (PandaException $e) {
             $output->write(
-                "An error occured while trying to delete the encoding: "
+                'An error occurred while trying to delete the encoding: '
             );
             $output->writeln($e->getMessage());
         }

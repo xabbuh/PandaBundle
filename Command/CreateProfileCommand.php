@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the XabbuhPandaBundle package.
-*
-* (c) Christian Flothmann <christian.flothmann@xabbuh.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Xabbuh\PandaBundle\Command;
 
@@ -28,12 +28,12 @@ class CreateProfileCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:profile:create");
-        $this->setDescription("Create a profile based on a given preset");
+        $this->setName('panda:profile:create');
+        $this->setDescription('Create a profile based on a given preset');
         $this->addArgument(
-        "preset",
+        'preset',
             InputArgument::REQUIRED,
-            "Name of the preset to use"
+            'Name of the preset to use'
         );
 
         parent::configure();
@@ -46,18 +46,18 @@ class CreateProfileCommand extends CloudCommand
     {
         try {
             $cloud = $this->getCloud($input);
-            $preset = $input->getArgument("preset");
+            $preset = $input->getArgument('preset');
             $profile = $cloud->addProfileFromPreset($preset);
             $output->writeln(
                 sprintf(
-                    "Successfully created profile %s with id %s",
+                    'Successfully created profile %s with id %s',
                     $profile->getName(),
                     $profile->getId()
                 )
             );
         } catch(PandaException $e) {
             $output->writeln(
-                "An error occured while trying to create the profile: " . $e->getMessage()
+                'An error occured while trying to create the profile: '.$e->getMessage()
             );
         }
     }

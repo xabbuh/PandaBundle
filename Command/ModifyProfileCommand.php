@@ -1,10 +1,12 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: christian
- * Date: 15.04.13
- * Time: 16:53
- * To change this template use File | Settings | File Templates.
+
+/*
+ * This file is part of the XabbuhPandaBundle package.
+ *
+ * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Xabbuh\PandaBundle\Command;
@@ -27,60 +29,60 @@ class ModifyProfileCommand extends CloudCommand
      */
     protected function configure()
     {
-        $this->setName("panda:profile:modify");
-        $this->setDescription("Modify a profile");
+        $this->setName('panda:profile:modify');
+        $this->setDescription('Modify a profile');
         $this->addArgument(
-            "id",
+            'id',
             InputArgument::REQUIRED,
-            "Id of the profile"
+            'Id of the profile'
         );
         $this->addOption(
-            "name",
+            'name',
             null,
             InputOption::VALUE_REQUIRED,
-            "Machine-readable unqiue name"
+            'Machine-readable unique name'
         );
         $this->addOption(
-            "title",
+            'title',
             null,
             InputOption::VALUE_REQUIRED,
-            "Human-readable name"
+            'Human-readable name'
         );
         $this->addOption(
-            "extname",
+            'extname',
             null,
             InputOption::VALUE_REQUIRED,
-            "File extension"
+            'File extension'
         );
         $this->addOption(
-            "width",
+            'width',
             null,
             InputOption::VALUE_REQUIRED,
-            "Width in pixels"
+            'Width in pixels'
         );
         $this->addOption(
-            "height",
+            'height',
             null,
             InputOption::VALUE_REQUIRED,
-            "Height in Pixels"
+            'Height in Pixels'
         );
         $this->addOption(
-            "audio-bitrate",
+            'audio-bitrate',
             null,
             InputOption::VALUE_REQUIRED,
-            "Audio bitrate"
+            'Audio bit rate'
         );
         $this->addOption(
-            "video-bitrate",
+            'video-bit rate',
             null,
             InputOption::VALUE_REQUIRED,
-            "Video bitrate"
+            'Video bit rate'
         );
         $this->addOption(
-            "aspect-mode",
+            'aspect-mode',
             null,
             InputOption::VALUE_REQUIRED,
-            "Aspect mode"
+            'Aspect mode'
         );
 
         parent::configure();
@@ -92,44 +94,51 @@ class ModifyProfileCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $cloud = $this->getCloud($input);
-            $profile = $cloud->getProfile($input->getArgument("id"));
+            $profile = $this->getCloud($input)->getProfile($input->getArgument('id'));
 
-            if ($input->hasOption("name")) {
-                $profile->setName($input->getOption("name"));
-            }
-            if ($input->hasOption("title")) {
-                $profile->setTitle($input->getOption("title"));
-            }
-            if ($input->hasOption("extname")) {
-                $profile->setExtname($input->getOption("extname"));
-            }
-            if ($input->hasOption("width")) {
-                $profile->setWidth($input->getOption("width"));
-            }
-            if ($input->hasOption("height")) {
-                $profile->setHeight($input->getOption("height"));
-            }
-            if ($input->hasOption("audio-bitrate")) {
-                $profile->setAudioBitrate($input->getOption("audio-bitrate"));
-            }
-            if ($input->hasOption("video-bitrate")) {
-                $profile->setVideoBitrate($input->getOption("video-bitrate"));
-            }
-            if ($input->hasOption("aspect-mode")) {
-                $profile->setAspectMode($input->getOption("aspect-mode"));
+            if ($input->hasOption('name')) {
+                $profile->setName($input->getOption('name'));
             }
 
-            $cloud->setProfile($profile);
+            if ($input->hasOption('title')) {
+                $profile->setTitle($input->getOption('title'));
+            }
+
+            if ($input->hasOption('extname')) {
+                $profile->setExtname($input->getOption('extname'));
+            }
+
+            if ($input->hasOption('width')) {
+                $profile->setWidth($input->getOption('width'));
+            }
+
+            if ($input->hasOption('height')) {
+                $profile->setHeight($input->getOption('height'));
+            }
+
+            if ($input->hasOption('audio-bitrate')) {
+                $profile->setAudioBitrate($input->getOption('audio-bitrate'));
+            }
+
+            if ($input->hasOption('video-bitrate')) {
+                $profile->setVideoBitrate($input->getOption('video-bitrate'));
+            }
+
+            if ($input->hasOption('aspect-mode')) {
+                $profile->setAspectMode($input->getOption('aspect-mode'));
+            }
+
+            $this->getCloud($input)->setProfile($profile);
+
             $output->writeln(
                 sprintf(
-                    "Successfully modified profile %s",
+                    'Successfully modified profile %s',
                     $profile->getName()
                 )
             );
         } catch(PandaException $e) {
             $output->writeln(
-                "An error occured while trying to modify the profile: " . $e->getMessage()
+                'An error occurred while trying to modify the profile: '.$e->getMessage()
             );
         }
     }
