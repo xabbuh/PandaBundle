@@ -50,12 +50,14 @@ class DeleteEncodingCommand extends CloudCommand
             $encoding = new Encoding();
             $encoding->setId($encodingId);
             $this->getCloud($input)->deleteEncoding($encoding);
-            $output->writeln('Successfully deleted encoding with id '.$encodingId);
-        } catch (PandaException $e) {
-            $output->write(
-                'An error occurred while trying to delete the encoding: '
+            $output->writeln(
+                '<info>Successfully deleted encoding with id '.$encodingId.'</info>'
             );
-            $output->writeln($e->getMessage());
+        } catch (PandaException $e) {
+            $output->writeln(
+                '<error>An error occurred while trying to delete the encoding: '
+                .$e->getMessage().'</error>'
+            );
         }
     }
 }

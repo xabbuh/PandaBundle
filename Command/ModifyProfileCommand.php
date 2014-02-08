@@ -132,13 +132,14 @@ class ModifyProfileCommand extends CloudCommand
 
             $output->writeln(
                 sprintf(
-                    'Successfully modified profile %s',
+                    '<info>Successfully modified profile %s</info>',
                     $profile->getName()
                 )
             );
         } catch(PandaException $e) {
             $output->writeln(
-                'An error occurred while trying to modify the profile: '.$e->getMessage()
+                '<error>An error occurred while trying to modify the profile: '
+                .$e->getMessage().'</error>'
             );
         }
     }

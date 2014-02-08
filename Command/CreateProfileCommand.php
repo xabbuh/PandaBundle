@@ -50,14 +50,15 @@ class CreateProfileCommand extends CloudCommand
             $profile = $cloud->addProfileFromPreset($preset);
             $output->writeln(
                 sprintf(
-                    'Successfully created profile %s with id %s',
+                    '<info>Successfully created profile %s with id %s</info>',
                     $profile->getName(),
                     $profile->getId()
                 )
             );
         } catch(PandaException $e) {
             $output->writeln(
-                'An error occured while trying to create the profile: '.$e->getMessage()
+                '<error>An error occurred while trying to create the profile: '
+                .$e->getMessage().'</error>'
             );
         }
     }

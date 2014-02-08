@@ -61,4 +61,14 @@ abstract class CloudCommand extends ContainerAwareCommand
 
         return $this->getCloudManager()->getCloud($input->getOption('cloud'));
     }
+
+    /**
+     * Returns the Symfony {@link \Symfony\Component\Console\Helper\TableHelper table helper}.
+     *
+     * @return \Symfony\Component\Console\Helper\TableHelper
+     */
+    protected function getTableHelper()
+    {
+        return $this->getHelper('table');
+    }
 }

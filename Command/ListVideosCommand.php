@@ -69,11 +69,11 @@ class ListVideosCommand extends CloudCommand
         );
 
         if (count($result->videos) > 0) {
-            $output->writeln(sprintf(
-                '% -32s    % -32s    %s',
+            $table = $this->getTableHelper();
+            $table->setHeaders(array(
                 'video id',
                 'encoding status',
-                'file name'
+                'file name',
             ));
 
             foreach ($result->videos as $video) {
@@ -91,13 +91,14 @@ class ListVideosCommand extends CloudCommand
                     $status = 'success';
                 }
 
-                $output->writeln(sprintf(
-                    '% -32s    % -32s    %s',
+                $table->addRow(array(
                     $video->getId(),
                     $status,
-                    $video->getOriginalFilename()
+                    $video->getOriginalFilename(),
                 ));
             }
+
+            $table->render($output);
         }
     }
 }

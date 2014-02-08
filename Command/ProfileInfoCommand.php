@@ -44,17 +44,20 @@ class ProfileInfoCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $profile = $this->getCloud($input)->getProfile($input->getArgument('profile-id'));
-
-        $output->writeln('id               '.$profile->getId());
-        $output->writeln('title            '.$profile->getTitle());
-        $output->writeln('name             '.$profile->getName());
-        $output->writeln('extname          '.$profile->getExtname());
-        $output->writeln('width            '.$profile->getWidth());
-        $output->writeln('height           '.$profile->getHeight());
-        $output->writeln('audio bit rate   '.$profile->getAudioBitrate());
-        $output->writeln('video bit rate   '.$profile->getVideoBitrate());
-        $output->writeln('aspect mode      '.$profile->getAspectMode());
-        $output->writeln('created at       '.$profile->getCreatedAt());
-        $output->writeln('updated at       '.$profile->getUpdatedAt());
+        $table = $this->getTableHelper();
+        $table->addRows(array(
+            array('id', $profile->getId()),
+            array('title', $profile->getTitle()),
+            array('name', $profile->getName()),
+            array('file extension', $profile->getExtname()),
+            array('width', $profile->getWidth()),
+            array('height', $profile->getHeight()),
+            array('audio bit rate', $profile->getAudioBitrate()),
+            array('video bit rate', $profile->getVideoBitrate()),
+            array('aspect mode', $profile->getAspectMode()),
+            array('created at', $profile->getCreatedAt()),
+            array('updated at', $profile->getUpdatedAt()),
+        ));
+        $table->render($output);
     }
 }

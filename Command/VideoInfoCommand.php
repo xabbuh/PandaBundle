@@ -46,19 +46,25 @@ class VideoInfoCommand extends CloudCommand
         $cloud = $this->getCloud($input);
         $video = $cloud->getVideo($input->getArgument('video-id'));
 
-        $output->writeln('id                 '.$video->getId());
-        $output->writeln('file name          '.$video->getOriginalFilename());
-        $output->writeln('width              '.$video->getWidth());
-        $output->writeln('height             '.$video->getHeight());
-        $output->writeln('audio bit rate     '.$video->getAudioBitrate());
-        $output->writeln('video bit rate     '.$video->getVideoBitrate());
-        $output->writeln('status             '.$video->getStatus());
+        $table = $this->getTableHelper();
+        $table->addRows(array(
+            array('id', $video->getId()),
+            array('file name', $video->getOriginalFilename()),
+            array('width', $video->getWidth()),
+            array('height', $video->getHeight()),
+            array('audio bit rate', $video->getAudioBitrate()),
+            array('video bit rate', $video->getVideoBitrate()),
+            array('status', $video->getStatus()),
+        ));
 
-        if ($video->getStatus() == 'fail') {
-            $output->writeln('error message      '.$video->getErrorMessage());
+        if ('fail' === $video->getStatus()) {
+            $table->addRow(array('error message', $video->getErrorMessage()));
         }
 
-        $output->writeln('created at         '.$video->getCreatedAt());
-        $output->writeln('updated at         '.$video->getUpdatedAt());
+        $table->addRows(array(
+            array('created at', $video->getCreatedAt()),
+            array('updated at', $video->getUpdatedAt()),
+        ));
+        $table->render($output);
     }
 }

@@ -38,13 +38,16 @@ class CloudInfoCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $cloud = $this->getCloud($input)->getCloud();
-
-        $output->writeln('id                   '.$cloud->getId());
-        $output->writeln('name                 '.$cloud->getName());
-        $output->writeln('s3 videos bucket     '.$cloud->getS3VideosBucket());
-        $output->writeln('s3 private access    '.($cloud->isS3AccessPrivate() ? 'yes' : 'no'));
-        $output->writeln('url                  '.$cloud->getUrl());
-        $output->writeln('created at           '.$cloud->getCreatedAt());
-        $output->writeln('updated at           '.$cloud->getUpdatedAt());
+        $table = $this->getTableHelper();
+        $table->addRows(array(
+            array('id', $cloud->getId()),
+            array('name', $cloud->getName()),
+            array('s3 videos bucket', $cloud->getS3VideosBucket()),
+            array('s3 private access', $cloud->isS3AccessPrivate() ? 'yes' : 'no'),
+            array('url', $cloud->getUrl()),
+            array('created at', $cloud->getCreatedAt()),
+            array('updated at', $cloud->getUpdatedAt()),
+        ));
+        $table->render($output);
     }
 }

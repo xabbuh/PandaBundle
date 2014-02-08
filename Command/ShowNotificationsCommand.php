@@ -38,41 +38,33 @@ class ShowNotificationsCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $notifications = $this->getCloud($input)->getNotifications();
-
-        $output->writeln('url: '.$notifications->getUrl());
-
-        $output->writeln('events');
-
-        $output->write('  video-created:      ');
+        $table = $this->getTableHelper();
+        $table->addRow(array('url', $notifications->getUrl()));
 
         if ($notifications->getNotificationEvent('video_created')->isActive()) {
-            $output->writeln('enabled');
+            $table->addRow(array('video-created', '<info>enabled</info>'));
         } else {
-            $output->writeln('disabled');
+            $table->addRow(array('video-created', 'disabled'));
         }
-
-        $output->write('  video-encoded:      ');
 
         if ($notifications->getNotificationEvent('video_encoded')->isActive()) {
-            $output->writeln('enabled');
+            $table->addRow(array('video-encoded', '<info>enabled</info>'));
         } else {
-            $output->writeln('disabled');
+            $table->addRow(array('video-encoded', 'disabled'));
         }
-
-        $output->write('  encoding-progress:  ');
 
         if ($notifications->getNotificationEvent('encoding_progress')->isActive()) {
-            $output->writeln('enabled');
+            $table->addRow(array('encoding-progress', '<info>enabled</info>'));
         } else {
-            $output->writeln('disabled');
+            $table->addRow(array('encoding-progress', 'disabled'));
         }
-
-        $output->write('  encoding-completed: ');
 
         if ($notifications->getNotificationEvent('encoding_completed')->isActive()) {
-            $output->writeln('enabled');
+            $table->addRow(array('encoding-completed', '<info>enabled</info>'));
         } else {
-            $output->writeln('disabled');
+            $table->addRow(array('encoding-completed', 'disabled'));
         }
+
+        $table->render($output);
     }
 }

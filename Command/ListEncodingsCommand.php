@@ -83,13 +83,13 @@ class ListEncodingsCommand extends CloudCommand
         $encodings = $this->getCloud($input)->getEncodings($filter);
 
         if (count($encodings) > 0) {
-            $output->writeln(sprintf(
-                '% -32s    % -32s    % -32s    % -20s    %s',
+            $table = $this->getTableHelper();
+            $table->setHeaders(array(
                 'encoding id',
                 'video id',
                 'profile id',
                 'profile name',
-                'encoding status'
+                'encoding status',
             ));
 
             foreach ($encodings as $encoding) {
@@ -106,15 +106,17 @@ class ListEncodingsCommand extends CloudCommand
                 } else {
                     $status = 'success';
                 }
-                $output->writeln(sprintf(
-                    '% -32s    % -32s    % -32s    % -20s    %s',
+
+                $table->addRow(array(
                     $encoding->getId(),
                     $encoding->getVideoId(),
                     $encoding->getProfileId(),
                     $encoding->getProfileName(),
-                    $status
+                    $status,
                 ));
             }
+
+            $table->render($output);
         }
     }
 }

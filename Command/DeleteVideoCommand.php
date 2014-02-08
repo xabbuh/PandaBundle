@@ -14,6 +14,7 @@ namespace Xabbuh\PandaBundle\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Xabbuh\PandaClient\Exception\ApiException;
 use Xabbuh\PandaClient\Exception\PandaException;
 use Xabbuh\PandaClient\Model\Video;
 
@@ -50,12 +51,12 @@ class DeleteVideoCommand extends CloudCommand
             $video = new Video();
             $video->setId($videoId);
             $this->getCloud($input)->deleteVideo($video);
-            $output->writeln('Successfully deleted video with id '.$videoId);
+            $output->writeln('<info>Successfully deleted video with id '.$videoId.'</info>');
         } catch (PandaException $e) {
-            $output->write(
-                'An error occurred while trying to delete the video: '
+            $output->writeln(
+                '<error>An error occurred while trying to delete the video: '
+                .$e->getMessage().'</error>'
             );
-            $output->writeln($e->getMessage());
         }
     }
 }

@@ -45,14 +45,15 @@ class VideoMetadataCommand extends CloudCommand
     {
         $cloud = $this->getCloud($input);
         $metadata = $cloud->getVideoMetadata($input->getArgument('video-id'));
+        $table = $this->getTableHelper();
+
         foreach ($metadata as $key => $value) {
-            $output->writeln(
-                sprintf(
-                    '% -25s %s',
-                    $key,
-                    $value
-                )
-            );
+            $table->addRow(array(
+                $key,
+                is_array($value) ? implode(', ', $value) : $value,
+            ));
         }
+
+        $table->render($output);
     }
 }

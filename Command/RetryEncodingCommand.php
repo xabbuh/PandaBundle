@@ -50,12 +50,15 @@ class RetryEncodingCommand extends CloudCommand
             $encoding = new Encoding();
             $encoding->setId($encodingId);
             $this->getCloud($input)->retryEncoding($encoding);
-            $output->writeln('Successfully restarted encoding with id '.$encodingId);
-        } catch (PandaException $e) {
-            $output->write(
-                'An error occurred while trying to restart the encoding: '
+            $output->writeln(
+                '<info>Successfully restarted encoding with id '.$encodingId
+                .'</info>'
             );
-            $output->writeln($e->getMessage());
+        } catch (PandaException $e) {
+            $output->writeln(
+                '<error>An error occurred while trying to restart the encoding: '
+                .$e->getMessage().'</error>'
+            );
         }
     }
 }

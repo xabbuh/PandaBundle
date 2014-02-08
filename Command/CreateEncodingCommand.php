@@ -16,7 +16,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xabbuh\PandaClient\Exception\PandaException;
-use Xabbuh\PandaClient\Model\Video;
 
 /**
  * Command to create an encoding.
@@ -69,7 +68,7 @@ class CreateEncodingCommand extends CloudCommand
                 );
                 $output->writeln(
                     sprintf(
-                        'Successfully created encoding with id %s',
+                        '<info>Successfully created encoding with id %s</info>',
                         $encoding->getId()
                     )
                 );
@@ -80,20 +79,20 @@ class CreateEncodingCommand extends CloudCommand
                 );
                 $output->writeln(
                     sprintf(
-                        'Successfully created encoding with id %s',
+                        '<info>Successfully created encoding with id %s</info>',
                         $encoding->getId()
                     )
                 );
             } else {
                 $output->writeln(
-                    'Exactly one option of --profile-id or --profile-name must be given.'
+                    '<error>Exactly one option of --profile-id or --profile-name must be given.</error>'
                 );
             }
         } catch (PandaException $e) {
-            $output->write(
-                'An error occurred while trying to delete the encoding: '
+            $output->writeln(
+                '<error>An error occurred while trying to delete the encoding: '
+                .$e->getMessage().'</error>'
             );
-            $output->writeln($e->getMessage());
         }
     }
 }

@@ -37,8 +37,20 @@ class ListProfilesCommand extends CloudCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        foreach ($this->getCloud($input)->getProfiles() as $profile) {
-            $output->writeln($profile->getId().'    '.$profile->getTitle());
+        $profiles = $this->getCloud($input)->getProfiles();
+
+        if (count($profiles) > 0) {
+            $table = $this->getTableHelper();
+            $table->setHeaders(array('profile id', 'profile name'));
+
+            foreach ($this->getCloud($input)->getProfiles() as $profile) {
+                $table->addRow(array(
+                    $profile->getId(),
+                    $profile->getTitle(),
+                ));
+            }
+
+            $table->render($output);
         }
     }
 }

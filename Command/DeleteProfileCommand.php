@@ -48,14 +48,12 @@ class DeleteProfileCommand extends CloudCommand
             $profile = $this->getCloud($input)->getProfile($input->getArgument('id'));
             $this->getCloud($input)->deleteProfile($profile);
             $output->writeln(
-                sprintf(
-                    'Successfully deleted profile %s',
-                    $profile->getName()
-                )
+                '<info>Successfully deleted profile '.$profile->getName().'</info>'
             );
         } catch(PandaException $e) {
             $output->writeln(
-                'An error occurred while trying to delete the profile: '.$e->getMessage()
+                '<error>An error occurred while trying to delete the profile: '
+                .$e->getMessage().'</error>'
             );
         }
     }

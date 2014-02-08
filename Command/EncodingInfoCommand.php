@@ -45,25 +45,31 @@ class EncodingInfoCommand extends CloudCommand
     {
         $cloud = $this->getCloud($input);
         $encoding = $cloud->getEncoding($input->getArgument('encoding-id'));
-        $output->writeln('id                 '.$encoding->getId());
-        $output->writeln('video id           '.$encoding->getVideoId());
-        $output->writeln('extname            '.$encoding->getExtname());
-        $output->writeln('profile id         '.$encoding->getProfileId());
-        $output->writeln('profile name       '.$encoding->getProfileName());
-        $output->writeln('width              '.$encoding->getWidth());
-        $output->writeln('height             '.$encoding->getHeight());
-        $output->writeln('audio bit rate     '.$encoding->getAudioBitrate());
-        $output->writeln('video bit rate     '.$encoding->getVideoBitrate());
-        $output->writeln('status             '.$encoding->getStatus());
+        $table = $this->getTableHelper();
+        $table->addRows(array(
+            array('id', $encoding->getId()),
+            array('video id', $encoding->getVideoId()),
+            array('file extension', $encoding->getExtname()),
+            array('profile id', $encoding->getProfileId()),
+            array('profile name', $encoding->getProfileName()),
+            array('width', $encoding->getWidth()),
+            array('height', $encoding->getHeight()),
+            array('audio bit rate', $encoding->getAudioBitrate()),
+            array('video bit rate', $encoding->getVideoBitrate()),
+            array('status', $encoding->getStatus()),
+        ));
 
-        if ($encoding->getStatus() == 'fail') {
-            $output->writeln('error message      '.$encoding->getErrorMessage());
+        if ('fail' === $encoding->getStatus()) {
+            $table->addRow(array('error message', $encoding->getErrorMessage()));
         }
 
-        $output->writeln('encoding progress  '.$encoding->getEncodingProgress().'%');
-        $output->writeln('encoding started   '.$encoding->getStartedEncodingAt());
-        $output->writeln('encoding time      '.$encoding->getEncodingTime());
-        $output->writeln('created at         '.$encoding->getCreatedAt());
-        $output->writeln('updated at         '.$encoding->getUpdatedAt());
+        $table->addRows(array(
+            array('encoding progress', $encoding->getEncodingProgress()),
+            array('encoding started', $encoding->getStartedEncodingAt()),
+            array('encoding time', $encoding->getEncodingTime()),
+            array('created at', $encoding->getCreatedAt()),
+            array('updated at', $encoding->getUpdatedAt()),
+        ));
+        $table->render($output);
     }
 }
