@@ -32,7 +32,7 @@ class ModifyProfileCommand extends CloudCommand
         $this->setName('panda:profile:modify');
         $this->setDescription('Modify a profile');
         $this->addArgument(
-            'id',
+            'profile-id',
             InputArgument::REQUIRED,
             'Id of the profile'
         );
@@ -73,7 +73,7 @@ class ModifyProfileCommand extends CloudCommand
             'Audio bit rate'
         );
         $this->addOption(
-            'video-bit rate',
+            'video-bitrate',
             null,
             InputOption::VALUE_REQUIRED,
             'Video bit rate'
@@ -94,37 +94,38 @@ class ModifyProfileCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $profile = $this->getCloud($input)->getProfile($input->getArgument('id'));
+            $profile = $this->getCloud($input)
+                ->getProfile($input->getArgument('profile-id'));
 
-            if ($input->hasOption('name')) {
+            if (null !== $input->getOption('name')) {
                 $profile->setName($input->getOption('name'));
             }
 
-            if ($input->hasOption('title')) {
+            if (null !== $input->getOption('title')) {
                 $profile->setTitle($input->getOption('title'));
             }
 
-            if ($input->hasOption('extname')) {
+            if (null !== $input->getOption('extname')) {
                 $profile->setExtname($input->getOption('extname'));
             }
 
-            if ($input->hasOption('width')) {
+            if (null !== $input->getOption('width')) {
                 $profile->setWidth($input->getOption('width'));
             }
 
-            if ($input->hasOption('height')) {
+            if (null !== $input->getOption('height')) {
                 $profile->setHeight($input->getOption('height'));
             }
 
-            if ($input->hasOption('audio-bitrate')) {
+            if (null !== $input->getOption('audio-bitrate')) {
                 $profile->setAudioBitrate($input->getOption('audio-bitrate'));
             }
 
-            if ($input->hasOption('video-bitrate')) {
+            if (null !== $input->getOption('video-bitrate')) {
                 $profile->setVideoBitrate($input->getOption('video-bitrate'));
             }
 
-            if ($input->hasOption('aspect-mode')) {
+            if (null !== $input->getOption('aspect-mode')) {
                 $profile->setAspectMode($input->getOption('aspect-mode'));
             }
 

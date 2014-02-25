@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xabbuh\PandaClient\Exception\PandaException;
+use Xabbuh\PandaClient\Model\Video;
 
 /**
  * Command to create an encoding.
@@ -61,9 +62,11 @@ class CreateEncodingCommand extends CloudCommand
             $profileId = $input->getOption('profile-id');
             $profileName = $input->getOption('profile-name');
 
-            if ('' !== $profileId && '' === $profileName) {
-                $encoding = $this->getCloud($input)->createEncoding(
-                    $input->getArgument('video-id'),
+            if (null !== $profileId && null === $profileName) {
+                $video = new Video();
+                $video->setId($input->getArgument('video-id'));
+                $encoding = $this->getCloud($input)->createEncodingWithProfileId(
+                    $video,
                     $profileId
                 );
                 $output->writeln(
@@ -72,9 +75,11 @@ class CreateEncodingCommand extends CloudCommand
                         $encoding->getId()
                     )
                 );
-            } elseif ($profileId == '' && $profileName != '') {
+            } elseif (null === $profileId && null !== $profileName) {
+                $video = new Video();
+                $video->setId($input->getArgument('video-id'));
                 $encoding = $this->getCloud($input)->createEncodingWithProfileName(
-                    $input->getArgument('video-id'),
+                    $video,
                     $profileName
                 );
                 $output->writeln(

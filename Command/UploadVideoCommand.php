@@ -45,6 +45,6 @@ class UploadVideoCommand extends CloudCommand
     {
         $output->writeln('Starting file upload...');
         $this->getCloud($input)->encodeVideoFile($input->getArgument('filename'));
-        $output->writeln('<info>File successfully uploaded.</info>');
+        $output->writeln('<info>File uploaded successfully.</info>');
     }
 }

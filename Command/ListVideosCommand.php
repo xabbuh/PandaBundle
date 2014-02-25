@@ -83,10 +83,7 @@ class ListVideosCommand extends CloudCommand
                         $video->getErrorMessage()
                     );
                 } else if ($video->getStatus() == 'processing') {
-                    $status = sprintf(
-                        'proccessing (%d%%)',
-                        $video->getEncodingProgress()
-                    );
+                    $status = 'processing';
                 } else {
                     $status = 'success';
                 }

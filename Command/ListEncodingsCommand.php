@@ -64,19 +64,19 @@ class ListEncodingsCommand extends CloudCommand
     {
         $filter = array();
 
-        if ('' !== $input->getOption('status')) {
+        if (null !== $input->getOption('status')) {
             $filter['status'] = $input->getOption('status');
         }
 
-        if ('' !== $input->getOption('profile-id')) {
+        if (null !== $input->getOption('profile-id')) {
             $filter['profile_id'] = $input->getOption('profile-id');
         }
 
-        if ('' !== $input->getOption('profile-name')) {
+        if (null !== $input->getOption('profile-name')) {
             $filter['profile_name'] = $input->getOption('profile-name');
         }
 
-        if ('' !== $input->getOption('video-id')) {
+        if (null !== $input->getOption('video-id')) {
             $filter['video_id'] = $input->getOption('video-id');
         }
 
@@ -100,7 +100,7 @@ class ListEncodingsCommand extends CloudCommand
                     );
                 } else if ($encoding->getStatus() == 'processing') {
                     $status = sprintf(
-                        'proccessing (%d%%)',
+                        'processing (%d%%)',
                         $encoding->getEncodingProgress()
                     );
                 } else {

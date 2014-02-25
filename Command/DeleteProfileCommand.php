@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xabbuh\PandaClient\Exception\PandaException;
+use Xabbuh\PandaClient\Model\Profile;
 
 /**
  * Command to delete a profile.
@@ -31,7 +32,7 @@ class DeleteProfileCommand extends CloudCommand
         $this->setName('panda:profile:delete');
         $this->setDescription('Delete a profile');
         $this->addArgument(
-            'id',
+            'profile-id',
             InputArgument::REQUIRED,
             'Id of the profile'
         );
@@ -45,7 +46,8 @@ class DeleteProfileCommand extends CloudCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $profile = $this->getCloud($input)->getProfile($input->getArgument('id'));
+            $profile = new Profile();
+            $profile->setId($input->getArgument('profile-id'));
             $this->getCloud($input)->deleteProfile($profile);
             $output->writeln(
                 '<info>Successfully deleted profile '.$profile->getName().'</info>'
