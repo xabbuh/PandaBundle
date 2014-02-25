@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xabbuh\PandaBundle\Event\EventFactory;
 use Xabbuh\PandaClient\Api\CloudManagerInterface;
-use Xabbuh\PandaClient\Util\Signing;
+use Xabbuh\PandaClient\Signer\PandaSigner;
 
 /**
  * XabbuhPandaBundle controllers.
@@ -84,9 +84,9 @@ class Controller
         $httpClient = $this->cloudManager->getCloud($cloud)->getHttpClient();
         $cloudId = $httpClient->getCloudId();
         $account = $httpClient->getAccount();
-        $signing = Signing::getInstance($cloudId, $account);
+        $signer = PandaSigner::getInstance($cloudId, $account);
 
-        return new JsonResponse($signing->signParams($method, $path, $params));
+        return new JsonResponse($signer->signParams($method, $path, $params));
     }
 
     /**
