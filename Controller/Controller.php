@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of the XabbuhPandaBundle package.
  *
  * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -40,10 +40,7 @@ class Controller
      * @param CloudManagerInterface    $cloudManager
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(
-        CloudManagerInterface $cloudManager,
-        EventDispatcherInterface $eventDispatcher
-    ) {
+    public function __construct(CloudManagerInterface $cloudManager, EventDispatcherInterface $eventDispatcher) {
         $this->cloudManager = $cloudManager;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -128,6 +125,7 @@ class Controller
         try {
             $event = EventFactory::createEventFromRequest($request);
             $this->eventDispatcher->dispatch($event->getName(), $event);
+
             return new Response('');
         } catch (\InvalidArgumentException $e) {
             return new Response($e->getMessage(), 400);
