@@ -1,3 +1,10 @@
+Documentation
+=============
+
+- [Installation](#installation)
+
+- [Usage](#usage)
+
 Installation
 ------------
 
@@ -6,10 +13,10 @@ Installation
     Add ``xabbuh/panda-bundle`` to the ``require`` section of your project's
     ``composer.json``:
 
-    ``` json
+    ```json
     {
         "require": {
-            "xabbuh/panda-bundle": "dev-master"
+            "xabbuh/panda-bundle": "~1.0"
         }
     }
     ```
@@ -21,11 +28,11 @@ Installation
     After Composer has installed XabbuhPandaBundle you will find it in your
     project's ``vendor/xabbuh/panda-bundle`` directory.
 
-2. Enable the bundle
+1. Enable the bundle
 
     Register the bundle in the kernel:
 
-    ``` php
+    ```php
     // app/AppKernel.php
 
     public function registerBundles()
@@ -39,16 +46,17 @@ Installation
     }
     ```
 
-3. Configure your clouds:
+1. Configure your clouds:
 
-    XabbuhPandaBundle manages all clouds which are provided by so called
-    cloud providers. For each cloud you need to configure an account which
-    provides the API credentials. The bundle ships with providers for both
-    clouds and accounts. These providers parse the ``xabbuh_panda`` section
-    of your application's configuration. Your configuration should look
-    something like this:
+    XabbuhPandaBundle manages all clouds that you configure in the ``xabbuh_panda``
+    section of your application configuration. The configuration for a cloud
+    consists of its Panda id and a reference to an account. In account holds
+    the authentication information needed to sign requests to the Panda REST
+    API.
 
-    ``` yaml
+    Your configuration should look something like this:
+
+    ```yaml
     xabbuh_panda:
         accounts:
             default:
@@ -69,7 +77,7 @@ Installation
     ``default_account`` key. The ``default_cloud`` works the same with your
     cloud configuration:
 
-    ``` yaml
+    ```yaml
     xabbuh_panda:
         default_account: first-account
         accounts:
@@ -95,3 +103,28 @@ Installation
     Note that the `third-cloud` cloud is managed by the `first-account`
     account as there is no account specified for it in the configuration
     and `first-account` is the default account.
+
+Usage
+-----
+
+After having configured your clouds you can retrieve a
+[CloudManager](https://github.com/xabbuh/panda-client/blob/master/src/Api/CloudManagerInterface.php)
+is available from the service container via the ``xabbuh_panda.cloud_manager``
+key. The manager can then be used to get access to one of your configured clouds.
+
+For example, for the ``first-cloud`` from the configuration above this would
+look like this:
+
+```php
+$cloudManager = $container->get('xabbuh_panda.cloud_manager');
+$cloud = $cloudManager->getCloud('first-cloud');
+```
+
+Each cloud is also available as a service directly from the service container:
+
+```php
+$cloud = $container->get('xabbuh_panda.first_cloud_cloud');
+```
+
+Read the [Panda client documentation](https://github.com/xabbuh/panda-client/blob/master/doc/usage.md#api-methods)
+to find out how to work with a so retrieved cloud.

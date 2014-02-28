@@ -1,19 +1,19 @@
 XabbuhPandeBundle
 =================
 
-[![Build Status](https://secure.travis-ci.org/xabbuh/XabbuhPandaBundle.png?branch=master)](http://travis-ci.org/xabbuh/XabbuhPandaBundle)
+[![Build Status](https://travis-ci.org/xabbuh/PandaBundle.png?branch=master)](https://travis-ci.org/xabbuh/PandaBundle)
 
 The XabbuhPandaBundle eases integration of the Panda encoding service into
-Symfony 2. It sits on top a [PHP Client implementation]
-(https://github.com/xabbuh/PandaClient) for Panda's REST API.
+Symfony 2. It sits on top a [PHP client implementation]
+(https://github.com/xabbuh/panda-client) for Panda's REST API.
 
 Features included are:
 
-- Models for all objects mnanaged through the REST API
-- Commands for many administrative tasks
+- Commands to maintain your cloud, your videos and their encodings
 - Publishing of Panda notification events through Symfony's Event Dispatcher
   component
-- Extension of the default field form type as a video uploader widget
+- Extends the default Symfony field form type that make it usable as Panda video
+  uploader widget
 
 Installation
 ------------
@@ -21,8 +21,8 @@ Installation
 See the [documentation](Resources/doc/index.md) for instructions on how to
 install the XabbuhPandaBundle.
 
-Licence
+License
 -------
 
-XabbuhPandaBundle is licenced under the MIT licence. See the [LICENCE]
-(Resources/meta/LICENSE) for the full licence text.
+XabbuhPandaBundle is licensed under the MIT license. See the [LICENSE]
+(Resources/meta/LICENSE) for the full license text.
