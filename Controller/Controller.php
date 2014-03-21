@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the XabbuhPandaBundle package.
  *
  * (c) Christian Flothmann <christian.flothmann@xabbuh.de>
