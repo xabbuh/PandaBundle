@@ -35,21 +35,16 @@ class EventFactory
         switch($request->request->get('event')) {
             case 'video-created':
                 return self::createVideoCreatedEventFromRequest($request);
-                break;
             case 'video-encoded':
                 return self::createVideoEncodedEventFromRequest($request);
-                break;
             case 'encoding-progress':
                 return self::createEncodingProgressEventFromRequest($request);
-                break;
             case 'encoding-complete':
                 return self::createEncodingCompleteEventFromRequest($request);
-                break;
             default:
                 throw new \InvalidArgumentException(
                     'The request does not contain a valid event name'
                 );
-                break;
         }
     }
 
@@ -158,4 +153,3 @@ class EventFactory
         return new VideoEncodedEvent($videoId, $encodingIds);
     }
 }
- 
