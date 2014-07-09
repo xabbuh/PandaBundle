@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Event that is triggered when a video was successfully encoded.
@@ -42,7 +43,7 @@ class VideoEncodedEvent extends Event
     {
         $this->videoId = $videoId;
         $this->encodingIds = $encodingIds;
-        $this->setName("xabbuh_panda.video_encoded");
+        $this->setName(XabbuhPandaEvents::VIDEO_ENCODED);
     }
     
     /**

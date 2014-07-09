@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Event;
 
 use Xabbuh\PandaBundle\Event\EncodingCompleteEvent;
+use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Test the EncodingCompletedEvent class.
@@ -29,7 +30,7 @@ class EncodingCompleteEventTest extends \PHPUnit_Framework_TestCase
             "0e06bdeb513e9e5f495d769fd993d8be",
             "9078f6bd53e9b90979823574f56c94b0"
         );
-        $this->assertEquals("xabbuh_panda.encoding_complete", $event->getName());
+        $this->assertEquals(XabbuhPandaEvents::ENCODING_COMPLETE, $event->getName());
         $this->assertEquals("0e06bdeb513e9e5f495d769fd993d8be", $event->getVideoId());
         $this->assertEquals("9078f6bd53e9b90979823574f56c94b0", $event->getEncodingId());
     }
