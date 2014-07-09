@@ -50,11 +50,13 @@ class VideoInfoCommand extends CloudCommand
         $table->addRows(array(
             array('id', $video->getId()),
             array('file name', $video->getOriginalFilename()),
+            array('path', $video->getPath()),
             array('width', $video->getWidth()),
             array('height', $video->getHeight()),
             array('audio bit rate', $video->getAudioBitrate()),
             array('video bit rate', $video->getVideoBitrate()),
             array('status', $video->getStatus()),
+            array('payload', $video->getPayload()),
         ));
 
         if ('fail' === $video->getStatus()) {
