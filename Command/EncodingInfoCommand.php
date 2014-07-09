@@ -52,6 +52,7 @@ class EncodingInfoCommand extends CloudCommand
             array('file extension', $encoding->getExtname()),
             array('profile id', $encoding->getProfileId()),
             array('profile name', $encoding->getProfileName()),
+            array('path', $encoding->getPath()),
             array('width', $encoding->getWidth()),
             array('height', $encoding->getHeight()),
             array('audio bit rate', $encoding->getAudioBitrate()),
