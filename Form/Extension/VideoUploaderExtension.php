@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\UrlGenerator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Extends the {@link http://api.symfony.com/master/Symfony/Component/Form/Extension/Core/Type/FileType.html FileType}
@@ -28,7 +28,7 @@ class VideoUploaderExtension extends AbstractTypeExtension
 {
     /**
      * The router service
-     * @var \Symfony\Component\Routing\Router
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     private $router;
 
@@ -42,8 +42,8 @@ class VideoUploaderExtension extends AbstractTypeExtension
     /**
      * Constructor.
      *
-     * @param UrlGeneratorInterface $router The router
-     * @param array $defaultOptions Default display options for widget objects
+     * @param UrlGeneratorInterface $router         The router
+     * @param array                 $defaultOptions Default display options for widget objects
      */
     public function __construct(UrlGeneratorInterface $router, array $defaultOptions)
     {
