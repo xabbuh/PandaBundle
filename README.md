@@ -2,6 +2,7 @@ XabbuhPandeBundle
 =================
 
 [![Build Status](https://travis-ci.org/xabbuh/PandaBundle.png?branch=master)](https://travis-ci.org/xabbuh/PandaBundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xabbuh/PandaBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/xabbuh/PandaBundle/?branch=master)
 
 The XabbuhPandaBundle eases integration of the Panda encoding service into
 Symfony 2. It sits on top a [PHP client implementation]
