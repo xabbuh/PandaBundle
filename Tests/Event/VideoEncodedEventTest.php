@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Event;
 
 use Xabbuh\PandaBundle\Event\VideoEncodedEvent;
+use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Test the VideoEncodedEvent class.
@@ -32,7 +33,7 @@ class VideoEncodedEventTest extends \PHPUnit_Framework_TestCase
                 "403301e0d6f2fc502ad8e9a54afc38fc"
             )
         );
-        $this->assertEquals("xabbuh_panda.video_encoded", $event->getName());
+        $this->assertEquals(XabbuhPandaEvents::VIDEO_ENCODED, $event->getName());
         $this->assertEquals("0e06bdeb513e9e5f495d769fd993d8be", $event->getVideoId());
         $this->assertEquals(
             array(

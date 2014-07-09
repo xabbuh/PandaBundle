@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Event that is triggered repeatedly while an encoding process is running.
@@ -50,7 +51,7 @@ class EncodingProgressEvent extends Event
         $this->videoId = $videoId;
         $this->encodingId = $encodingId;
         $this->progress = $progress;
-        $this->setName("xabbuh_panda.encoding_progress");
+        $this->setName(XabbuhPandaEvents::ENCODING_PROGRESS);
     }
     
     /**

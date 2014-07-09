@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Event that is triggered when a video was successfully created.
@@ -42,7 +43,7 @@ class VideoCreatedEvent extends Event
     {
         $this->videoId = $videoId;
         $this->encodingIds = $encodingIds;
-        $this->setName("xabbuh_panda.video_created");
+        $this->setName(XabbuhPandaEvents::VIDEO_CREATED);
     }
     
     /**
