@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* do not display misleading pagination information with empty result sets in
+  the ``panda:video:list`` command
+
 * less restrictive type hint in the ``VideoUploaderExtension`` (rely on the
   ``UrlGeneratorInterface`` instead of requiring the complete ``Router`` class
   (by @stof in #1)

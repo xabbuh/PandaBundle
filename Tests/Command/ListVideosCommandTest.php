@@ -32,7 +32,7 @@ class ListVideosCommandTest extends CloudCommandTest
             ->expects($this->once())
             ->method('getVideosForPagination')
             ->with(1, 10)
-            ->will($this->returnValue($this->createVideoResultList(1, 10)));
+            ->will($this->returnValue($this->createVideoResultList(1, 10, $this->createNonEmptyVideoList())));
         $this->runCommand('panda:video:list');
         $this->validateVideoResultOutput(1);
     }
@@ -43,7 +43,7 @@ class ListVideosCommandTest extends CloudCommandTest
             ->expects($this->once())
             ->method('getVideosForPagination')
             ->with(3, 10)
-            ->will($this->returnValue($this->createVideoResultList(3, 10)));
+            ->will($this->returnValue($this->createVideoResultList(3, 10, $this->createNonEmptyVideoList())));
         $this->runCommand('panda:video:list', array('--page' => 3));
         $this->validateVideoResultOutput(3);
     }
@@ -54,12 +54,23 @@ class ListVideosCommandTest extends CloudCommandTest
             ->expects($this->once())
             ->method('getVideosForPagination')
             ->with(1, 5)
-            ->will($this->returnValue($this->createVideoResultList(1, 5)));
+            ->will($this->returnValue($this->createVideoResultList(1, 5, $this->createNonEmptyVideoList())));
         $this->runCommand('panda:video:list', array('--per-page' => 5));
         $this->validateVideoResultOutput(1);
     }
 
-    private function createVideoResultList($page, $perPage)
+    public function testCommandWithEmptyResult()
+    {
+        $this->defaultCloud
+            ->expects($this->once())
+            ->method('getVideosForPagination')
+            ->with(1, 10)
+            ->will($this->returnValue($this->createVideoResultList(1, 10, array())));
+        $this->runCommand('panda:video:list');
+        $this->validateEmptyVideoResultOutput();
+    }
+
+    private function createNonEmptyVideoList()
     {
         $video1 = new Video();
         $video1->setId('video-1');
@@ -71,11 +82,16 @@ class ListVideosCommandTest extends CloudCommandTest
         $video3->setId('video-3');
         $video3->setStatus('processing');
 
+        return array($video1, $video2, $video3);
+    }
+
+    private function createVideoResultList($page, $perPage, array $videos)
+    {
         $result = new \stdClass();
-        $result->videos = array($video1, $video2, $video3);
+        $result->videos = $videos;
         $result->page = $page;
         $result->per_page = $perPage;
-        $result->total = 3;
+        $result->total = count($videos);
 
         return $result;
     }
@@ -100,6 +116,18 @@ class ListVideosCommandTest extends CloudCommandTest
         );
         $this->assertRegExp(
             '/video-3\s*\|\s*processing/',
+            $this->commandTester->getDisplay()
+        );
+    }
+
+    private function validateEmptyVideoResultOutput()
+    {
+        $this->assertNotRegExp(
+            '/Page .* of .*/',
+            $this->commandTester->getDisplay()
+        );
+        $this->assertRegExp(
+            '/Total number of videos: 0/',
             $this->commandTester->getDisplay()
         );
     }

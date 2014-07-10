@@ -57,16 +57,15 @@ class ListVideosCommand extends CloudCommand
             $input->getOption('per-page')
         );
 
-        $output->writeln(
-            array(
-                sprintf(
-                    'Page %d of %d',
-                    $result->page,
-                    ceil($result->total / $result->per_page)
-                ),
-                'Total number of videos: '.$result->total,
-            )
-        );
+        if ($result->total > 0) {
+            $output->writeln(sprintf(
+                'Page %d of %d',
+                $result->page,
+                ceil($result->total / $result->per_page)
+            ));
+        }
+
+        $output->writeln('Total number of videos: '.$result->total);
 
         if (count($result->videos) > 0) {
             $table = $this->getTableHelper();
