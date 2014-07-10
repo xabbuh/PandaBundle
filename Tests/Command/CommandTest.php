@@ -14,6 +14,7 @@ namespace Xabbuh\PandaBundle\Tests\Command;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Xabbuh\PandaClient\Exception\ApiException;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -68,10 +69,10 @@ abstract class CommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Xabbuh\PandaClient\Exception\ApiException|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Xabbuh\PandaClient\Exception\ApiException
      */
     protected function createApiException()
     {
-        return $this->getMock('\Xabbuh\PandaClient\Exception\ApiException');
+        return new ApiException();
     }
 }

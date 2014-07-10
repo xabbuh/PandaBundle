@@ -9,3 +9,5 @@ CHANGELOG
 
 * reflect the extended abilities from the 1.1.0 release of xabbuh/panda-client
   in the commands
+
+* full support for HHVM
