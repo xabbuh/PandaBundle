@@ -11,7 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Xabbuh\PandaBundle\DependencyInjection\XabbuhPandaExtension;
 
 /**
@@ -19,93 +19,45 @@ use Xabbuh\PandaBundle\DependencyInjection\XabbuhPandaExtension;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
+class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
-
-    /**
-     * @var XabbuhPandaExtension
-     */
-    private $extension;
-
-    protected function setUp()
-    {
-        $this->container = new ContainerBuilder();
-        $this->extension = new XabbuhPandaExtension();
-    }
-
     /**
      * Tests the extension without custom config options.
      */
     public function testDefaultConfig()
     {
-        $this->extension->load(array(), $this->container);
+        $this->load();
 
-        // and check that all parameters do exist and match the default configuration values
-        $this->assertEquals(
-            'default',
-            $this->container->getParameter('xabbuh_panda.account.default')
+        $this->assertContainerBuilderHasParameter('xabbuh_panda.account.default', 'default');
+        $this->assertContainerBuilderHasParameter('xabbuh_panda.cloud.default', 'default');
+        $this->assertContainerBuilderHasParameter(
+            'xabbuh_panda.video_uploader.multiple_files',
+            false
         );
-        $this->assertEquals(
-            'default',
-            $this->container->getParameter('xabbuh_panda.cloud.default')
+        $this->assertContainerBuilderHasParameter(
+            'xabbuh_panda.video_uploader.cancel_button',
+            true
         );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Api\AccountManager',
-            $this->container->getParameter('xabbuh_panda.account.manager.class')
+        $this->assertContainerBuilderHasParameter(
+            'xabbuh_panda.video_uploader.progress_bar',
+            true
         );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Api\CloudManager',
-            $this->container->getParameter('xabbuh_panda.cloud.manager.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaBundle\Cloud\CloudFactory',
-            $this->container->getParameter('xabbuh_panda.cloud.factory.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaBundle\Controller\Controller',
-            $this->container->getParameter('xabbuh_panda.controller.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\TransformerRegistry',
-            $this->container->getParameter('xabbuh_panda.transformer.registry.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\CloudTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.cloud.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\EncodingTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.encoding.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\NotificationsTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.notifications.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\ProfileTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.profile.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaClient\Transformer\VideoTransformer',
-            $this->container->getParameter('xabbuh_panda.transformer.video.class')
-        );
-        $this->assertEquals(
-            'Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension',
-            $this->container->getParameter('xabbuh_panda.video_uploader_extension.class')
-        );
-        $this->assertFalse(
-            $this->container->getParameter('xabbuh_panda.video_uploader.multiple_files')
-        );
-        $this->assertTrue(
-            $this->container->getParameter('xabbuh_panda.video_uploader.cancel_button')
-        );
-        $this->assertTrue(
-            $this->container->getParameter('xabbuh_panda.video_uploader.progress_bar')
-        );
+
+        $this->ensureThatDefinitionsAreRegistered(array(
+            'xabbuh_panda.account_manager' => 'Xabbuh\PandaClient\Api\AccountManager',
+            'xabbuh_panda.cloud_manager' => 'Xabbuh\PandaClient\Api\CloudManager',
+            'xabbuh_panda.cloud_factory' => 'Xabbuh\PandaBundle\Cloud\CloudFactory',
+            'xabbuh_panda.controller' => 'Xabbuh\PandaBundle\Controller\Controller',
+            'xabbuh_panda.transformer' => 'Xabbuh\PandaClient\Transformer\TransformerRegistry',
+            'xabbuh_panda.transformer.cloud' => 'Xabbuh\PandaClient\Transformer\CloudTransformer',
+            'xabbuh_panda.transformer.encoding' => 'Xabbuh\PandaClient\Transformer\EncodingTransformer',
+            'xabbuh_panda.transformer.notifications' => 'Xabbuh\PandaClient\Transformer\NotificationsTransformer',
+            'xabbuh_panda.transformer.profile' => 'Xabbuh\PandaClient\Transformer\ProfileTransformer',
+            'xabbuh_panda.transformer.video' => 'Xabbuh\PandaClient\Transformer\VideoTransformer',
+            'xabbuh_panda.video_uploader_extension' => 'Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension',
+        ));
+        $this->ensureThatSerializersArePassedToTransformers();
+        $this->ensureThatTransformersArePassedToTheRegistry();
     }
 
     /**
@@ -114,16 +66,10 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testModifiedDefaultNames()
     {
-        $config = array('default_account' => 'foo', 'default_cloud' => 'bar');
-        $this->extension->load(array($config), $this->container);
-        $this->assertEquals(
-            'foo',
-            $this->container->getParameter('xabbuh_panda.account.default')
-        );
-        $this->assertEquals(
-            'bar',
-            $this->container->getParameter('xabbuh_panda.cloud.default')
-        );
+        $this->load(array('default_account' => 'foo', 'default_cloud' => 'bar'));
+
+        $this->assertContainerBuilderHasParameter('xabbuh_panda.account.default', 'foo');
+        $this->assertContainerBuilderHasParameter('xabbuh_panda.cloud.default', 'bar');
     }
 
     /**
@@ -132,7 +78,7 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCloudWithoutAccountKey()
     {
-        $config = array(
+        $this->load(array(
             'default_account' => 'default',
             'clouds' => array(
                 'with_account' => array(
@@ -143,107 +89,80 @@ class XabbuhPandaExtensionTest extends \PHPUnit_Framework_TestCase
                     'id' => 'foobar',
                 ),
             ),
+        ));
+        $withAccountCloud = $this->container->findDefinition('xabbuh_panda.with_account_cloud');
+        $withoutAccountCloud = $this->container->findDefinition('xabbuh_panda.without_account_cloud');
+
+        $this->ensureThatDefinitionsAreRegistered(array(
+            'xabbuh_panda.with_account_cloud' => 'Xabbuh\PandaClient\Api\Cloud',
+            'xabbuh_panda.without_account_cloud' => 'Xabbuh\PandaClient\Api\Cloud',
+        ));
+
+        $this->assertContainerBuilderHasParameter('xabbuh_panda.account.default', 'default');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'xabbuh_panda.with_account_cloud',
+            1,
+            'bar'
         );
-        $this->extension->load(array($config), $this->container);
-
-        $this->assertEquals(
-            'default',
-            $this->container->getParameter('xabbuh_panda.account.default')
+        $this->assertEquals('xabbuh_panda.cloud_factory', $withAccountCloud->getFactoryService());
+        $this->assertEquals('get', $withAccountCloud->getFactoryMethod());
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'xabbuh_panda.without_account_cloud',
+            1,
+            null
         );
-
-        $fooCloud = $this->container->getDefinition('xabbuh_panda.with_account_cloud');
-        $this->assertEquals('bar', $fooCloud->getArgument(1));
-        $this->assertEquals('xabbuh_panda.cloud_factory', $fooCloud->getFactoryService());
-
-        $foobarCloud = $this->container->getDefinition('xabbuh_panda.without_account_cloud');
-        $this->assertNull($foobarCloud->getArgument(1));
-        $this->assertEquals('xabbuh_panda.cloud_factory', $fooCloud->getFactoryService());
+        $this->assertEquals('xabbuh_panda.cloud_factory', $withoutAccountCloud->getFactoryService());
+        $this->assertEquals('get', $withoutAccountCloud->getFactoryMethod());
     }
 
-    public function testTransformerServices()
+    protected function getContainerExtensions()
     {
-        $this->extension->load(array(), $this->container);
+        return array(new XabbuhPandaExtension());
+    }
 
-        $cloudTransformerId = 'xabbuh_panda.transformer.cloud';
-        $cloudTransformer = $this->container->findDefinition($cloudTransformerId);
-        $encodingTransformerId = 'xabbuh_panda.transformer.encoding';
-        $encodingTransformer = $this->container->findDefinition($encodingTransformerId);
-        $notificationsTransformerId = 'xabbuh_panda.transformer.notifications';
-        $profileTransformerId = 'xabbuh_panda.transformer.profile';
-        $profileTransformer = $this->container->findDefinition($profileTransformerId);
-        $videoTransformerId = 'xabbuh_panda.transformer.video';
-        $videoTransformer = $this->container->findDefinition($videoTransformerId);
+    private function ensureThatDefinitionsAreRegistered(array $definitions)
+    {
+        foreach ($definitions as $id => $className) {
+            $this->assertContainerBuilderHasService($id, $className);
+        }
+    }
 
-        // ensure that serializers are passed to the transformers
-        $this->assertEquals(
-            'xabbuh_panda.serializer.cloud',
-            $this->getMethodArgument($cloudTransformer->getMethodCalls(), 0, 0)
-        );
-        $this->assertEquals(
-            'xabbuh_panda.serializer.encoding',
-            $this->getMethodArgument($encodingTransformer->getMethodCalls(), 0, 0)
-        );
-        $this->assertEquals(
-            'xabbuh_panda.serializer.profile',
-            $this->getMethodArgument($profileTransformer->getMethodCalls(), 0, 0)
-        );
-        $this->assertEquals(
-            'xabbuh_panda.serializer.video',
-            $this->getMethodArgument($videoTransformer->getMethodCalls(), 0, 0)
-        );
+    private function ensureThatSerializersArePassedToTransformers()
+    {
+        $transformerTypes = array('cloud', 'encoding', 'profile', 'video');
 
+        foreach ($transformerTypes as $type) {
+            $definition = $this->container->findDefinition('xabbuh_panda.transformer.'.$type);
+            $methodCalls = $definition->getMethodCalls();
+            $this->validateMethodCallWithOneArgument(
+                $methodCalls[0],
+                'setSerializer',
+                'xabbuh_panda.serializer.'.$type
+            );
+        }
+    }
+
+    private function ensureThatTransformersArePassedToTheRegistry()
+    {
         $transformerRegistry = $this->container->findDefinition('xabbuh_panda.transformer');
+        $methodCalls = $transformerRegistry->getMethodCalls();
+        $transformerTypes = array('Cloud', 'Encoding', 'Notifications', 'Profile', 'Video');
 
-        // ensure that encoders are passed to the transformer registry
-        $this->assertEquals(
-            'setCloudTransformer',
-            $this->getMethodName($transformerRegistry->getMethodCalls(), 0)
-        );
-        $this->assertEquals(
-            $cloudTransformerId,
-            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 0, 0)
-        );
-        $this->assertEquals(
-            'setEncodingTransformer',
-            $this->getMethodName($transformerRegistry->getMethodCalls(), 1)
-        );
-        $this->assertEquals(
-            $encodingTransformerId,
-            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 1, 0)
-        );
-        $this->assertEquals(
-            'setNotificationsTransformer',
-            $this->getMethodName($transformerRegistry->getMethodCalls(), 2)
-        );
-        $this->assertEquals(
-            $notificationsTransformerId,
-            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 2, 0)
-        );
-        $this->assertEquals(
-            'setProfileTransformer',
-            $this->getMethodName($transformerRegistry->getMethodCalls(), 3)
-        );
-        $this->assertEquals(
-            $profileTransformerId,
-            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 3, 0)
-        );
-        $this->assertEquals(
-            'setVideoTransformer',
-            $this->getMethodName($transformerRegistry->getMethodCalls(), 4)
-        );
-        $this->assertEquals(
-            $videoTransformerId,
-            $this->getMethodArgument($transformerRegistry->getMethodCalls(), 4, 0)
-        );
+        for ($i = 0; $i < count($transformerTypes); $i++) {
+            $this->validateMethodCallWithOneArgument(
+                $methodCalls[$i],
+                'set'.$transformerTypes[$i].'Transformer',
+                'xabbuh_panda.transformer.'.strtolower($transformerTypes[$i])
+            );
+        }
     }
 
-    private function getMethodName($methodCalls, $number)
+    private function validateMethodCallWithOneArgument(array $methodCall, $expectedMethodName, $expectedArgument)
     {
-        return $methodCalls[$number][0];
-    }
+        $actualMethodName = $methodCall[0];
+        $actualArgument = $methodCall[1][0];
 
-    private function getMethodArgument($methodCalls, $number, $argument)
-    {
-        return $methodCalls[$number][1][$argument];
+        $this->assertEquals($expectedMethodName, $actualMethodName);
+        $this->assertEquals($expectedArgument, $actualArgument);
     }
 }
