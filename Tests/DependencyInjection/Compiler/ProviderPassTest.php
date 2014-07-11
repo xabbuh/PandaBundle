@@ -11,7 +11,9 @@
 
 namespace Xabbuh\PandaBundle\Tests\DependencyInjection;
 
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Xabbuh\PandaBundle\DependencyInjection\Compiler\ProviderPass;
 
 /**
@@ -20,183 +22,75 @@ use Xabbuh\PandaBundle\DependencyInjection\Compiler\ProviderPass;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ProviderPassTest extends \PHPUnit_Framework_TestCase
+class ProviderPassTest extends AbstractCompilerPassTestCase
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\Definition
-     */
-    protected $accountManagerDefinitionMock;
-
-    /**
-     * @var \Symfony\Component\DependencyInjection\Definition
-     */
-    protected $cloudManagerDefinitionMock;
-
-    /**
-     * @var \Symfony\Component\DependencyInjection\Definition
-     */
-    protected $containerBuilderMock;
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function setUp()
-    {
-        $this->accountManagerDefinitionMock = $this->getMockBuilder("\\Symfony\\Component\\DependencyInjection\\Definition")
-            ->getMock();
-        $this->cloudManagerDefinitionMock = $this->getMockBuilder("\\Symfony\\Component\\DependencyInjection\\Definition")
-            ->getMock();
-
-        $this->containerBuilderMock = $this->getMock("Symfony\\Component\\DependencyInjection\\ContainerBuilder");
-        $this->containerBuilderMock->expects($this->any())
-            ->method("hasDefinition")
-            ->will($this->returnValue(true));
-        $returnValueMap = array(
-            array("xabbuh_panda.account_manager", $this->accountManagerDefinitionMock),
-            array("xabbuh_panda.cloud_manager", $this->cloudManagerDefinitionMock)
-        );
-        $this->containerBuilderMock->expects($this->any())
-            ->method("getDefinition")
-            ->will($this->returnValueMap($returnValueMap));
-    }
-
-    /**
-     * Tests that no register method is called when no services are tagged
-     * as providers.
-     */
     public function testWithoutProviders()
     {
-        $this->accountManagerDefinitionMock->expects($this->never())
-            ->method("addMethodCall");
-        $this->cloudManagerDefinitionMock->expects($this->never())
-            ->method("addMethodCall");
-        $this->containerBuilderMock->expects($this->any())
-            ->method("findTaggedServiceIds")
-            ->will($this->returnValue(array()));
-        $pass = new ProviderPass();
-        $pass->process($this->containerBuilderMock);
+        $this->validateContainerWithTaggedProviders(0, 0);
     }
 
-    /**
-     * Ensure that registerProvider on AccountManager is called once whereas
-     * registerProvider on CloudManager is called never when one account
-     * provider and no cloud provider is registered.
-     */
     public function testWithOneAccountProvider()
     {
-        $this->accountManagerDefinitionMock->expects($this->once())
-            ->method("addMethodCall")
-            ->with($this->equalTo("registerProvider"));
-        $this->cloudManagerDefinitionMock->expects($this->never())
-            ->method("addMethodCall");
-        $returnValueMap = array(
-            array("xabbuh_panda.account_provider", array("id" => array())),
-            array("xabbuh_panda.cloud_provider", array())
-        );
-        $this->containerBuilderMock->expects($this->any())
-            ->method("findTaggedServiceIds")
-            ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderPass();
-        $pass->process($this->containerBuilderMock);
+        $this->validateContainerWithTaggedProviders(1, 0);
     }
 
-    /**
-     * Ensure that registerProvider on AccountManager is called twice whereas
-     * registerProvider on CloudManager is called never when two account
-     * providers and no cloud provider is registered.
-     */
     public function testWithTwoAccountProviders()
     {
-        $this->accountManagerDefinitionMock->expects($this->exactly(2))
-            ->method("addMethodCall")
-            ->with($this->equalTo("registerProvider"));
-        $this->cloudManagerDefinitionMock->expects($this->never())
-            ->method("addMethodCall");
-        $returnValueMap = array(
-            array(
-                "xabbuh_panda.account_provider",
-                array("id1" => array(), "id2" => array())
-            ),
-            array("xabbuh_panda.cloud_provider", array())
-        );
-        $this->containerBuilderMock->expects($this->any())
-            ->method("findTaggedServiceIds")
-            ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderPass();
-        $pass->process($this->containerBuilderMock);
+        $this->validateContainerWithTaggedProviders(2, 0);
     }
 
-    /**
-     * Ensure that registerProvider on AccountManager is never called whereas
-     * registerProvider on CloudManager is called one when no account
-     * provider and one cloud provider is registered.
-     */
     public function testWithOneCloudProvider()
     {
-        $this->accountManagerDefinitionMock->expects($this->never())
-            ->method("addMethodCall");
-        $this->cloudManagerDefinitionMock->expects($this->once())
-            ->method("addMethodCall")
-            ->with($this->equalTo("registerProvider"));
-        $returnValueMap = array(
-            array("xabbuh_panda.account_provider", array()),
-            array("xabbuh_panda.cloud_provider", array("id" => array()))
-        );
-        $this->containerBuilderMock->expects($this->any())
-            ->method("findTaggedServiceIds")
-            ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderPass();
-        $pass->process($this->containerBuilderMock);
+        $this->validateContainerWithTaggedProviders(0, 1);
     }
 
-    /**
-     * Ensure that registerProvider on CloudManager is called twice whereas
-     * registerProvider on AccountManager is called never when two cloud
-     * providers and no account provider is registered.
-     */
     public function testWithTwoCloudProviders()
     {
-        $this->accountManagerDefinitionMock->expects($this->never())
-            ->method("addMethodCall");
-        $this->cloudManagerDefinitionMock->expects($this->exactly(2))
-            ->method("addMethodCall")
-            ->with($this->equalTo("registerProvider"));
-        $returnValueMap = array(
-            array("xabbuh_panda.account_provider", array()),
-            array(
-                "xabbuh_panda.cloud_provider",
-                array("id1" => array(), "id2" => array())
-            )
-        );
-        $this->containerBuilderMock->expects($this->any())
-            ->method("findTaggedServiceIds")
-            ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderPass();
-        $pass->process($this->containerBuilderMock);
+        $this->validateContainerWithTaggedProviders(0, 2);
     }
 
-    /**
-     * Ensure that registerProvider on AccountManager as well as
-     * registerProvider on CloudManager is called once when one
-     * account provider and one cloud provider is defined.
-     */
     public function testWithOneAccountProviderAndOneCloudProvider()
     {
-        $this->accountManagerDefinitionMock->expects($this->once())
-            ->method("addMethodCall")
-            ->with($this->equalTo("registerProvider"));
-        $this->cloudManagerDefinitionMock->expects($this->once())
-            ->method("addMethodCall")
-            ->with($this->equalTo("registerProvider"));
-        $returnValueMap = array(
-            array("xabbuh_panda.account_provider", array("id1" => array())),
-            array("xabbuh_panda.cloud_provider", array("id2" => array()))
+        $this->validateContainerWithTaggedProviders(1, 1);
+    }
+
+    protected function registerCompilerPass(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new ProviderPass());
+    }
+
+    private function validateContainerWithTaggedProviders($accountProvidersCount, $cloudProvidersCount)
+    {
+        $this->container->register(
+            'xabbuh_panda.account_manager',
+            'Xabbuh\PandaClient\Api\AccountManager'
         );
-        $this->containerBuilderMock->expects($this->any())
-            ->method("findTaggedServiceIds")
-            ->will($this->returnValueMap($returnValueMap));
-        $pass = new ProviderPass();
-        $pass->process($this->containerBuilderMock);
+        $this->container->register(
+            'xabbuh_panda.cloud_manager',
+            'Xabbuh\PandaClient\Api\CloudManager'
+        );
+
+        for ($i = 0; $i < $accountProvidersCount; $i++) {
+            $definition = new Definition('Foo');
+            $definition->addTag('xabbuh_panda.account_provider');
+            $this->container->setDefinition(md5(uniqid()), $definition);
+        }
+
+        for ($i = 0; $i < $cloudProvidersCount; $i++) {
+            $definition = new Definition('Foo');
+            $definition->addTag('xabbuh_panda.cloud_provider');
+            $this->container->setDefinition(md5(uniqid()), $definition);
+        }
+
+        $this->compile();
+
+        $this->assertEquals(
+            $accountProvidersCount,
+            count($this->container->getDefinition('xabbuh_panda.account_manager')->getMethodCalls())
+        );
+        $this->assertEquals(
+            $cloudProvidersCount,
+            count($this->container->getDefinition('xabbuh_panda.cloud_manager')->getMethodCalls())
+        );
     }
 }
