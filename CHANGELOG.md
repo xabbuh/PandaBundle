@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.0.1
+-----
+
 * service container extension test improvements (by using test case classes
   from the ``matthiasnoback/symfony-dependency-injection-test`` package)
 
