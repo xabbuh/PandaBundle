@@ -14,6 +14,8 @@ namespace Xabbuh\PandaBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
  * Base class of all commands which act on panda clouds.
@@ -70,5 +72,22 @@ abstract class CloudCommand extends ContainerAwareCommand
     protected function getTableHelper()
     {
         return $this->getHelper('table');
+    }
+
+    /**
+     * TODO: docblock
+     */
+    abstract protected function doExecuteCommand(InputInterface $input, OutputInterface $output);
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        try {
+            $this->doExecuteCommand($input, $output);
+        } catch (PandaException $e) {
+            $output->writeln(sprintf('<error>An error occurred: %s</error>', $e->getMessage()));
+        }
     }
 }

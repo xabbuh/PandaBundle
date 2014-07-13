@@ -23,6 +23,7 @@ class EnableEventCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new EnableEventCommand();
+        $this->apiMethod = 'setNotifications';
 
         parent::setUp();
     }
@@ -49,5 +50,10 @@ class EnableEventCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:notifications:enable');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('event' => 'video-created');
     }
 }

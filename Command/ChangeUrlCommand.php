@@ -24,9 +24,9 @@ use Xabbuh\PandaClient\Model\Notifications;
 class ChangeUrlCommand extends CloudCommand
 {
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
-    public function configure()
+    protected function configure()
     {
         $this->setName('panda:notifications:change-url');
         $this->setDescription('Change the endpoint for notification requests');
@@ -34,11 +34,11 @@ class ChangeUrlCommand extends CloudCommand
 
         parent::configure();
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $notifications = new Notifications();
         $notifications->setUrl($input->getArgument('url'));

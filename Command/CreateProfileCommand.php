@@ -42,24 +42,17 @@ class CreateProfileCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $cloud = $this->getCloud($input);
-            $preset = $input->getArgument('preset');
-            $profile = $cloud->addProfileFromPreset($preset);
-            $output->writeln(
-                sprintf(
-                    '<info>Successfully created profile %s with id %s</info>',
-                    $profile->getName(),
-                    $profile->getId()
-                )
-            );
-        } catch(PandaException $e) {
-            $output->writeln(
-                '<error>An error occurred while trying to create the profile: '
-                .$e->getMessage().'</error>'
-            );
-        }
+        $cloud = $this->getCloud($input);
+        $preset = $input->getArgument('preset');
+        $profile = $cloud->addProfileFromPreset($preset);
+        $output->writeln(
+            sprintf(
+                '<info>Successfully created profile %s with id %s</info>',
+                $profile->getName(),
+                $profile->getId()
+            )
+        );
     }
 }

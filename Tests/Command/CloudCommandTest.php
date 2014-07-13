@@ -11,6 +11,8 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Xabbuh\PandaClient\Exception\PandaException;
+
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
@@ -25,6 +27,23 @@ abstract class CloudCommandTest extends CommandTest
      * @var \Xabbuh\PandaClient\Api\Cloud|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $defaultCloud;
+
+    protected $apiMethod;
+
+    public function testCommandWhenPandaExceptionIsThrown()
+    {
+        $this
+            ->defaultCloud
+            ->expects($this->any())
+            ->method($this->apiMethod)
+            ->willThrowException(new PandaException('Panda API error message'));
+        $this->runCommand($this->command->getName(), $this->getDefaultCommandArguments());
+
+        $this->assertRegExp(
+            '/An error occurred: Panda API error message/',
+            $this->commandTester->getDisplay()
+        );
+    }
 
     protected function createContainerMock()
     {
@@ -68,5 +87,10 @@ abstract class CloudCommandTest extends CommandTest
         foreach ($rows as $row) {
             $this->validateTableRow($row[0], $row[1]);
         }
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array();
     }
 }

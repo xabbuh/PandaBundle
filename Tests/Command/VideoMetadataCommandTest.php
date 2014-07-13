@@ -21,6 +21,7 @@ class VideoMetadataCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new VideoMetadataCommand();
+        $this->apiMethod = 'getVideoMetadata';
 
         parent::setUp();
     }
@@ -53,5 +54,10 @@ class VideoMetadataCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:video:metadata');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('video-id' => md5(uniqid()));
     }
 }

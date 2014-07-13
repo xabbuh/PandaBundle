@@ -41,7 +41,7 @@ class ProfileInfoCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $profile = $this->getCloud($input)->getProfile($input->getArgument('profile-id'));
         $table = $this->getTableHelper();

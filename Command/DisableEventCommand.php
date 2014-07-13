@@ -27,7 +27,7 @@ class DisableEventCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function configure()
+    protected function configure()
     {
         $this->setName('panda:notifications:disable');
         $this->setDescription('Disable a notification event');
@@ -43,7 +43,7 @@ class DisableEventCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $notificationEvent = new NotificationEvent($input->getArgument('event'), false);
         $notifications = new Notifications();

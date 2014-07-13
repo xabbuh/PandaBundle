@@ -31,6 +31,7 @@ class ModifyProfileCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new ModifyProfileCommand();
+        $this->apiMethod = 'getProfile';
 
         parent::setUp();
 
@@ -141,6 +142,11 @@ class ModifyProfileCommandTest extends CloudCommandTest
             array('profile-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('profile-id' => md5(uniqid()));
     }
 
     private function createProfileMock()

@@ -43,20 +43,13 @@ class DeleteProfileCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $profile = new Profile();
-            $profile->setId($input->getArgument('profile-id'));
-            $this->getCloud($input)->deleteProfile($profile);
-            $output->writeln(
-                '<info>Successfully deleted profile '.$profile->getName().'</info>'
-            );
-        } catch(PandaException $e) {
-            $output->writeln(
-                '<error>An error occurred while trying to delete the profile: '
-                .$e->getMessage().'</error>'
-            );
-        }
+        $profile = new Profile();
+        $profile->setId($input->getArgument('profile-id'));
+        $this->getCloud($input)->deleteProfile($profile);
+        $output->writeln(
+            '<info>Successfully deleted profile '.$profile->getName().'</info>'
+        );
     }
 }

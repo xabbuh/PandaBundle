@@ -20,6 +20,7 @@ class UploadVideoCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new UploadVideoCommand();
+        $this->apiMethod = 'encodeVideoFile';
         parent::setUp();
     }
 
@@ -92,5 +93,10 @@ class UploadVideoCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:video:upload');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('filename' => 'video-file.mp4');
     }
 }

@@ -22,6 +22,7 @@ class ListProfilesCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new ListProfilesCommand();
+        $this->apiMethod = 'getProfiles';
 
         parent::setUp();
     }

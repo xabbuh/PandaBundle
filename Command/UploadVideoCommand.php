@@ -60,7 +60,7 @@ class UploadVideoCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $profiles = $input->getOption('profile');
         $pathFormat = $input->getOption('path-format');

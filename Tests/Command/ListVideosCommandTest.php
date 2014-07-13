@@ -22,6 +22,7 @@ class ListVideosCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new ListVideosCommand();
+        $this->apiMethod = 'getVideosForPagination';
 
         parent::setUp();
     }

@@ -41,7 +41,7 @@ class EncodingInfoCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $cloud = $this->getCloud($input);
         $encoding = $cloud->getEncoding($input->getArgument('encoding-id'));

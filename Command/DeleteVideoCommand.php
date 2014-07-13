@@ -43,19 +43,12 @@ class DeleteVideoCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $videoId = $input->getArgument('video-id');
-            $video = new Video();
-            $video->setId($videoId);
-            $this->getCloud($input)->deleteVideo($video);
-            $output->writeln('<info>Successfully deleted video with id '.$videoId.'</info>');
-        } catch (PandaException $e) {
-            $output->writeln(
-                '<error>An error occurred while trying to delete the video: '
-                .$e->getMessage().'</error>'
-            );
-        }
+        $videoId = $input->getArgument('video-id');
+        $video = new Video();
+        $video->setId($videoId);
+        $this->getCloud($input)->deleteVideo($video);
+        $output->writeln('<info>Successfully deleted video with id '.$videoId.'</info>');
     }
 }

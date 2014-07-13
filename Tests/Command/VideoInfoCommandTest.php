@@ -22,6 +22,7 @@ class VideoInfoCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new VideoInfoCommand();
+        $this->apiMethod = 'getVideo';
         parent::setUp();
     }
 
@@ -87,5 +88,10 @@ class VideoInfoCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:video:info');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('video-id' => md5(uniqid()));
     }
 }

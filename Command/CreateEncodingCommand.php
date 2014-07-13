@@ -56,47 +56,40 @@ class CreateEncodingCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $profileId = $input->getOption('profile-id');
-            $profileName = $input->getOption('profile-name');
+        $profileId = $input->getOption('profile-id');
+        $profileName = $input->getOption('profile-name');
 
-            if (null !== $profileId && null === $profileName) {
-                $video = new Video();
-                $video->setId($input->getArgument('video-id'));
-                $encoding = $this->getCloud($input)->createEncodingWithProfileId(
-                    $video,
-                    $profileId
-                );
-                $output->writeln(
-                    sprintf(
-                        '<info>Successfully created encoding with id %s</info>',
-                        $encoding->getId()
-                    )
-                );
-            } elseif (null === $profileId && null !== $profileName) {
-                $video = new Video();
-                $video->setId($input->getArgument('video-id'));
-                $encoding = $this->getCloud($input)->createEncodingWithProfileName(
-                    $video,
-                    $profileName
-                );
-                $output->writeln(
-                    sprintf(
-                        '<info>Successfully created encoding with id %s</info>',
-                        $encoding->getId()
-                    )
-                );
-            } else {
-                $output->writeln(
-                    '<error>Exactly one option of --profile-id or --profile-name must be given.</error>'
-                );
-            }
-        } catch (PandaException $e) {
+        if (null !== $profileId && null === $profileName) {
+            $video = new Video();
+            $video->setId($input->getArgument('video-id'));
+            $encoding = $this->getCloud($input)->createEncodingWithProfileId(
+                $video,
+                $profileId
+            );
             $output->writeln(
-                '<error>An error occurred while trying to delete the encoding: '
-                .$e->getMessage().'</error>'
+                sprintf(
+                    '<info>Successfully created encoding with id %s</info>',
+                    $encoding->getId()
+                )
+            );
+        } elseif (null === $profileId && null !== $profileName) {
+            $video = new Video();
+            $video->setId($input->getArgument('video-id'));
+            $encoding = $this->getCloud($input)->createEncodingWithProfileName(
+                $video,
+                $profileName
+            );
+            $output->writeln(
+                sprintf(
+                    '<info>Successfully created encoding with id %s</info>',
+                    $encoding->getId()
+                )
+            );
+        } else {
+            $output->writeln(
+                '<error>Exactly one option of --profile-id or --profile-name must be given.</error>'
             );
         }
     }

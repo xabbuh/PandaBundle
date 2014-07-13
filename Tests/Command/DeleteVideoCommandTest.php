@@ -22,6 +22,7 @@ class DeleteVideoCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new DeleteVideoCommand();
+        $this->apiMethod = 'deleteVideo';
 
         parent::setUp();
     }
@@ -58,5 +59,10 @@ class DeleteVideoCommandTest extends CloudCommandTest
             array('video-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('video-id' => md5(uniqid()));
     }
 }

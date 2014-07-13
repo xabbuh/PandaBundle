@@ -22,6 +22,7 @@ class EncodingInfoCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new EncodingInfoCommand();
+        $this->apiMethod = 'getEncoding';
 
         parent::setUp();
     }
@@ -115,5 +116,10 @@ class EncodingInfoCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:encoding:info');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('encoding-id' => md5(uniqid()));
     }
 }

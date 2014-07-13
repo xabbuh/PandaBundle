@@ -84,7 +84,13 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (isset($options["panda_widget"]) && $options["panda_widget"]) {
+        if (!isset($options['panda_widget'])) {
+            $view->vars["panda_uploader"] = false;
+        } elseif (!$options['panda_widget']) {
+            $view->vars["panda_uploader"] = false;
+        } elseif (!isset($view->vars['id'])) {
+            $view->vars["panda_uploader"] = false;
+        } else {
             $view->vars["panda_uploader"] = true;
 
             if (isset($options["panda_widget_version"])) {
@@ -130,8 +136,6 @@ class VideoUploaderExtension extends AbstractTypeExtension
                 $view->vars["progress_bar"] = $this->defaultOptions["progress_bar"];
             }
             $view->vars["progress_bar_id"] = $progressBarId;
-        } else {
-            $view->vars["panda_uploader"] = false;
         }
     }
 }

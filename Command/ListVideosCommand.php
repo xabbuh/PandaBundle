@@ -50,7 +50,7 @@ class ListVideosCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $result = $this->getCloud($input)->getVideosForPagination(
             $input->getOption('page'),
