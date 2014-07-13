@@ -23,6 +23,7 @@ class ShowNotificationsCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new ShowNotificationsCommand();
+        $this->apiMethod = 'getNotifications';
         parent::setUp();
     }
 

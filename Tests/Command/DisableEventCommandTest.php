@@ -23,6 +23,7 @@ class DisableEventCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new DisableEventCommand();
+        $this->apiMethod = 'setNotifications';
 
         parent::setUp();
     }
@@ -49,5 +50,10 @@ class DisableEventCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:notifications:disable');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('event' => 'video-created');
     }
 }

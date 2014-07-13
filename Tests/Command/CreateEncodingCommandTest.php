@@ -23,6 +23,7 @@ class CreateEncodingCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new CreateEncodingCommand();
+        $this->apiMethod = 'createEncodingWithProfileId';
 
         parent::setUp();
     }
@@ -119,5 +120,10 @@ class CreateEncodingCommandTest extends CloudCommandTest
             )
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('--profile-id' => md5(uniqid()), 'video-id' => md5(uniqid()));
     }
 }

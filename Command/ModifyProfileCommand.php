@@ -91,57 +91,50 @@ class ModifyProfileCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $profile = $this->getCloud($input)
-                ->getProfile($input->getArgument('profile-id'));
+        $profile = $this->getCloud($input)
+            ->getProfile($input->getArgument('profile-id'));
 
-            if (null !== $input->getOption('name')) {
-                $profile->setName($input->getOption('name'));
-            }
-
-            if (null !== $input->getOption('title')) {
-                $profile->setTitle($input->getOption('title'));
-            }
-
-            if (null !== $input->getOption('extname')) {
-                $profile->setExtname($input->getOption('extname'));
-            }
-
-            if (null !== $input->getOption('width')) {
-                $profile->setWidth($input->getOption('width'));
-            }
-
-            if (null !== $input->getOption('height')) {
-                $profile->setHeight($input->getOption('height'));
-            }
-
-            if (null !== $input->getOption('audio-bitrate')) {
-                $profile->setAudioBitrate($input->getOption('audio-bitrate'));
-            }
-
-            if (null !== $input->getOption('video-bitrate')) {
-                $profile->setVideoBitrate($input->getOption('video-bitrate'));
-            }
-
-            if (null !== $input->getOption('aspect-mode')) {
-                $profile->setAspectMode($input->getOption('aspect-mode'));
-            }
-
-            $this->getCloud($input)->setProfile($profile);
-
-            $output->writeln(
-                sprintf(
-                    '<info>Successfully modified profile %s</info>',
-                    $profile->getName()
-                )
-            );
-        } catch(PandaException $e) {
-            $output->writeln(
-                '<error>An error occurred while trying to modify the profile: '
-                .$e->getMessage().'</error>'
-            );
+        if (null !== $input->getOption('name')) {
+            $profile->setName($input->getOption('name'));
         }
+
+        if (null !== $input->getOption('title')) {
+            $profile->setTitle($input->getOption('title'));
+        }
+
+        if (null !== $input->getOption('extname')) {
+            $profile->setExtname($input->getOption('extname'));
+        }
+
+        if (null !== $input->getOption('width')) {
+            $profile->setWidth($input->getOption('width'));
+        }
+
+        if (null !== $input->getOption('height')) {
+            $profile->setHeight($input->getOption('height'));
+        }
+
+        if (null !== $input->getOption('audio-bitrate')) {
+            $profile->setAudioBitrate($input->getOption('audio-bitrate'));
+        }
+
+        if (null !== $input->getOption('video-bitrate')) {
+            $profile->setVideoBitrate($input->getOption('video-bitrate'));
+        }
+
+        if (null !== $input->getOption('aspect-mode')) {
+            $profile->setAspectMode($input->getOption('aspect-mode'));
+        }
+
+        $this->getCloud($input)->setProfile($profile);
+
+        $output->writeln(
+            sprintf(
+                '<info>Successfully modified profile %s</info>',
+                $profile->getName()
+            )
+        );
     }
 }

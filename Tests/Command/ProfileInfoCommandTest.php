@@ -22,6 +22,7 @@ class ProfileInfoCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new ProfileInfoCommand();
+        $this->apiMethod = 'getProfile';
 
         parent::setUp();
     }
@@ -64,5 +65,10 @@ class ProfileInfoCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:profile:info');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('profile-id' => md5(uniqid()));
     }
 }

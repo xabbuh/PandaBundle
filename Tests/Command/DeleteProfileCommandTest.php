@@ -22,6 +22,7 @@ class DeleteProfileCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new DeleteProfileCommand();
+        $this->apiMethod = 'deleteProfile';
 
         parent::setUp();
     }
@@ -58,5 +59,10 @@ class DeleteProfileCommandTest extends CloudCommandTest
             array('profile-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('profile-id' => md5(uniqid()));
     }
 }

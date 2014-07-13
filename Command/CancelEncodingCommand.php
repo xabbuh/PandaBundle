@@ -43,21 +43,14 @@ class CancelEncodingCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $encodingId = $input->getArgument('encoding-id');
-            $encoding = new Encoding();
-            $encoding->setId($encodingId);
-            $this->getCloud($input)->cancelEncoding($encoding);
-            $output->writeln(
-                '<info>Successfully canceled encoding with id '.$encodingId.'</info>'
-            );
-        } catch (PandaException $e) {
-            $output->writeln(
-                '<error>An error occurred while trying to cancel the encoding: '
-                .$e->getMessage().'</error>'
-            );
-        }
+        $encodingId = $input->getArgument('encoding-id');
+        $encoding = new Encoding();
+        $encoding->setId($encodingId);
+        $this->getCloud($input)->cancelEncoding($encoding);
+        $output->writeln(
+            '<info>Successfully canceled encoding with id '.$encodingId.'</info>'
+        );
     }
 }

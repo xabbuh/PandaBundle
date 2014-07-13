@@ -22,6 +22,7 @@ class RetryEncodingCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new RetryEncodingCommand();
+        $this->apiMethod = 'retryEncoding';
 
         parent::setUp();
     }
@@ -58,5 +59,10 @@ class RetryEncodingCommandTest extends CloudCommandTest
             array('encoding-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('encoding-id' => md5(uniqid()));
     }
 }

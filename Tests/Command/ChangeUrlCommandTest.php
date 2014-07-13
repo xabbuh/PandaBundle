@@ -22,6 +22,7 @@ class ChangeUrlCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new ChangeUrlCommand();
+        $this->apiMethod = 'setNotifications';
 
         parent::setUp();
     }
@@ -47,5 +48,10 @@ class ChangeUrlCommandTest extends CloudCommandTest
     public function testCommandWithoutArguments()
     {
         $this->runCommand('panda:notifications:change-url');
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('url' => 'http://example.com/notify');
     }
 }

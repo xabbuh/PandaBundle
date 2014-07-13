@@ -22,6 +22,7 @@ class CancelEncodingCloudCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new CancelEncodingCommand();
+        $this->apiMethod = 'cancelEncoding';
 
         parent::setUp();
     }
@@ -61,5 +62,10 @@ class CancelEncodingCloudCommandTest extends CloudCommandTest
             array('encoding-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('encoding-id' => md5(uniqid()));
     }
 }

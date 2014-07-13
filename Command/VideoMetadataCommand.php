@@ -41,7 +41,7 @@ class VideoMetadataCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $cloud = $this->getCloud($input);
         $metadata = $cloud->getVideoMetadata($input->getArgument('video-id'));

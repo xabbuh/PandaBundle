@@ -47,7 +47,7 @@ class ModifyCloudCommand extends ContainerAwareCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $data = array();
 

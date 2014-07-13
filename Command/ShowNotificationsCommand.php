@@ -35,7 +35,7 @@ class ShowNotificationsCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $notifications = $this->getCloud($input)->getNotifications();
         $table = $this->getTableHelper();

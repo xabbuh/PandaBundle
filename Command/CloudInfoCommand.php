@@ -35,7 +35,7 @@ class CloudInfoCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $cloud = $this->getCloud($input)->getCloud();
         $table = $this->getTableHelper();

@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* commands don't terminate unexpectedly when the client library throws an
+  exception
+
 1.0.1
 -----
 

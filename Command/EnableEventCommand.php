@@ -27,7 +27,7 @@ class EnableEventCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function configure()
+    protected function configure()
     {
         $this->setName('panda:notifications:enable');
         $this->setDescription('Enable a notification event');
@@ -43,7 +43,7 @@ class EnableEventCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $notificationEvent = new NotificationEvent($input->getArgument('event'), true);
         $notifications = new Notifications();

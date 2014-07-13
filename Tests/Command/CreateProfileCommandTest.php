@@ -22,6 +22,7 @@ class CreateProfileCommandTest extends CloudCommandTest
     protected function setUp()
     {
         $this->command = new CreateProfileCommand();
+        $this->apiMethod = 'addProfileFromPreset';
 
         parent::setUp();
     }
@@ -63,5 +64,10 @@ class CreateProfileCommandTest extends CloudCommandTest
             array('preset' => 'h264')
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function getDefaultCommandArguments()
+    {
+        return array('preset' => 'h264');
     }
 }
