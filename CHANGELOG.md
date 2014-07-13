@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* extend the panda:video:upload command to be able to path profiles used to
+  encode the video, a custom path format and an arbitrary payload
+
 * less restrictive type hint in the ``VideoUploaderExtension`` (rely on the
   ``UrlGeneratorInterface`` instead of requiring the complete ``Router`` class
   (by @stof in #1)

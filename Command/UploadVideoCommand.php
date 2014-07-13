@@ -13,6 +13,7 @@ namespace Xabbuh\PandaBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -29,6 +30,24 @@ class UploadVideoCommand extends CloudCommand
     {
         $this->setName('panda:video:upload');
         $this->setDescription('Upload a video');
+        $this->addOption(
+            'profile',
+            null,
+            InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY,
+            'A profile to be used to encode the video, use it several times to use more than one profile'
+        );
+        $this->addOption(
+            'path-format',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Custom path format'
+        );
+        $this->addOption(
+            'payload',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'An arbitrary string stored with the video'
+        );
         $this->addArgument(
             'filename',
             InputArgument::REQUIRED,
@@ -43,8 +62,17 @@ class UploadVideoCommand extends CloudCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $profiles = $input->getOption('profile');
+        $pathFormat = $input->getOption('path-format');
+        $payload = $input->getOption('payload');
+
         $output->writeln('Starting file upload...');
-        $this->getCloud($input)->encodeVideoFile($input->getArgument('filename'));
+        $this->getCloud($input)->encodeVideoFile(
+            $input->getArgument('filename'),
+            $profiles,
+            $pathFormat,
+            $payload
+        );
         $output->writeln('<info>File uploaded successfully.</info>');
     }
 }

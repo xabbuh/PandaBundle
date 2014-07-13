@@ -33,6 +33,58 @@ class UploadVideoCommandTest extends CloudCommandTest
         $this->assertRegExp('/File uploaded successfully./', $this->commandTester->getDisplay());
     }
 
+    public function testCommandWithOneProfileOption()
+    {
+        $this->defaultCloud
+            ->expects($this->once())
+            ->method('encodeVideoFile')
+            ->with('foo', array('profile1'));
+        $this->runCommand('panda:video:upload', array(
+            '--profile' => array('profile1'),
+            'filename' => 'foo',
+        ));
+        $this->assertRegExp('/File uploaded successfully./', $this->commandTester->getDisplay());
+    }
+
+    public function testCommandWithMultipleProfileOptions()
+    {
+        $this->defaultCloud
+            ->expects($this->once())
+            ->method('encodeVideoFile')
+            ->with('foo', array('profile1', 'profile2'));
+        $this->runCommand('panda:video:upload', array(
+            '--profile' => array('profile1', 'profile2'),
+            'filename' => 'foo',
+        ));
+        $this->assertRegExp('/File uploaded successfully./', $this->commandTester->getDisplay());
+    }
+
+    public function testCommandWithCustomPathFormatOption()
+    {
+        $this->defaultCloud
+            ->expects($this->once())
+            ->method('encodeVideoFile')
+            ->with('foo', array(), 'bar/:id', null);
+        $this->runCommand('panda:video:upload', array(
+            '--path-format' => 'bar/:id',
+            'filename' => 'foo',
+        ));
+        $this->assertRegExp('/File uploaded successfully./', $this->commandTester->getDisplay());
+    }
+
+    public function testCommandWithPayloadOption()
+    {
+        $this->defaultCloud
+            ->expects($this->once())
+            ->method('encodeVideoFile')
+            ->with('foo', array(), null, 'baz');
+        $this->runCommand('panda:video:upload', array(
+            '--payload' => 'baz',
+            'filename' => 'foo',
+        ));
+        $this->assertRegExp('/File uploaded successfully./', $this->commandTester->getDisplay());
+    }
+
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Not enough arguments.
