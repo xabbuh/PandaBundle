@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* ensure that a form id is set when enabling the upload form widget
+
+* add tests for the ``VideoUploaderExtension`` class
+
 * commands don't terminate unexpectedly when the client library throws an
   exception
 
