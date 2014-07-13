@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.0.2
+-----
+
 * ensure that a form id is set when enabling the upload form widget
 
 * add tests for the ``VideoUploaderExtension`` class
