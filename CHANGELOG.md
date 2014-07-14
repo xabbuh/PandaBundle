@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.1.0
+-----
+
 * move event name constants to the event classes
 
 * extend the panda:video:upload command to be able to path profiles used to
