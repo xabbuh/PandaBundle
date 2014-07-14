@@ -1,8 +1,6 @@
 CHANGELOG
 =========
 
-* add tests for the ``EventFactory`` class
-
 * extend the panda:video:upload command to be able to path profiles used to
   encode the video, a custom path format and an arbitrary payload
 
@@ -16,6 +14,11 @@ CHANGELOG
   in the commands
 
 * full support for HHVM
+
+1.0.3
+-----
+
+* add tests for the ``EventFactory`` class
 
 1.0.2
 -----
