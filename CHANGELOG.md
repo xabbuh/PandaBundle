@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* add tests for the ``EventFactory`` class
+
 * extend the panda:video:upload command to be able to path profiles used to
   encode the video, a custom path format and an arbitrary payload
 
