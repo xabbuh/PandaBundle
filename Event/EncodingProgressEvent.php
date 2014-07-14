@@ -12,7 +12,6 @@
 namespace Xabbuh\PandaBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Event that is triggered repeatedly while an encoding process is running.
@@ -22,26 +21,33 @@ use Xabbuh\PandaBundle\XabbuhPandaEvents;
 class EncodingProgressEvent extends Event
 {
     /**
+     * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
+     *
+     * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
+     */
+    const NAME = 'xabbuh_panda.encoding_progress';
+
+    /**
      * The id of the encoded video
      * @var string
      */
     private $videoId;
-    
+
     /**
      * The id of the encoding
      * @var string
      */
     private $encodingId;
-    
+
     /**
      * The encoding progress
      * @var integer
      */
     private $progress;
-    
+
     /**
      * Constructs a new EncodingProgressEvent.
-     * 
+     *
      * @param string $videoId Video id
      * @param string $encodingId Encoding id
      * @param integer $progress Progress of the encoding
@@ -51,32 +57,32 @@ class EncodingProgressEvent extends Event
         $this->videoId = $videoId;
         $this->encodingId = $encodingId;
         $this->progress = $progress;
-        $this->setName(XabbuhPandaEvents::ENCODING_PROGRESS);
+        $this->setName(self::NAME);
     }
-    
+
     /**
      * Returns the video id.
-     * 
+     *
      * @return string The video id
      */
     public function getVideoId()
     {
         return $this->videoId;
     }
-    
+
     /**
      * Returns the encoding id.
-     * 
+     *
      * @return string The encoding id
      */
     public function getEncodingId()
     {
         return $this->encodingId;
     }
-    
+
     /**
      * Returns the encoding progress.
-     * 
+     *
      * @return integer The progress
      */
     public function getProgress()

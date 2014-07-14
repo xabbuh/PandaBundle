@@ -12,7 +12,6 @@
 namespace Xabbuh\PandaBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Event that is triggered when an encoding has successfully finished.
@@ -22,20 +21,27 @@ use Xabbuh\PandaBundle\XabbuhPandaEvents;
 class EncodingCompleteEvent extends Event
 {
     /**
+     * The ENCODING_COMPLETE event occurs when an encoding is done or failed.
+     *
+     * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingCompleteEvent instance.
+     */
+    const NAME = 'xabbuh_panda.encoding_complete';
+
+    /**
      * The id of the encoded video
      * @var string
      */
     private $videoId;
-    
+
     /**
      * The id of the encoding
      * @var string
      */
     private $encodingId;
-    
+
     /**
      * Constructs a new EncodingCompleteEvent.
-     * 
+     *
      * @param string $videoId Video id
      * @param string $encodingId Encoding id
      */
@@ -43,22 +49,22 @@ class EncodingCompleteEvent extends Event
     {
         $this->videoId = $videoId;
         $this->encodingId = $encodingId;
-        $this->setName(XabbuhPandaEvents::ENCODING_COMPLETE);
+        $this->setName(self::NAME);
     }
-    
+
     /**
      * Returns the video id.
-     * 
+     *
      * @return string The video id
      */
     public function getVideoId()
     {
         return $this->videoId;
     }
-    
+
     /**
      * Returns the encoding id.
-     * 
+     *
      * @return string The encoding id
      */
     public function getEncodingId()

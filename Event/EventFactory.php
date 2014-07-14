@@ -32,14 +32,16 @@ class EventFactory
      */
     public static function createEventFromRequest(Request $request)
     {
-        switch($request->request->get('event')) {
-            case 'video-created':
+        $eventName = 'xabbuh_panda.'.strtr($request->request->get('event'), '-', '_');
+
+        switch($eventName) {
+            case VideoCreatedEvent::NAME:
                 return self::createVideoCreatedEventFromRequest($request);
-            case 'video-encoded':
+            case VideoEncodedEvent::NAME:
                 return self::createVideoEncodedEventFromRequest($request);
-            case 'encoding-progress':
+            case EncodingProgressEvent::NAME:
                 return self::createEncodingProgressEventFromRequest($request);
-            case 'encoding-complete':
+            case EncodingCompleteEvent::NAME:
                 return self::createEncodingCompleteEventFromRequest($request);
             default:
                 throw new \InvalidArgumentException(

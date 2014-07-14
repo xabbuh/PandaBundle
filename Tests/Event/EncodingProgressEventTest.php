@@ -12,7 +12,6 @@
 namespace Xabbuh\PandaBundle\Tests\Event;
 
 use Xabbuh\PandaBundle\Event\EncodingProgressEvent;
-use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Test the EncodingProgressEvent class.
@@ -31,7 +30,7 @@ class EncodingProgressEventTest extends \PHPUnit_Framework_TestCase
             "9078f6bd53e9b90979823574f56c94b0",
             99
         );
-        $this->assertEquals(XabbuhPandaEvents::ENCODING_PROGRESS, $event->getName());
+        $this->assertEquals('xabbuh_panda.encoding_progress', $event->getName());
         $this->assertEquals("0e06bdeb513e9e5f495d769fd993d8be", $event->getVideoId());
         $this->assertEquals("9078f6bd53e9b90979823574f56c94b0", $event->getEncodingId());
         $this->assertEquals(99, $event->getProgress());

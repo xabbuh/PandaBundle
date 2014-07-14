@@ -12,7 +12,6 @@
 namespace Xabbuh\PandaBundle\Tests\Event;
 
 use Xabbuh\PandaBundle\Event\VideoCreatedEvent;
-use Xabbuh\PandaBundle\XabbuhPandaEvents;
 
 /**
  * Test the VideoCreatedEvent class.
@@ -33,7 +32,7 @@ class VideoCreatedEventTest extends \PHPUnit_Framework_TestCase
                 "403301e0d6f2fc502ad8e9a54afc38fc"
             )
         );
-        $this->assertEquals(XabbuhPandaEvents::VIDEO_CREATED, $event->getName());
+        $this->assertEquals('xabbuh_panda.video_created', $event->getName());
         $this->assertEquals("0e06bdeb513e9e5f495d769fd993d8be", $event->getVideoId());
         $this->assertEquals(
             array(
