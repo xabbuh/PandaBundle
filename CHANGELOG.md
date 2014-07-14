@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* move event name constants to the event classes
+
 * extend the panda:video:upload command to be able to path profiles used to
   encode the video, a custom path format and an arbitrary payload
 
