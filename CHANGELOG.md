@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.0.3
+-----
+
 * add tests for the ``EventFactory`` class
 
 1.0.2
