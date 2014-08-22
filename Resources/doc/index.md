@@ -10,23 +10,11 @@ Installation
 
 1. Download XabbuhPandaBundle using Composer
 
-    Add ``xabbuh/panda-bundle`` to the ``require`` section of your project's
-    ``composer.json``:
+    Add ``xabbuh/panda-bundle`` as a dependency of your project:
 
-    ```json
-    {
-        "require": {
-            "xabbuh/panda-bundle": "~1.0"
-        }
-    }
+    ```bash
+    $ composer require xabbuh/panda-bundle "~1.0"
     ```
-
-    Tell Composer to download the bundle:
-
-        php composer.phar update xabbuh/panda-bundle
-
-    After Composer has installed XabbuhPandaBundle you will find it in your
-    project's ``vendor/xabbuh/panda-bundle`` directory.
 
 1. Enable the bundle
 
@@ -34,6 +22,7 @@ Installation
 
     ```php
     // app/AppKernel.php
+    // ...
 
     public function registerBundles()
     {
