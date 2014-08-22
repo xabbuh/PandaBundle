@@ -13,7 +13,7 @@ Installation
     Add ``xabbuh/panda-bundle`` as a dependency of your project:
 
     ```bash
-    $ composer require xabbuh/panda-bundle "~1.0"
+    $ composer require xabbuh/panda-bundle "~1.1"
     ```
 
 1. Enable the bundle
