@@ -31,7 +31,8 @@
         "matthiasnoback/symfony-dependency-injection-test": "~0.7",
         "symfony/browser-kit": "~2.2",
         "symfony/finder": "~2.2",
-        "symfony/framework-bundle": "~2.2"
+        "symfony/framework-bundle": "~2.2",
+        "symfony/validator": "~2.3"
     },
     "target-dir": "Xabbuh/PandaBundle",
     "extra": {
