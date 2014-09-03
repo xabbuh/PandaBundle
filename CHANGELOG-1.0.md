@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.4
+-----
+
+* update dependencies to work with Symfony 2.5.4
+
 1.0.3
 -----
 
