@@ -75,7 +75,7 @@ abstract class CloudCommand extends ContainerAwareCommand
     }
 
     /**
-     * TODO: docblock
+     * Executes the actual command (to be implemented by subclasses, will be called automatically).
      */
     abstract protected function doExecuteCommand(InputInterface $input, OutputInterface $output);
 
