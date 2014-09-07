@@ -81,7 +81,7 @@ class ListVideosCommand extends CloudCommand
                         'fail (%s)',
                         $video->getErrorMessage()
                     );
-                } else if ($video->getStatus() == 'processing') {
+                } elseif ($video->getStatus() == 'processing') {
                     $status = 'processing';
                 } else {
                     $status = 'success';

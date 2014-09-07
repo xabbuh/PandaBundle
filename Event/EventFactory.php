@@ -32,7 +32,7 @@ class EventFactory
      */
     public static function createEventFromRequest(Request $request)
     {
-        switch($request->request->get('event')) {
+        switch ($request->request->get('event')) {
             case 'video-created':
                 return self::createVideoCreatedEventFromRequest($request);
             case 'video-encoded':

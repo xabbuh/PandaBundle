@@ -38,7 +38,6 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     private $defaultOptions;
 
-
     /**
      * Constructor.
      *

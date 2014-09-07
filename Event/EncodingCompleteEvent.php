@@ -25,17 +25,17 @@ class EncodingCompleteEvent extends Event
      * @var string
      */
     private $videoId;
-    
+
     /**
      * The id of the encoding
      * @var string
      */
     private $encodingId;
-    
+
     /**
      * Constructs a new EncodingCompleteEvent.
-     * 
-     * @param string $videoId Video id
+     *
+     * @param string $videoId    Video id
      * @param string $encodingId Encoding id
      */
     public function __construct($videoId, $encodingId)
@@ -44,20 +44,20 @@ class EncodingCompleteEvent extends Event
         $this->encodingId = $encodingId;
         $this->setName("xabbuh_panda.encoding_complete");
     }
-    
+
     /**
      * Returns the video id.
-     * 
+     *
      * @return string The video id
      */
     public function getVideoId()
     {
         return $this->videoId;
     }
-    
+
     /**
      * Returns the encoding id.
-     * 
+     *
      * @return string The encoding id
      */
     public function getEncodingId()

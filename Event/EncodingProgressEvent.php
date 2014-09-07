@@ -25,25 +25,25 @@ class EncodingProgressEvent extends Event
      * @var string
      */
     private $videoId;
-    
+
     /**
      * The id of the encoding
      * @var string
      */
     private $encodingId;
-    
+
     /**
      * The encoding progress
      * @var integer
      */
     private $progress;
-    
+
     /**
      * Constructs a new EncodingProgressEvent.
-     * 
-     * @param string $videoId Video id
+     *
+     * @param string $videoId    Video id
      * @param string $encodingId Encoding id
-     * @param integer $progress Progress of the encoding
+     * @param integer $progress  Progress of the encoding
      */
     public function __construct($videoId, $encodingId, $progress)
     {
@@ -52,30 +52,30 @@ class EncodingProgressEvent extends Event
         $this->progress = $progress;
         $this->setName("xabbuh_panda.encoding_progress");
     }
-    
+
     /**
      * Returns the video id.
-     * 
+     *
      * @return string The video id
      */
     public function getVideoId()
     {
         return $this->videoId;
     }
-    
+
     /**
      * Returns the encoding id.
-     * 
+     *
      * @return string The encoding id
      */
     public function getEncodingId()
     {
         return $this->encodingId;
     }
-    
+
     /**
      * Returns the encoding progress.
-     * 
+     *
      * @return integer The progress
      */
     public function getProgress()
