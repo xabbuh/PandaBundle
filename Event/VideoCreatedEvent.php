@@ -35,15 +35,15 @@ class VideoCreatedEvent extends Event
 
     /**
      * List of encoding ids of this video
-     * @var array
+     * @var string[]
      */
     private $encodingIds = array();
 
     /**
      * Constructs a new VideoCreatedEvent.
      *
-     * @param string $videoId     Video id
-     * @param array  $encodingIds Ids of the video's encodings
+     * @param string   $videoId     Video id
+     * @param string[] $encodingIds Ids of the video's encodings
      */
     public function __construct($videoId, array $encodingIds)
     {
@@ -65,7 +65,7 @@ class VideoCreatedEvent extends Event
     /**
      * Returns the video's encoding ids.
      *
-     * @return array The encoding ids
+     * @return string[] The encoding ids
      */
     public function getEncodingIds()
     {

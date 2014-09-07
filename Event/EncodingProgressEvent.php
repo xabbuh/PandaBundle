@@ -41,7 +41,7 @@ class EncodingProgressEvent extends Event
 
     /**
      * The encoding progress
-     * @var integer
+     * @var int
      */
     private $progress;
 
@@ -50,7 +50,7 @@ class EncodingProgressEvent extends Event
      *
      * @param string $videoId    Video id
      * @param string $encodingId Encoding id
-     * @param integer $progress  Progress of the encoding
+     * @param int    $progress   Progress of the encoding
      */
     public function __construct($videoId, $encodingId, $progress)
     {
@@ -83,7 +83,7 @@ class EncodingProgressEvent extends Event
     /**
      * Returns the encoding progress.
      *
-     * @return integer The progress
+     * @return int The progress
      */
     public function getProgress()
     {
