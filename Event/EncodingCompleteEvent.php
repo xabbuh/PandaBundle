@@ -42,7 +42,7 @@ class EncodingCompleteEvent extends Event
     /**
      * Constructs a new EncodingCompleteEvent.
      *
-     * @param string $videoId Video id
+     * @param string $videoId    Video id
      * @param string $encodingId Encoding id
      */
     public function __construct($videoId, $encodingId)

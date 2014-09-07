@@ -26,7 +26,7 @@ class DeleteVideoCommand extends CloudCommand
     /**
      * {@inheritDoc}
      */
-    protected  function configure()
+    protected function configure()
     {
         $this->setName('panda:video:delete');
         $this->setDescription('Delete a video');

@@ -48,9 +48,9 @@ class EncodingProgressEvent extends Event
     /**
      * Constructs a new EncodingProgressEvent.
      *
-     * @param string $videoId Video id
+     * @param string $videoId    Video id
      * @param string $encodingId Encoding id
-     * @param integer $progress Progress of the encoding
+     * @param integer $progress  Progress of the encoding
      */
     public function __construct($videoId, $encodingId, $progress)
     {

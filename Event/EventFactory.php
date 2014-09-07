@@ -34,7 +34,7 @@ class EventFactory
     {
         $eventName = 'xabbuh_panda.'.strtr($request->request->get('event'), '-', '_');
 
-        switch($eventName) {
+        switch ($eventName) {
             case VideoCreatedEvent::NAME:
                 return self::createVideoCreatedEventFromRequest($request);
             case VideoEncodedEvent::NAME:

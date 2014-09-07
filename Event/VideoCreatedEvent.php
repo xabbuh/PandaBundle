@@ -42,8 +42,8 @@ class VideoCreatedEvent extends Event
     /**
      * Constructs a new VideoCreatedEvent.
      *
-     * @param string $videoId Video id
-     * @param array $encodingIds Ids of the video's encodings
+     * @param string $videoId     Video id
+     * @param array  $encodingIds Ids of the video's encodings
      */
     public function __construct($videoId, array $encodingIds)
     {

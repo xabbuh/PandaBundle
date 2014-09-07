@@ -98,7 +98,7 @@ class ListEncodingsCommand extends CloudCommand
                         'fail (%s)',
                         $encoding->getErrorMessage()
                     );
-                } else if ($encoding->getStatus() == 'processing') {
+                } elseif ($encoding->getStatus() == 'processing') {
                     $status = sprintf(
                         'processing (%d%%)',
                         $encoding->getEncodingProgress()

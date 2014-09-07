@@ -40,7 +40,8 @@ class Controller
      * @param CloudManagerInterface    $cloudManager
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(CloudManagerInterface $cloudManager, EventDispatcherInterface $eventDispatcher) {
+    public function __construct(CloudManagerInterface $cloudManager, EventDispatcherInterface $eventDispatcher)
+    {
         $this->cloudManager = $cloudManager;
         $this->eventDispatcher = $eventDispatcher;
     }
