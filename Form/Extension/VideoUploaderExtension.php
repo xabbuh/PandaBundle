@@ -28,7 +28,7 @@ class VideoUploaderExtension extends AbstractTypeExtension
 {
     /**
      * The router service
-     * @var \Symfony\Component\Routing\Router
+     * @var Router
      */
     private $router;
 
@@ -41,8 +41,8 @@ class VideoUploaderExtension extends AbstractTypeExtension
     /**
      * Constructor.
      *
-     * @param \Symfony\Component\Routing\Router $router The router
-     * @param array $defaultOptions Default display options for widget objects
+     * @param Router $router         The router
+     * @param array  $defaultOptions Default display options for widget objects
      */
     public function __construct(Router $router, array $defaultOptions)
     {
