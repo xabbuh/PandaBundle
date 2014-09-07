@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Extends the {@link http://api.symfony.com/master/Symfony/Component/Form/Extension/Core/Type/FileType.html FileType}
@@ -27,10 +27,10 @@ use Symfony\Component\Routing\Router;
 class VideoUploaderExtension extends AbstractTypeExtension
 {
     /**
-     * The router service
-     * @var Router
+     * The url generator
+     * @var UrlGeneratorInterface
      */
-    private $router;
+    private $urlGenerator;
 
     /**
      * General options to configure the display of widget components
@@ -41,12 +41,12 @@ class VideoUploaderExtension extends AbstractTypeExtension
     /**
      * Constructor.
      *
-     * @param Router $router         The router
-     * @param array  $defaultOptions Default display options for widget objects
+     * @param UrlGeneratorInterface $urlGenerator   The url generator
+     * @param array                 $defaultOptions Default display options for widget objects
      */
-    public function __construct(Router $router, array $defaultOptions)
+    public function __construct(UrlGeneratorInterface $urlGenerator, array $defaultOptions)
     {
-        $this->router = $router;
+        $this->urlGenerator = $urlGenerator;
         $this->defaultOptions = $defaultOptions;
     }
 
@@ -107,7 +107,7 @@ class VideoUploaderExtension extends AbstractTypeExtension
             // set input field attributes accordingly (widget ids will be
             // read from there by the javascript uploader implementation)
             $view->vars["attr"]["panda-uploader"] = "v$widgetVersion";
-            $view->vars["attr"]["authorise-url"] = $this->router->generate(
+            $view->vars["attr"]["authorise-url"] = $this->urlGenerator->generate(
                 "xabbuh_panda_authorise_upload",
                 array("cloud" => $options["cloud"])
             );
