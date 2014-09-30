@@ -1,4 +1,4 @@
-XabbuhPandeBundle
+XabbuhPandaBundle
 =================
 
 [![Build Status](https://travis-ci.org/xabbuh/PandaBundle.svg?branch=master)](https://travis-ci.org/xabbuh/PandaBundle)
