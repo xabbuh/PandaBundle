@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* switch to PSR-4 autoloading
+
 1.1.1
 -----
 

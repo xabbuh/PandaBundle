@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Xabbuh\\PandaBundle": "" }
+        "psr-4": { "Xabbuh\\PandaBundle\\": "" }
     },
     "require": {
         "php": ">=5.3.0",
@@ -34,7 +34,6 @@
         "symfony/framework-bundle": "~2.2",
         "symfony/validator": "~2.3"
     },
-    "target-dir": "Xabbuh/PandaBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.1.x-dev"
