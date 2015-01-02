@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* fix tests to use the `UrlGeneratorInterface` instead of the complete `Router`
+  (this makes them pass again with Symfony 2.6 or higher)
+
 1.0.4
 -----
 

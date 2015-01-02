@@ -25,9 +25,9 @@ class VideoUploaderExtensionTest extends \PHPUnit_Framework_TestCase
     private $extension;
 
     /**
-     * @var \Symfony\Component\Routing\Router
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    private $router;
+    private $urlGenerator;
 
     /**
      * @var \Symfony\Component\Form\FormView
@@ -41,7 +41,7 @@ class VideoUploaderExtensionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->router = $this->createRouterMock();
+        $this->urlGenerator = $this->createUrlGeneratorMock();
         $this->formView = $this->createFormView();
         $this->form = $this->createFormInterfaceMock();
         $defaultOptions = array(
@@ -49,7 +49,7 @@ class VideoUploaderExtensionTest extends \PHPUnit_Framework_TestCase
             'cancel_button' => false,
             'progress_bar' => false,
         );
-        $this->extension = new VideoUploaderExtension($this->router, $defaultOptions);
+        $this->extension = new VideoUploaderExtension($this->urlGenerator, $defaultOptions);
     }
 
     public function testWidgetIsDisabledByDefault()
@@ -149,12 +149,12 @@ class VideoUploaderExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Router
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    private function createRouterMock()
+    private function createUrlGeneratorMock()
     {
         return $this
-            ->getMockBuilder('\Symfony\Component\Routing\Router')
+            ->getMockBuilder('\Symfony\Component\Routing\Generator\UrlGeneratorInterface')
             ->disableOriginalConstructor()
             ->getMock();
     }
