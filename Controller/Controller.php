@@ -125,7 +125,7 @@ class Controller
     {
         try {
             $event = EventFactory::createEventFromRequest($request);
-            $this->eventDispatcher->dispatch($event->getName(), $event);
+            $this->eventDispatcher->dispatch(constant(get_class($event).'::NAME'), $event);
 
             return new Response('');
         } catch (\InvalidArgumentException $e) {

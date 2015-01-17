@@ -12,6 +12,8 @@
 namespace Xabbuh\PandaBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -65,17 +67,26 @@ abstract class CloudCommand extends ContainerAwareCommand
     }
 
     /**
-     * Returns the Symfony {@link \Symfony\Component\Console\Helper\TableHelper table helper}.
+     * Returns the console table helper.
      *
-     * @return \Symfony\Component\Console\Helper\TableHelper
+     * @param OutputInterface $output
+     *
+     * @return TableHelper|Table
      */
-    protected function getTableHelper()
+    protected function getTableHelper(OutputInterface $output = null)
     {
-        return $this->getHelper('table');
+        if (class_exists('Symfony\Component\Console\Helper\Table')) {
+            return new Table($output);
+        }
+
+        return new TableHelper();
     }
 
     /**
      * Executes the actual command (to be implemented by subclasses, will be called automatically).
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
     abstract protected function doExecuteCommand(InputInterface $input, OutputInterface $output);
 

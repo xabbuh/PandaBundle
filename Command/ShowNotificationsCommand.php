@@ -38,7 +38,7 @@ class ShowNotificationsCommand extends CloudCommand
     protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $notifications = $this->getCloud($input)->getNotifications();
-        $table = $this->getTableHelper();
+        $table = $this->getTableHelper($output);
         $table->addRow(array('url', $notifications->getUrl()));
 
         if ($notifications->getNotificationEvent('video_created')->isActive()) {

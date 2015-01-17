@@ -45,7 +45,7 @@ class VideoMetadataCommand extends CloudCommand
     {
         $cloud = $this->getCloud($input);
         $metadata = $cloud->getVideoMetadata($input->getArgument('video-id'));
-        $table = $this->getTableHelper();
+        $table = $this->getTableHelper($output);
 
         foreach ($metadata as $key => $value) {
             $table->addRow(array(

@@ -45,7 +45,7 @@ class EncodingInfoCommand extends CloudCommand
     {
         $cloud = $this->getCloud($input);
         $encoding = $cloud->getEncoding($input->getArgument('encoding-id'));
-        $table = $this->getTableHelper();
+        $table = $this->getTableHelper($output);
         $table->addRows(array(
             array('id', $encoding->getId()),
             array('video id', $encoding->getVideoId()),

@@ -60,6 +60,7 @@ class XabbuhPandaExtension extends Extension
 
         $this->loadAccounts($config['accounts'], $container);
         $this->loadClouds($config['clouds'], $container);
+        $this->registerSerializerFactory($container);
     }
 
     private function loadAccounts(array $accounts, ContainerBuilder $container)
@@ -100,8 +101,14 @@ class XabbuhPandaExtension extends Extension
                     isset($cloudConfig['account']) ? $cloudConfig['account'] : null,
                 )
             );
-            $cloudDefinition->setFactoryService('xabbuh_panda.cloud_factory');
-            $cloudDefinition->setFactoryMethod('get');
+
+            if (method_exists($cloudDefinition, 'setFactory')) {
+                $cloudDefinition->setFactory(array(new Reference('xabbuh_panda.cloud_factory'), 'get'));
+            } else {
+                $cloudDefinition->setFactoryService('xabbuh_panda.cloud_factory');
+                $cloudDefinition->setFactoryMethod('get');
+            }
+
             $id = 'xabbuh_panda.'.strtr($name, ' -', '_').'_cloud';
             $container->setDefinition($id, $cloudDefinition);
 
@@ -110,6 +117,27 @@ class XabbuhPandaExtension extends Extension
                 'registerCloud',
                 array($name, new Reference($id))
             );
+        }
+    }
+
+    private function registerSerializerFactory(ContainerBuilder $container)
+    {
+        $serializers = array(
+            'xabbuh_panda.serializer.cloud' => 'getCloudSerializer',
+            'xabbuh_panda.serializer.encoding' => 'getEncodingSerializer',
+            'xabbuh_panda.serializer.profile' => 'getProfileSerializer',
+            'xabbuh_panda.serializer.video' => 'getVideoSerializer',
+        );
+
+        foreach ($serializers as $serviceId => $factoryMethod) {
+            $definition = $container->getDefinition($serviceId);
+
+            if (method_exists($definition, 'setFactory')) {
+                $definition->setFactory(array('%xabbuh_panda.serializer.factory.class%', $factoryMethod));
+            } else {
+                $definition->setFactoryClass('%xabbuh_panda.serializer.factory.class%');
+                $definition->setFactoryMethod($factoryMethod);
+            }
         }
     }
 

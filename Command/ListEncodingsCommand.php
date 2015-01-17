@@ -83,7 +83,7 @@ class ListEncodingsCommand extends CloudCommand
         $encodings = $this->getCloud($input)->getEncodings($filter);
 
         if (count($encodings) > 0) {
-            $table = $this->getTableHelper();
+            $table = $this->getTableHelper($output);
             $table->setHeaders(array(
                 'encoding id',
                 'video id',

@@ -46,7 +46,7 @@ class VideoInfoCommand extends CloudCommand
         $cloud = $this->getCloud($input);
         $video = $cloud->getVideo($input->getArgument('video-id'));
 
-        $table = $this->getTableHelper();
+        $table = $this->getTableHelper($output);
         $table->addRows(array(
             array('id', $video->getId()),
             array('file name', $video->getOriginalFilename()),

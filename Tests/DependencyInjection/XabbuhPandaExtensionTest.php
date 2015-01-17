@@ -12,6 +12,8 @@
 namespace Xabbuh\PandaBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Xabbuh\PandaBundle\DependencyInjection\XabbuhPandaExtension;
 
 /**
@@ -48,6 +50,10 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
             'xabbuh_panda.cloud_manager' => 'Xabbuh\PandaClient\Api\CloudManager',
             'xabbuh_panda.cloud_factory' => 'Xabbuh\PandaBundle\Cloud\CloudFactory',
             'xabbuh_panda.controller' => 'Xabbuh\PandaBundle\Controller\Controller',
+            'xabbuh_panda.serializer.cloud' => 'Xabbuh\PandaClient\Serializer\Symfony\Serializer',
+            'xabbuh_panda.serializer.encoding' => 'Xabbuh\PandaClient\Serializer\Symfony\Serializer',
+            'xabbuh_panda.serializer.profile' => 'Xabbuh\PandaClient\Serializer\Symfony\Serializer',
+            'xabbuh_panda.serializer.video' => 'Xabbuh\PandaClient\Serializer\Symfony\Serializer',
             'xabbuh_panda.transformer' => 'Xabbuh\PandaClient\Transformer\TransformerRegistry',
             'xabbuh_panda.transformer.cloud' => 'Xabbuh\PandaClient\Transformer\CloudTransformer',
             'xabbuh_panda.transformer.encoding' => 'Xabbuh\PandaClient\Transformer\EncodingTransformer',
@@ -56,6 +62,7 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
             'xabbuh_panda.transformer.video' => 'Xabbuh\PandaClient\Transformer\VideoTransformer',
             'xabbuh_panda.video_uploader_extension' => 'Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension',
         ));
+        $this->ensureThatSerializersAreRegistered();
         $this->ensureThatSerializersArePassedToTransformers();
         $this->ensureThatTransformersArePassedToTheRegistry();
     }
@@ -104,15 +111,13 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
             1,
             'bar'
         );
-        $this->assertEquals('xabbuh_panda.cloud_factory', $withAccountCloud->getFactoryService());
-        $this->assertEquals('get', $withAccountCloud->getFactoryMethod());
+        $this->validateFactoryService('xabbuh_panda.cloud_factory', 'get', $withAccountCloud);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'xabbuh_panda.without_account_cloud',
             1,
             null
         );
-        $this->assertEquals('xabbuh_panda.cloud_factory', $withoutAccountCloud->getFactoryService());
-        $this->assertEquals('get', $withoutAccountCloud->getFactoryMethod());
+        $this->validateFactoryService('xabbuh_panda.cloud_factory', 'get', $withoutAccountCloud);
     }
 
     protected function getContainerExtensions()
@@ -124,6 +129,24 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
     {
         foreach ($definitions as $id => $className) {
             $this->assertContainerBuilderHasService($id, $className);
+        }
+    }
+
+    private function ensureThatSerializersAreRegistered()
+    {
+        $serializers = array(
+            'xabbuh_panda.serializer.cloud' => 'getCloudSerializer',
+            'xabbuh_panda.serializer.encoding' => 'getEncodingSerializer',
+            'xabbuh_panda.serializer.profile' => 'getProfileSerializer',
+            'xabbuh_panda.serializer.video' => 'getVideoSerializer',
+        );
+
+        foreach ($serializers as $serviceId => $factoryMethod) {
+            $this->validateFactoryClass(
+                '%xabbuh_panda.serializer.factory.class%',
+                $factoryMethod,
+                $this->container->getDefinition($serviceId)
+            );
         }
     }
 
@@ -164,5 +187,29 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertEquals($expectedMethodName, $actualMethodName);
         $this->assertEquals($expectedArgument, $actualArgument);
+    }
+
+    private function validateFactoryClass($expectedClass, $expectedMethod, Definition $definition)
+    {
+        if (method_exists($definition, 'setFactory')) {
+            $factory = $definition->getFactory();
+            $this->assertEquals($expectedClass, $factory[0]);
+            $this->assertSame($expectedMethod, $factory[1]);
+        } else {
+            $this->assertSame($expectedClass, $definition->getFactoryClass());
+            $this->assertSame($expectedMethod, $definition->getFactoryMethod());
+        }
+    }
+
+    private function validateFactoryService($expectedService, $expectedMethod, Definition $definition)
+    {
+        if (method_exists($definition, 'setFactory')) {
+            $factory = $definition->getFactory();
+            $this->assertEquals(new Reference($expectedService), $factory[0]);
+            $this->assertSame($expectedMethod, $factory[1]);
+        } else {
+            $this->assertSame($expectedService, $definition->getFactoryService());
+            $this->assertSame($expectedMethod, $definition->getFactoryMethod());
+        }
     }
 }

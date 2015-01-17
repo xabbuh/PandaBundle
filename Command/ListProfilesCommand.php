@@ -40,7 +40,7 @@ class ListProfilesCommand extends CloudCommand
         $profiles = $this->getCloud($input)->getProfiles();
 
         if (count($profiles) > 0) {
-            $table = $this->getTableHelper();
+            $table = $this->getTableHelper($output);
             $table->setHeaders(array('profile id', 'profile name'));
 
             foreach ($profiles as $profile) {

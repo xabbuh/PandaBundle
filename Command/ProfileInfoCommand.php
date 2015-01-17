@@ -44,7 +44,7 @@ class ProfileInfoCommand extends CloudCommand
     protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $profile = $this->getCloud($input)->getProfile($input->getArgument('profile-id'));
-        $table = $this->getTableHelper();
+        $table = $this->getTableHelper($output);
         $table->addRows(array(
             array('id', $profile->getId()),
             array('title', $profile->getTitle()),
