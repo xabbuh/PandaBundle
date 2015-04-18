@@ -5,11 +5,14 @@ language: php
 env:
   global:
     - SYMFONY_VERSION=""
+    - deps=""
 
 matrix:
   fast_finish: true
   include:
     - php: 5.3
+    - php: 5.3
+      env: deps="low"
     - php: 5.4
     - php: 5.5
     - php: 5.6
@@ -25,9 +28,12 @@ matrix:
     - php: hhvm
     - php: hhvm-nightly
 
-before_script:
+before_install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --dev --no-update; fi
-  - composer install
+
+install:
+  - if [ "$deps" = "" ]; then composer install; fi
+  - if [ "$deps" = "low" ]; then composer update --prefer-lowest; fi
 
 script:
   - phpunit --coverage-clover=coverage.clover
