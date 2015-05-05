@@ -23,10 +23,8 @@ matrix:
       env: SYMFONY_VERSION="2.7.x@dev"
     - php: 7.0
     - php: hhvm
-    - php: hhvm-nightly
   allow_failures:
     - php: hhvm
-    - php: hhvm-nightly
 
 before_install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --dev --no-update; fi
