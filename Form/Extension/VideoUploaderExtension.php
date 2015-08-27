@@ -14,6 +14,7 @@ namespace Xabbuh\PandaBundle\Form\Extension;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -63,19 +64,37 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(
-            array(
-                "panda_widget",
-                "panda_widget_version",
-                "cloud",
-                "multiple_files",
-                "cancel_button",
-                "progress_bar"
-            )
+        // BC for symfony 2.6 and older which don't have the forward-compatibility layer
+        if (!$resolver instanceof OptionsResolver) {
+            throw new \InvalidArgumentException(sprintf('Custom resolver "%s" must extend "Symfony\Component\OptionsResolver\OptionsResolver".', get_class($resolver)));
+        }
+
+        $this->configureOptions($resolver);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $optionalOptions = array(
+            "panda_widget",
+            "panda_widget_version",
+            "cloud",
+            "multiple_files",
+            "cancel_button",
+            "progress_bar",
         );
-        $resolver->setAllowedValues(
-            array("panda_widget_version" => array(1, 2))
-        );
+
+        if (method_exists($resolver, 'setDefined')) {
+            $resolver->setDefined($optionalOptions);
+            $resolver->setAllowedValues('panda_widget_version', array(1, 2));
+        } else {
+            $resolver->setOptional($optionalOptions);
+            $resolver->setAllowedValues(
+                array("panda_widget_version" => array(1, 2))
+            );
+        }
     }
 
     /**
