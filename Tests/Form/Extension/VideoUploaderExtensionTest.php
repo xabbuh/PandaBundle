@@ -143,7 +143,13 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
 
         $options['cloud'] = 'the-cloud';
 
-        $form = $this->factory->createNamed($id, 'file', null, $options);
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = 'Symfony\Component\Form\Extension\Core\Type\FileType';
+        } else {
+            $type = 'file';
+        }
+
+        $form = $this->factory->createNamed($id, $type, null, $options);
 
         return $form->createView();
     }

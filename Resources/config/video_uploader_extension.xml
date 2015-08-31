@@ -14,7 +14,7 @@
                 <argument key="cancel_button">%xabbuh_panda.video_uploader.cancel_button%</argument>
                 <argument key="progress_bar">%xabbuh_panda.video_uploader.progress_bar%</argument>
             </argument>
-            <tag name="form.type_extension" alias="file"/>
+            <!-- The tag is added in the extension to avoid deprecation warnings in 2.8+ -->
         </service>
     </services>
 </container>

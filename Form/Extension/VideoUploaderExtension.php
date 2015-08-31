@@ -56,7 +56,12 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return "file";
+        // BC with Symfony < 2.8
+        if (!method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            return 'file';
+        }
+
+        return 'Symfony\Component\Form\Extension\Core\Type\FileType';
     }
 
     /**
