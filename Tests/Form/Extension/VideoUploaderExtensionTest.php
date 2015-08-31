@@ -11,168 +11,128 @@
 
 namespace Xabbuh\PandaBundle\Tests\Form\Extension;
 
-use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\Test\FormIntegrationTestCase;
 use Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class VideoUploaderExtensionTest extends \PHPUnit_Framework_TestCase
+class VideoUploaderExtensionTest extends FormIntegrationTestCase
 {
-    /**
-     * @var VideoUploaderExtension
-     */
-    private $extension;
-
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     private $urlGenerator;
 
-    /**
-     * @var \Symfony\Component\Form\FormView
-     */
-    private $formView;
-
-    /**
-     * @var \Symfony\Component\Form\FormInterface
-     */
-    private $form;
-
     protected function setUp()
     {
-        $this->urlGenerator = $this->createUrlGeneratorMock();
-        $this->formView = $this->createFormView();
-        $this->form = $this->createFormInterfaceMock();
+        $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+
+        parent::setUp();
+    }
+
+    protected function getExtensions()
+    {
         $defaultOptions = array(
             'multiple_files' => false,
             'cancel_button' => false,
             'progress_bar' => false,
         );
-        $this->extension = new VideoUploaderExtension($this->urlGenerator, $defaultOptions);
+        $extension = new VideoUploaderExtension($this->urlGenerator, $defaultOptions);
+
+        return array(
+            new PreloadedExtension(array(), array($extension->getExtendedType() => array($extension))),
+        );
     }
 
     public function testWidgetIsDisabledByDefault()
     {
-        $this->buildView(array(), false);
+        $formView = $this->buildView(array(), false);
 
-        $this->assertFalse($this->formView->vars['panda_uploader']);
+        $this->assertFalse($formView->vars['panda_uploader']);
     }
 
     public function testEnableWidget()
     {
-        $this->buildView();
+        $formView = $this->buildView();
 
-        $this->assertTrue($this->formView->vars['panda_uploader']);
+        $this->assertTrue($formView->vars['panda_uploader']);
     }
 
     public function testEnableWidgetWithNonBoolOptionValue()
     {
-        $this->buildView(array('panda_widget' => 'yes'));
+        $formView = $this->buildView(array('panda_widget' => 'yes'));
 
-        $this->assertTrue($this->formView->vars['panda_uploader']);
-    }
-
-    public function testIdHasToBeSetToEnableTheWidget()
-    {
-        $this->buildView(array(), true, null);
-
-        $this->assertFalse($this->formView->vars['panda_uploader']);
+        $this->assertTrue($formView->vars['panda_uploader']);
     }
 
     public function testDefaultWidgetVersion()
     {
-        $this->buildView(array());
+        $formView = $this->buildView(array());
 
-        $this->assertEquals('v2', $this->formView->vars['attr']['panda-uploader']);
+        $this->assertEquals('v2', $formView->vars['attr']['panda-uploader']);
     }
 
     public function testWidgetVersionCanBeChanged()
     {
-        $this->buildView(array('panda_widget_version' => 1), true);
+        $formView = $this->buildView(array('panda_widget_version' => 1), true);
 
-        $this->assertEquals('v1', $this->formView->vars['attr']['panda-uploader']);
+        $this->assertEquals('v1', $formView->vars['attr']['panda-uploader']);
     }
 
     public function testDefaultOptions()
     {
-        $this->buildView();
+        $formView = $this->buildView();
 
-        $this->assertEquals('false', $this->formView->vars['attr']['multiple_files']);
-        $this->assertFalse($this->formView->vars['cancel_button']);
-        $this->assertFalse($this->formView->vars['progress_bar']);
+        $this->assertEquals('false', $formView->vars['attr']['multiple_files']);
+        $this->assertFalse($formView->vars['cancel_button']);
+        $this->assertFalse($formView->vars['progress_bar']);
     }
 
     public function testMultipleFilesUploadsCanBeEnabled()
     {
-        $this->buildView(array('multiple_files' => true));
+        $formView = $this->buildView(array('multiple_files' => true));
 
-        $this->assertEquals('true', $this->formView->vars['attr']['multiple_files']);
+        $this->assertEquals('true', $formView->vars['attr']['multiple_files']);
     }
 
     public function testCancelButtonCanBeEnabled()
     {
-        $this->buildView(array('cancel_button' => true));
+        $formView = $this->buildView(array('cancel_button' => true));
 
-        $this->assertTrue($this->formView->vars['cancel_button']);
+        $this->assertTrue($formView->vars['cancel_button']);
     }
 
     public function testProgressBarCanBeEnabled()
     {
-        $this->buildView(array('progress_bar' => true));
+        $formView = $this->buildView(array('progress_bar' => true));
 
-        $this->assertTrue($this->formView->vars['progress_bar']);
+        $this->assertTrue($formView->vars['progress_bar']);
     }
 
     public function testBrowseButtonId()
     {
-        $this->buildView(array(), true, 'bar');
+        $formView = $this->buildView(array(), true, 'bar');
 
-        $this->assertEquals('browse_button_bar', $this->formView->vars['attr']['browse-button-id']);
-        $this->assertEquals('browse_button_bar', $this->formView->vars['browse_button_id']);
+        $this->assertEquals('browse_button_bar', $formView->vars['attr']['browse-button-id']);
+        $this->assertEquals('browse_button_bar', $formView->vars['browse_button_id']);
     }
 
     public function testCancelButtonId()
     {
-        $this->buildView(array('cancel_button' => true), true, 'baz');
+        $formView = $this->buildView(array('cancel_button' => true), true, 'baz');
 
-        $this->assertEquals('cancel_button_baz', $this->formView->vars['attr']['cancel-button-id']);
-        $this->assertEquals('cancel_button_baz', $this->formView->vars['cancel_button_id']);
+        $this->assertEquals('cancel_button_baz', $formView->vars['attr']['cancel-button-id']);
+        $this->assertEquals('cancel_button_baz', $formView->vars['cancel_button_id']);
     }
 
     public function testProgressBarId()
     {
-        $this->buildView(array('progress_bar' => true), true, 'foobar');
+        $formView = $this->buildView(array('progress_bar' => true), true, 'foobar');
 
-        $this->assertEquals('progress_bar_foobar', $this->formView->vars['attr']['progress-bar-id']);
-        $this->assertEquals('progress_bar_foobar', $this->formView->vars['progress_bar_id']);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    private function createUrlGeneratorMock()
-    {
-        return $this
-            ->getMockBuilder('\Symfony\Component\Routing\Generator\UrlGeneratorInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormView
-     */
-    private function createFormView()
-    {
-        return new FormView();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Form\FormInterface
-     */
-    private function createFormInterfaceMock()
-    {
-        return $this->getMock('\Symfony\Component\Form\FormInterface');
+        $this->assertEquals('progress_bar_foobar', $formView->vars['attr']['progress-bar-id']);
+        $this->assertEquals('progress_bar_foobar', $formView->vars['progress_bar_id']);
     }
 
     private function buildView(array $options = array(), $enable = true, $id = 'foo')
@@ -181,12 +141,16 @@ class VideoUploaderExtensionTest extends \PHPUnit_Framework_TestCase
             $options['panda_widget'] = true;
         }
 
-        if (isset($options['panda_widget']) && $options['panda_widget']) {
-            $this->formView->vars['id'] = $id;
-        }
-
         $options['cloud'] = 'the-cloud';
 
-        $this->extension->buildView($this->formView, $this->form, $options);
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = 'Symfony\Component\Form\Extension\Core\Type\FileType';
+        } else {
+            $type = 'file';
+        }
+
+        $form = $this->factory->createNamed($id, $type, null, $options);
+
+        return $form->createView();
     }
 }
