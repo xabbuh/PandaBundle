@@ -21,14 +21,14 @@
 
     <xsd:complexType name="account">
         <xsd:attribute name="name" type="xsd:string" use="required" />
-        <xsd:attribute name="access-key" type="xsd:string" use="required" />
-        <xsd:attribute name="secret-key" type="xsd:string" use="required" />
+        <xsd:attribute name="access-key" type="xsd:string" />
+        <xsd:attribute name="secret-key" type="xsd:string" />
         <xsd:attribute name="api-host" type="xsd:string" />
     </xsd:complexType>
 
     <xsd:complexType name="cloud">
         <xsd:attribute name="name" type="xsd:string" use="required" />
-        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:string" />
         <xsd:attribute name="account" type="xsd:string" />
     </xsd:complexType>
 
