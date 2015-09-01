@@ -135,6 +135,20 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
         $this->assertEquals('progress_bar_foobar', $formView->vars['progress_bar_id']);
     }
 
+    /**
+     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     */
+    public function testExceptionForWidgetWithoutCloud()
+    {
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = 'Symfony\Component\Form\Extension\Core\Type\FileType';
+        } else {
+            $type = 'file';
+        }
+
+        $this->factory->create($type, null, array('panda_widget' => true));
+    }
+
     private function buildView(array $options = array(), $enable = true, $id = 'foo')
     {
         if (!isset($options['panda_widget']) && $enable) {
