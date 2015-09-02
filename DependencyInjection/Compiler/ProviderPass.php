@@ -32,7 +32,7 @@ class ProviderPass implements CompilerPassInterface
         if ($container->hasDefinition("xabbuh_panda.account_manager")) {
             $accountManager = $container->getDefinition("xabbuh_panda.account_manager");
             $accountProviderServices = $container->findTaggedServiceIds("xabbuh_panda.account_provider");
-            foreach ($accountProviderServices as $id => $attributes) {
+            foreach ($accountProviderServices as $id => $tags) {
                 $accountManager->addMethodCall("registerProvider", array(new Reference($id)));
             }
         }
@@ -41,7 +41,7 @@ class ProviderPass implements CompilerPassInterface
         if ($container->hasDefinition("xabbuh_panda.cloud_manager")) {
             $cloudManager = $container->getDefinition("xabbuh_panda.cloud_manager");
             $cloudProviderServices = $container->findTaggedServiceIds("xabbuh_panda.cloud_provider");
-            foreach ($cloudProviderServices as $id => $attributes) {
+            foreach ($cloudProviderServices as $id => $tags) {
                 $cloudManager->addMethodCall("registerProvider", array(new Reference($id)));
             }
         }
