@@ -5,6 +5,9 @@ XabbuhPandeBundle
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xabbuh/PandaBundle/badges/quality-score.png?b=1.0)](https://scrutinizer-ci.com/g/xabbuh/PandaBundle/?branch=1.0)
 [![Code Coverage](https://scrutinizer-ci.com/g/xabbuh/PandaBundle/badges/coverage.png?b=1.0)](https://scrutinizer-ci.com/g/xabbuh/PandaBundle/?branch=1.0)
 
+**CAUTION**: The 1.0.x branch of the PandaBundle is no longer maintained.
+Please consider upgrading to a later version.
+
 The XabbuhPandaBundle eases integration of the Panda encoding service into
 Symfony 2. It sits on top a [PHP client implementation]
 (https://github.com/xabbuh/panda-client) for Panda's REST API.
