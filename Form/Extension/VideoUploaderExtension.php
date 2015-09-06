@@ -14,6 +14,8 @@ namespace Xabbuh\PandaBundle\Form\Extension;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -48,7 +50,11 @@ class VideoUploaderExtension extends AbstractTypeExtension
     public function __construct(UrlGeneratorInterface $urlGenerator, array $defaultOptions)
     {
         $this->urlGenerator = $urlGenerator;
-        $this->defaultOptions = $defaultOptions;
+        $this->defaultOptions = array_replace(array(
+            'multiple_files' => false,
+            'cancel_button' => true,
+            'progress_bar' => true,
+        ), $defaultOptions);
     }
 
     /**
@@ -82,20 +88,30 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $optionalOptions = array(
-            "panda_widget",
-            "panda_widget_version",
-            "cloud",
-            "multiple_files",
-            "cancel_button",
-            "progress_bar",
-        );
+        $resolver->setDefaults(array(
+            'panda_widget' => false,
+            'panda_widget_version' => 2,
+            'cloud' => null,
+        ));
+        $resolver->setDefaults($this->defaultOptions);
 
-        if (method_exists($resolver, 'setDefined')) {
-            $resolver->setDefined($optionalOptions);
+        $cloudNormalizer = function (Options $options, $cloud) {
+            if (!$options['panda_widget']) {
+                return null;
+            }
+
+            if (null === $cloud) {
+                throw new InvalidOptionsException('The "cloud" option is required when enabling the panda widget.');
+            }
+
+            return $cloud;
+        };
+
+        if (method_exists($resolver, 'setNormalizer')) {
+            $resolver->setNormalizer('cloud', $cloudNormalizer);
             $resolver->setAllowedValues('panda_widget_version', array(1, 2));
         } else {
-            $resolver->setOptional($optionalOptions);
+            $resolver->setNormalizers(array('cloud' => $cloudNormalizer));
             $resolver->setAllowedValues(
                 array("panda_widget_version" => array(1, 2))
             );
@@ -107,58 +123,40 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (!isset($options['panda_widget'])) {
+        if (!$options['panda_widget'] || !isset($view->vars['id'])) {
             $view->vars["panda_uploader"] = false;
-        } elseif (!$options['panda_widget']) {
-            $view->vars["panda_uploader"] = false;
-        } elseif (!isset($view->vars['id'])) {
-            $view->vars["panda_uploader"] = false;
-        } else {
-            $view->vars["panda_uploader"] = true;
 
-            if (isset($options["panda_widget_version"])) {
-                $widgetVersion = $options["panda_widget_version"];
-            } else {
-                $widgetVersion = 2;
-            }
-
-            // generate widgets' ids
-            $formId = $view->vars["id"];
-            $browseButtonId = "browse_button_$formId";
-            $cancelButtonId = "cancel_button_$formId";
-            $progressBarId = "progress_bar_$formId";
-
-            // set input field attributes accordingly (widget ids will be
-            // read from there by the javascript uploader implementation)
-            $view->vars["attr"]["panda-uploader"] = "v$widgetVersion";
-            $view->vars["attr"]["authorise-url"] = $this->urlGenerator->generate(
-                "xabbuh_panda_authorise_upload",
-                array("cloud" => $options["cloud"])
-            );
-            if (isset($options["multiple_files"])) {
-                $view->vars["attr"]["multiple_files"] = var_export($options["multiple_files"], true);
-            } else {
-                $view->vars["attr"]["multiple_files"] = var_export($this->defaultOptions["multiple_files"], true);
-            }
-            $view->vars["attr"]["browse-button-id"] = $browseButtonId;
-            $view->vars["attr"]["cancel-button-id"] = $cancelButtonId;
-            $view->vars["attr"]["progress-bar-id"] = $progressBarId;
-
-            $view->vars["browse_button_id"] = $browseButtonId;
-            $view->vars["browse_button_label"] = "Browse";
-            if (isset($options["cancel_button"])) {
-                $view->vars["cancel_button"] = $options["cancel_button"];
-            } else {
-                $view->vars["cancel_button"] = $this->defaultOptions["cancel_button"];
-            }
-            $view->vars["cancel_button_id"] = $cancelButtonId;
-            $view->vars["cancel_button_label"] = "Cancel";
-            if (isset($options["progress_bar"])) {
-                $view->vars["progress_bar"] = $options["progress_bar"];
-            } else {
-                $view->vars["progress_bar"] = $this->defaultOptions["progress_bar"];
-            }
-            $view->vars["progress_bar_id"] = $progressBarId;
+            return;
         }
+
+        $view->vars["panda_uploader"] = true;
+
+        $widgetVersion = $options["panda_widget_version"];
+
+        // generate widgets' ids
+        $formId = $view->vars["id"];
+        $browseButtonId = "browse_button_$formId";
+        $cancelButtonId = "cancel_button_$formId";
+        $progressBarId = "progress_bar_$formId";
+
+        // set input field attributes accordingly (widget ids will be
+        // read from there by the javascript uploader implementation)
+        $view->vars["attr"]["panda-uploader"] = "v$widgetVersion";
+        $view->vars["attr"]["authorise-url"] = $this->urlGenerator->generate(
+            "xabbuh_panda_authorise_upload",
+            array("cloud" => $options["cloud"])
+        );
+        $view->vars["attr"]["multiple_files"] = var_export($options["multiple_files"], true);
+        $view->vars["attr"]["browse-button-id"] = $browseButtonId;
+        $view->vars["attr"]["cancel-button-id"] = $cancelButtonId;
+        $view->vars["attr"]["progress-bar-id"] = $progressBarId;
+
+        $view->vars["browse_button_id"] = $browseButtonId;
+        $view->vars["browse_button_label"] = "Browse";
+        $view->vars["cancel_button"] = $options["cancel_button"];
+        $view->vars["cancel_button_id"] = $cancelButtonId;
+        $view->vars["cancel_button_label"] = "Cancel";
+        $view->vars["progress_bar"] = $options["progress_bar"];
+        $view->vars["progress_bar_id"] = $progressBarId;
     }
 }
