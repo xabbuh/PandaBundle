@@ -109,12 +109,26 @@ class VideoUploaderExtension extends AbstractTypeExtension
 
         if (method_exists($resolver, 'setNormalizer')) {
             $resolver->setNormalizer('cloud', $cloudNormalizer);
+            $resolver->setAllowedValues('panda_widget', array(true, false, 'yes', 'no'));
             $resolver->setAllowedValues('panda_widget_version', array(1, 2));
+            $resolver->setAllowedTypes('cancel_button', 'bool');
+            $resolver->setAllowedTypes('cloud', array('null', 'string'));
+            $resolver->setAllowedTypes('multiple_files', 'bool');
+            $resolver->setAllowedTypes('panda_widget', array('bool', 'string'));
+            $resolver->setAllowedTypes('progress_bar', 'bool');
         } else {
             $resolver->setNormalizers(array('cloud' => $cloudNormalizer));
             $resolver->setAllowedValues(
+                array("panda_widget" => array(true, false, 'yes', 'no')),
                 array("panda_widget_version" => array(1, 2))
             );
+            $resolver->setAllowedTypes(array(
+                'cancel_button' => 'bool',
+                'cloud' => array('null', 'string'),
+                'multiple_files' => 'bool',
+                'panda_widget' => array('bool', 'string'),
+                'progress_bar' => 'bool',
+            ));
         }
     }
 

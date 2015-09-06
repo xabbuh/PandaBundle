@@ -13,7 +13,7 @@ Some other improvements that have been made:
 * switch to PSR-4 autoloading
 * improve the handling of configured options in the video uploader form
   extension class (it will now trigger meaningful error messages when invalid
-  values where used)
+  values were used)
 
 **CAUTION**: Before 1.2, the video uploader form extension was able to work
 with custom implementations of the `OptionsResolverInterface`. This does not
