@@ -26,7 +26,7 @@ matrix:
     - php: 5.6
       env: SYMFONY_VERSION="2.7.x"
     - php: 5.6
-      env: SYMFONY_VERSION="2.8.x@dev symfony/security-acl:2.8.*@dev"
+      env: SYMFONY_VERSION="2.8.x@dev"
     - php: 7.0
     - php: hhvm
   allow_failures:
@@ -41,7 +41,7 @@ install:
 
 script:
   - phpunit --coverage-clover=coverage.clover
-  
+
 after_script:
   # PHP 7.0 and HHVM 3.5 are not able to generate code coverage
   # Avoid notifying that generating it failed to let other jobs upload it rather than  cancelling the Scrutinizer job
