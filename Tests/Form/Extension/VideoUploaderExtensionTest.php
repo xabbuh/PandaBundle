@@ -137,8 +137,9 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
 
     /**
      * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @dataProvider invalidOptionsProvider
      */
-    public function testExceptionForWidgetWithoutCloud()
+    public function testExceptionIsThrownForInvalidOptions(array $options)
     {
         if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
             $type = 'Symfony\Component\Form\Extension\Core\Type\FileType';
@@ -146,7 +147,18 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
             $type = 'file';
         }
 
-        $this->factory->create($type, null, array('panda_widget' => true));
+        $this->factory->create($type, null, $options);
+    }
+
+    public function invalidOptionsProvider()
+    {
+        return array(
+            'widget-without-cloud' => array(array('panda_widget' => true)),
+            'multiple-files-not-boolean' => array(array('multiple_files' => 'false')),
+            'cancel-button-not-boolean' => array(array('cancel_button' => 'true')),
+            'panda-widget-not-boolean' => array(array('panda_widget' => 'false')),
+            'progress-bar-not-boolean' => array(array('progress_bar' => 'true')),
+        );
     }
 
     private function buildView(array $options = array(), $enable = true, $id = 'foo')
