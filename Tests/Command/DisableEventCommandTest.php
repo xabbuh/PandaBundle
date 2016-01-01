@@ -45,7 +45,7 @@ class DisableEventCommandTest extends CloudCommandTest
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments.
+     * @expectedExceptionMessage Not enough arguments
      */
     public function testCommandWithoutArguments()
     {

@@ -44,7 +44,7 @@ class ProfileInfoCommandTest extends CloudCommandTest
             ->expects($this->once())
             ->method('getProfile')
             ->will($this->returnValue($profile));
-        $this->runCommand('panda:profile:info', array('profile-id', $profileId));
+        $this->runCommand('panda:profile:info', array('profile-id' => $profileId));
         $this->validateTableRows(array(
             array('id', $profileId),
             array('title', 'MP4 (H.264)'),
@@ -60,7 +60,7 @@ class ProfileInfoCommandTest extends CloudCommandTest
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments.
+     * @expectedExceptionMessage Not enough arguments
      */
     public function testCommandWithoutArguments()
     {

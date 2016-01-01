@@ -109,7 +109,7 @@ class ModifyCloudCommandTest extends CommandTest
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments.
+     * @expectedExceptionMessage Not enough arguments
      */
     public function testCommandWithoutArguments()
     {
