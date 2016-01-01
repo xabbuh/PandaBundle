@@ -60,13 +60,12 @@ class XabbuhPandaExtension extends Extension
 
         // Add the tag for the form type extension without using deprecated APIs
         if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $extendedType = 'Symfony\Component\Form\Extension\Core\Type\FileType';
+            $container->getDefinition('xabbuh_panda.video_uploader_extension')
+                ->addTag('form.type_extension', array('extended_type' => 'Symfony\Component\Form\Extension\Core\Type\FileType'));
         } else {
-            $extendedType = 'file';
+            $container->getDefinition('xabbuh_panda.video_uploader_extension')
+                ->addTag('form.type_extension', array('alias' => 'file'));
         }
-
-        $container->getDefinition('xabbuh_panda.video_uploader_extension')
-            ->addTag('form.type_extension', array('alias' => $extendedType));
 
         $this->loadAccounts($config['accounts'], $container);
         $this->loadClouds($config['clouds'], $container);
