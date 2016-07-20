@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.2.1
+-----
+
+The `VideoUploaderExtension` is now properly registered when using Symfony
+3.0 or higher.
+
 1.2.0
 -----
 
