@@ -49,7 +49,6 @@ class VideoCreatedEvent extends Event
     {
         $this->videoId = $videoId;
         $this->encodingIds = $encodingIds;
-        $this->setName(self::NAME);
     }
 
     /**

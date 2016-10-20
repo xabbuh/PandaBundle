@@ -49,7 +49,6 @@ class EncodingCompleteEvent extends Event
     {
         $this->videoId = $videoId;
         $this->encodingId = $encodingId;
-        $this->setName(self::NAME);
     }
 
     /**

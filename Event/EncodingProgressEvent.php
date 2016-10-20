@@ -57,7 +57,6 @@ class EncodingProgressEvent extends Event
         $this->videoId = $videoId;
         $this->encodingId = $encodingId;
         $this->progress = $progress;
-        $this->setName(self::NAME);
     }
 
     /**
