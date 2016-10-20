@@ -91,9 +91,7 @@ class CloudFactoryTest extends \PHPUnit_Framework_TestCase
     private function createAccountManagerMock()
     {
         $this->createAccount();
-        $this->accountManager = $this->getMock(
-            '\Xabbuh\PandaClient\Api\AccountManagerInterface'
-        );
+        $this->accountManager = $this->getMockBuilder('\Xabbuh\PandaClient\Api\AccountManagerInterface')->getMock();
         $this->accountManager
             ->expects($this->any())
             ->method('getAccount')
@@ -102,8 +100,6 @@ class CloudFactoryTest extends \PHPUnit_Framework_TestCase
 
     private function createTransformerRegistryMock()
     {
-        $this->transformerRegistry = $this->getMock(
-            '\Xabbuh\PandaClient\Transformer\TransformerRegistryInterface'
-        );
+        $this->transformerRegistry = $this->getMockBuilder('\Xabbuh\PandaClient\Transformer\TransformerRegistryInterface')->getMock();
     }
 }

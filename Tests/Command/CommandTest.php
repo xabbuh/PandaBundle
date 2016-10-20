@@ -65,7 +65,7 @@ abstract class CommandTest extends \PHPUnit_Framework_TestCase
 
     protected function createContainerMock()
     {
-        $this->container = $this->getMock('\Symfony\Component\DependencyInjection\Container');
+        $this->container = $this->getMockBuilder('\Symfony\Component\DependencyInjection\Container')->getMock();
     }
 
     /**

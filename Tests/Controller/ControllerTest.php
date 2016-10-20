@@ -233,7 +233,7 @@ class ControllerTest extends WebTestCase
 
     private function createMocks()
     {
-        $httpClient = $this->getMock('\Xabbuh\PandaClient\Api\HttpClientInterface');
+        $httpClient = $this->getMockBuilder('\Xabbuh\PandaClient\Api\HttpClientInterface')->getMock();
         $httpClient->expects($this->any())
             ->method('getCloudId')
             ->will($this->returnValue('cloud-id'));
@@ -242,12 +242,12 @@ class ControllerTest extends WebTestCase
             ->will($this->returnValue(
                 new Account('access-key', 'secret-key', 'api.pandastream.com')
             ));
-        $this->defaultCloud = $this->getMock('\Xabbuh\PandaClient\Api\CloudInterface');
+        $this->defaultCloud = $this->getMockBuilder('\Xabbuh\PandaClient\Api\CloudInterface')->getMock();
         $this->defaultCloud
             ->expects($this->any())
             ->method('getHttpClient')
             ->will($this->returnValue($httpClient));
-        $cloudManager = $this->getMock('\Xabbuh\PandaClient\Api\CloudManagerInterface');
+        $cloudManager = $this->getMockBuilder('\Xabbuh\PandaClient\Api\CloudManagerInterface')->getMock();
         $cloudManager->expects($this->any())
             ->method('getCloud')
             ->with($this->getDefaultCloudName())

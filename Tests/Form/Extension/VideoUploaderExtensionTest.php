@@ -27,7 +27,7 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
 
     protected function setUp()
     {
-        $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $this->urlGenerator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
 
         parent::setUp();
     }

@@ -118,17 +118,14 @@ class ModifyCloudCommandTest extends CommandTest
 
     private function createCloudFactoryMock()
     {
-        $this->cloudFactory = $this->getMock(
-            '\Xabbuh\PandaBundle\Cloud\CloudFactory',
-            array(),
-            array(),
-            '',
-            false
-        );
+        $this->cloudFactory = $this->getMockBuilder('\Xabbuh\PandaBundle\Cloud\CloudFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(array())
+            ->getMock();
     }
 
     private function createCloudMock()
     {
-        return $this->getMock('\Xabbuh\PandaClient\Api\Cloud');
+        return $this->getMockBuilder('\Xabbuh\PandaClient\Api\Cloud')->getMock();
     }
 }

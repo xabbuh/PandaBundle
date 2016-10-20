@@ -60,7 +60,7 @@ abstract class CloudCommandTest extends CommandTest
     protected function createCloudManagerMock()
     {
         $this->createDefaultCloudMock();
-        $this->cloudManager = $this->getMock('\Xabbuh\PandaClient\Api\CloudManager');
+        $this->cloudManager = $this->getMockBuilder('\Xabbuh\PandaClient\Api\CloudManager')->getMock();
         $this->cloudManager
             ->expects($this->any())
             ->method('getDefaultCloud')
@@ -69,7 +69,7 @@ abstract class CloudCommandTest extends CommandTest
 
     protected function createDefaultCloudMock()
     {
-        $this->defaultCloud = $this->getMock('\Xabbuh\PandaClient\Api\Cloud');
+        $this->defaultCloud = $this->getMockBuilder('\Xabbuh\PandaClient\Api\Cloud')->getMock();
     }
 
     protected function validateTableRow($label, $value)

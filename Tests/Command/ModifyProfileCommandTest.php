@@ -151,17 +151,14 @@ class ModifyProfileCommandTest extends CloudCommandTest
 
     private function createProfileMock()
     {
-        return $this->getMock('\Xabbuh\PandaClient\Model\Profile');
+        return $this->getMockBuilder('\Xabbuh\PandaClient\Model\Profile')->getMock();
     }
 
     private function createCloudFactoryMock()
     {
-        return $this->getMock(
-            '\Xabbuh\PandaBundle\Cloud\CloudFactory',
-            array(),
-            array(),
-            '',
-            false
-        );
+        return $this->getMockBuilder('\Xabbuh\PandaBundle\Cloud\CloudFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(array())
+            ->getMock();
     }
 }
