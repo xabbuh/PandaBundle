@@ -27,5 +27,5 @@ install the XabbuhPandaBundle.
 License
 -------
 
-XabbuhPandaBundle is licensed under the MIT license. See the [LICENSE]
-(Resources/meta/LICENSE) for the full license text.
+XabbuhPandaBundle is licensed under the MIT license. See the [LICENSE](LICENSE)
+for the full license text.
