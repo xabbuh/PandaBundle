@@ -68,6 +68,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('httplug')
+                    ->info('Allow configuring the HTTPlug objects being used, instead of creating new ones using the discovery system.')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')->defaultNull()->end()
+                        ->scalarNode('request_factory')->defaultNull()->end()
+                        ->scalarNode('stream_factory')->defaultNull()->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

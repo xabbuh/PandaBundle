@@ -62,6 +62,14 @@ class XabbuhPandaExtension extends Extension
 
         $this->loadAccounts($config['accounts'], $container);
         $this->loadClouds($config['clouds'], $container);
+
+        $baseHttpClientDefinition = $container->getDefinition('xabbuh_panda.http_client');
+
+        foreach (array('client' => 0, 'request_factory' => 1, 'stream_factory' => 2) as $key => $argumentIndex) {
+            if (null !== $config['httplug'][$key]) {
+                $baseHttpClientDefinition->replaceArgument($argumentIndex, new Reference($config['httplug'][$key]));
+            }
+        }
     }
 
     private function loadAccounts(array $accounts, ContainerBuilder $container)
