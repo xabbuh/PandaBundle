@@ -11,10 +11,9 @@
 
 namespace Xabbuh\PandaBundle\Cloud;
 
-use Guzzle\Http\Client;
 use Xabbuh\PandaClient\Api\AccountManagerInterface;
 use Xabbuh\PandaClient\Api\Cloud;
-use Xabbuh\PandaClient\Api\HttpClient;
+use Xabbuh\PandaClient\Api\HttplugClient;
 use Xabbuh\PandaClient\Transformer\TransformerRegistryInterface;
 
 /**
@@ -51,12 +50,9 @@ class CloudFactory implements CloudFactoryInterface
     {
         $account = $this->accountManager->getAccount($accountKey);
 
-        $guzzleClient = new Client('https://'.$account->getApiHost().'/v2');
-
-        $httpClient = new HttpClient();
+        $httpClient = new HttplugClient();
         $httpClient->setCloudId($cloudId);
         $httpClient->setAccount($account);
-        $httpClient->setGuzzleClient($guzzleClient);
 
         $cloud = new Cloud();
         $cloud->setHttpClient($httpClient);

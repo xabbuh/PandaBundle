@@ -67,18 +67,6 @@ class CloudFactoryTest extends TestCase
         $this->assertEquals($this->account, $httpClient->getAccount());
     }
 
-    public function testGuzzleClientFromGet()
-    {
-        $cloud = $this->cloudFactory->get(md5(uniqid()), 'foo');
-        $guzzleClient = $cloud->getHttpClient()->getGuzzleClient();
-
-        $this->assertInstanceOf('\Guzzle\Http\Client', $guzzleClient);
-        $this->assertEquals(
-            'https://example.com/v2',
-            $guzzleClient->getBaseUrl()
-        );
-    }
-
     public function testTransformerRegistryFromGet()
     {
         $cloud = $this->cloudFactory->get(md5(uniqid()), 'foo');
