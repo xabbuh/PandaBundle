@@ -11,12 +11,15 @@
 
 namespace Xabbuh\PandaBundle\Tests\Cloud;
 
+use Http\Discovery\HttpClientDiscovery;
 use PHPUnit\Framework\TestCase;
 use Xabbuh\PandaBundle\Cloud\CloudFactory;
 use Xabbuh\PandaClient\Api\Account;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class CloudFactoryTest extends TestCase
 {
@@ -48,6 +51,8 @@ class CloudFactoryTest extends TestCase
             $this->accountManager,
             $this->transformerRegistry
         );
+
+        HttpClientDiscovery::prependStrategy('Http\Discovery\Strategy\MockClientStrategy');
     }
 
     public function testGet()
@@ -65,18 +70,6 @@ class CloudFactoryTest extends TestCase
 
         $this->assertEquals($cloudId, $httpClient->getCloudId());
         $this->assertEquals($this->account, $httpClient->getAccount());
-    }
-
-    public function testGuzzleClientFromGet()
-    {
-        $cloud = $this->cloudFactory->get(md5(uniqid()), 'foo');
-        $guzzleClient = $cloud->getHttpClient()->getGuzzleClient();
-
-        $this->assertInstanceOf('\Guzzle\Http\Client', $guzzleClient);
-        $this->assertEquals(
-            'https://example.com/v2',
-            $guzzleClient->getBaseUrl()
-        );
     }
 
     public function testTransformerRegistryFromGet()
