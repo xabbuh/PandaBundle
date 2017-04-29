@@ -11,12 +11,15 @@
 
 namespace Xabbuh\PandaBundle\Tests\Cloud;
 
+use Http\Discovery\HttpClientDiscovery;
 use PHPUnit\Framework\TestCase;
 use Xabbuh\PandaBundle\Cloud\CloudFactory;
 use Xabbuh\PandaClient\Api\Account;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class CloudFactoryTest extends TestCase
 {
@@ -48,6 +51,8 @@ class CloudFactoryTest extends TestCase
             $this->accountManager,
             $this->transformerRegistry
         );
+
+        HttpClientDiscovery::prependStrategy('Http\Discovery\Strategy\MockClientStrategy');
     }
 
     public function testGet()

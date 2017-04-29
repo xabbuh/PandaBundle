@@ -97,8 +97,6 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
                 ),
             ),
         ));
-        $withAccountCloud = $this->container->findDefinition('xabbuh_panda.with_account_cloud');
-        $withoutAccountCloud = $this->container->findDefinition('xabbuh_panda.without_account_cloud');
 
         $this->ensureThatDefinitionsAreRegistered(array(
             'xabbuh_panda.with_account_cloud' => 'Xabbuh\PandaClient\Api\Cloud',
@@ -106,22 +104,24 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
         ));
 
         $this->assertContainerBuilderHasParameter('xabbuh_panda.account.default', 'default');
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'xabbuh_panda.with_account_cloud',
-            1,
-            'bar'
+            'setHttpClient',
+            array(new Reference('xabbuh_panda.http_client.with_account'))
         );
-        $factory = $withAccountCloud->getFactory();
-        $this->assertEquals(new Reference('xabbuh_panda.cloud_factory'), $factory[0]);
-        $this->assertSame('get', $factory[1]);
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'xabbuh_panda.without_account_cloud',
-            1,
-            null
+            'setHttpClient',
+            array(new Reference('xabbuh_panda.http_client.without_account'))
         );
-        $factory = $withoutAccountCloud->getFactory();
-        $this->assertEquals(new Reference('xabbuh_panda.cloud_factory'), $factory[0]);
-        $this->assertSame('get', $factory[1]);
+
+        $accountDef = new Definition('Xabbuh\PandaClient\Api\Account', array('bar'));
+        $accountDef->setFactory(array(new Reference('xabbuh_panda.account_manager'), 'getAccount'));
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.with_account', 'setAccount', array($accountDef));
+
+        $withoutAccountDef = new Definition('Xabbuh\PandaClient\Api\Account', array(null));
+        $withoutAccountDef->setFactory(array(new Reference('xabbuh_panda.account_manager'), 'getAccount'));
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.without_account', 'setAccount', array($withoutAccountDef));
     }
 
     protected function getContainerExtensions()

@@ -11,6 +11,8 @@
 
 namespace Xabbuh\PandaBundle\Cloud;
 
+@trigger_error('The Xabbuh\PandaBundle\Cloud\CloudFactory class is deprecated since version 1.3 and will be removed in 2.0', E_USER_DEPRECATED);
+
 use Xabbuh\PandaClient\Api\AccountManagerInterface;
 use Xabbuh\PandaClient\Api\Cloud;
 use Xabbuh\PandaClient\Api\HttplugClient;
@@ -20,6 +22,8 @@ use Xabbuh\PandaClient\Transformer\TransformerRegistryInterface;
  * Factory to create Cloud instances.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @deprecated since version 1.3, to be removed in 2.0
  */
 class CloudFactory implements CloudFactoryInterface
 {
