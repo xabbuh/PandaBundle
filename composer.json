@@ -24,7 +24,7 @@
         "symfony/http-kernel": "^2.3||^3.0",
         "symfony/options-resolver": "^2.2||^3.0",
         "symfony/routing": "^2.2||^3.0",
-        "xabbuh/panda-client": "~1.1"
+        "xabbuh/panda-client": "^1.2.3"
     },
     "require-dev": {
         "matthiasnoback/symfony-dependency-injection-test": "~0.7",
