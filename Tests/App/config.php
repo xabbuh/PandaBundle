@@ -2,7 +2,7 @@
 
 $frameworkConfig = array(
     'router' => array(
-        'resource' => '%kernel.root_dir%/routing.yml',
+        'resource' => '%kernel.root_dir%/routing.xml',
     ),
     'secret' => uniqid('', true),
     'test' => true,
