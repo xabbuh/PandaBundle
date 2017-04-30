@@ -2,4 +2,3 @@ composer.lock
 Tests/App/log
 Tests/App/cache
 vendor
-/.phpunit
