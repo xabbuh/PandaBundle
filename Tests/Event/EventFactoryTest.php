@@ -11,13 +11,14 @@
 
 namespace Xabbuh\PandaBundle\Tests\Event;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Xabbuh\PandaBundle\Event\EventFactory;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class EventFactoryTest extends \PHPUnit_Framework_TestCase
+class EventFactoryTest extends TestCase
 {
     /**
      * @dataProvider createRequestWithEvent

@@ -5,9 +5,11 @@ language: php
 cache:
   directories:
     - $HOME/.composer/cache/files
+    - $HOME/symfony-bridge/.phpunit
 
 env:
   global:
+    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
     - COMPOSER_OPTIONS="--prefer-stable"
     - SYMFONY_VERSION=""
 
@@ -18,13 +20,13 @@ matrix:
       env: COMPOSER_OPTIONS="--prefer-lowest --prefer-stable"
     - php: 5.4
     - php: 5.5
+    # Test against LTS versions
     - php: 5.6
       env: SYMFONY_VERSION="2.7.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="2.8.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="3.1.x"
     - php: 7.0
+      env: SYMFONY_VERSION="2.8.x"
+    # Test against dev versions
+    - php: 7.1
       env: xdebug=yes COMPOSER_OPTIONS=""
     - php: hhvm
 
@@ -35,9 +37,10 @@ before_install:
 
 install:
   - composer update $COMPOSER_OPTIONS
+  - vendor/bin/simple-phpunit install
 
 script:
-  - if [[ "$xdebug" = "yes" ]]; then phpunit --coverage-clover=coverage.clover; else phpunit; fi
+  - if [[ "$xdebug" = "yes" ]]; then vendor/bin/simple-phpunit --coverage-clover=coverage.clover; else vendor/bin/simple-phpunit; fi
 
 after_script:
   - if [[ "$xdebug" = "yes" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
