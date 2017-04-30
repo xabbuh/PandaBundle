@@ -11,14 +11,17 @@
 
 namespace Xabbuh\PandaBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Xabbuh\PandaBundle\Controller\Controller;
 use Xabbuh\PandaClient\Api\Account;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class ControllerTest extends WebTestCase
+class ControllerTest extends TestCase
 {
     /**
      * @var \Symfony\Component\EventDispatcher\Event
@@ -31,37 +34,36 @@ class ControllerTest extends WebTestCase
     public $eventCounter;
 
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
+     * @var EventDispatcher
      */
-    private $client;
+    private $eventDispatcher;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var Controller
      */
-    private $container;
+    private $controller;
 
     /**
      * @var \Xabbuh\PandaClient\Api\CloudInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $defaultCloud;
 
-    public function setUp()
+    protected function setUp()
     {
-        try {
-            self::getKernelClass();
-        } catch (\RuntimeException $e) {
-            $this->markTestSkipped('missing kernel configuration');
-        }
-
         $this->event = null;
         $this->eventCounter = 0;
-        $this->initClient();
+        $this->createMocks();
     }
 
     public function testSignWithoutTimestamp()
     {
-        $this->client->request('GET', '/sign/'.$this->getDefaultCloudName());
-        $decodedResponse = $this->validateJsonResponse($this->client->getResponse());
+        $cloud = $this->getDefaultCloudName();
+        $request = new Request(array(), array(), array('cloud' => $cloud));
+        $request->setMethod('GET');
+
+        $response = $this->controller->signAction($cloud, $request);
+
+        $decodedResponse = $this->validateJsonResponse($response);
 
         $this->assertEquals('cloud-id', $decodedResponse->cloud_id);
         $this->assertEquals('access-key', $decodedResponse->access_key);
@@ -76,26 +78,26 @@ class ControllerTest extends WebTestCase
         // first, request signature without specifying the request method
         // and the url path of the request to be signed (this implies that GET
         // and /videos.json will be used as default values)
-        $this->client->request(
-            'GET',
-            '/sign/'.$this->getDefaultCloudName(),
-            array('timestamp' => $timestamp)
-        );
-        $decodedResponse1 = $this->validateJsonResponse($this->client->getResponse());
+        $cloud = $this->getDefaultCloudName();
+        $request = new Request(array('timestamp' => $timestamp), array(), array('cloud' => $cloud));
+        $request->setMethod('GET');
+
+        $response = $this->controller->signAction($cloud, $request);
+
+        $decodedResponse1 = $this->validateJsonResponse($response);
 
         // do a second request where the request method (GET) and the url
         // path (/videos.json) are explicitly specified
-        $this->initClient();
-        $this->client->request(
-            'GET',
-            '/sign/'.$this->getDefaultCloudName(),
-            array(
-                'method' => 'GET',
-                'path' => '/videos.json',
-                'timestamp' => $timestamp
-            )
-        );
-        $decodedResponse2 = $this->validateJsonResponse($this->client->getResponse());
+        $this->createMocks();
+        $request = new Request(array(
+            'method' => 'GET',
+            'path' => '/videos.json',
+            'timestamp' => $timestamp
+        ), array(), array('cloud' => $cloud));
+        $request->setMethod('GET');
+
+        $response = $this->controller->signAction($cloud, $request);
+        $decodedResponse2 = $this->validateJsonResponse($response);
 
         // check that both signatures are equal
         $this->assertEquals($decodedResponse1->signature, $decodedResponse2->signature);
@@ -118,12 +120,11 @@ class ControllerTest extends WebTestCase
             ->with($payload->filename, $payload->filesize, null, true)
             ->will($this->returnValue($apiResponse));
 
-        $this->client->request(
-            'POST',
-            '/authorise_upload/'.$this->getDefaultCloudName(),
-            array('payload' => json_encode($payload))
-        );
-        $response = $this->client->getResponse();
+        $cloud = $this->getDefaultCloudName();
+        $request = new Request(array(), array('payload' => json_encode($payload)), array('cloud' => $cloud));
+        $request->setMethod('POST');
+
+        $response = $this->controller->authoriseUploadAction($cloud, $request);
 
         $decodedJson = $this->validateJsonResponse($response);
         $this->assertEquals($apiResponse->location, $decodedJson->upload_url);
@@ -208,23 +209,22 @@ class ControllerTest extends WebTestCase
 
     public function testNotifyWithoutEvent()
     {
-        $this->client->request('POST', '/notify');
+        $request = new Request();
+        $request->setMethod('POST');
 
-        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+        $response = $this->controller->notifyAction($request);
+
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
     public function testNotifyWithInvalidEvent()
     {
-        $this->client->request('POST', '/notify', array('event' => 'video-complete'));
+        $request = new Request(array(), array('event' => 'video-complete'));
+        $request->setMethod('POST');
 
-        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
-    }
+        $response = $this->controller->notifyAction($request);
 
-    private function initClient()
-    {
-        $this->client = static::createClient();
-        $this->container = $this->client->getContainer();
-        $this->createMocks();
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
     private function createMocks()
@@ -248,16 +248,15 @@ class ControllerTest extends WebTestCase
             ->method('getCloud')
             ->with($this->getDefaultCloudName())
             ->will($this->returnValue($this->defaultCloud));
-        $this->container->set('xabbuh_panda.cloud_manager', $cloudManager);
+
+        $this->eventDispatcher = new EventDispatcher();
+
+        $this->controller = new Controller($cloudManager, $this->eventDispatcher);
     }
 
     private function getDefaultCloudName()
     {
-        if (!$this->container->hasParameter('xabbuh_panda.cloud.default')) {
-            $this->markTestSkipped('default cloud name has to be configured');
-        }
-
-        return $this->container->getParameter('xabbuh_panda.cloud.default');
+        return 'default';
     }
 
     private function validateJsonResponse(Response $response)
@@ -271,8 +270,7 @@ class ControllerTest extends WebTestCase
     private function validateEventRequest($eventName, $eventClassName, array $parameters)
     {
         $self = $this;
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        $eventDispatcher->addListener(
+        $this->eventDispatcher->addListener(
             'xabbuh_panda.'.strtr($eventName, '-', '_'),
             function ($event) use ($self) {
                 $self->event = $event;
@@ -280,8 +278,10 @@ class ControllerTest extends WebTestCase
             }
         );
 
-        $this->client->request('POST', '/notify', $parameters);
-        $response = $this->client->getResponse();
+        $request = new Request(array(), $parameters);
+        $request->setMethod('POST');
+
+        $response = $this->controller->notifyAction($request);
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals(200, $response->getStatusCode());
