@@ -13,10 +13,6 @@ namespace Xabbuh\PandaBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Xabbuh\PandaBundle\Event\EncodingProgressEvent;
-use Xabbuh\PandaBundle\Event\EncodingCompleteEvent;
-use Xabbuh\PandaBundle\Event\VideoCreatedEvent;
-use Xabbuh\PandaBundle\Event\VideoEncodedEvent;
 use Xabbuh\PandaClient\Api\Account;
 
 /**

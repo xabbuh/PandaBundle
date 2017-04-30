@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Event;
 
+use PHPUnit\Framework\TestCase;
 use Xabbuh\PandaBundle\Event\VideoEncodedEvent;
 
 /**
@@ -18,7 +19,7 @@ use Xabbuh\PandaBundle\Event\VideoEncodedEvent;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class VideoEncodedEventTest extends \PHPUnit_Framework_TestCase
+class VideoEncodedEventTest extends TestCase
 {
     /**
      * Test to ensure that the getter methods return the expected values.

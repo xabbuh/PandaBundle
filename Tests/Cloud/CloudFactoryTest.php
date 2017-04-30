@@ -9,13 +9,16 @@
  * file that was distributed with this source code.
  */
 
+namespace Xabbuh\PandaBundle\Tests\Cloud;
+
+use PHPUnit\Framework\TestCase;
 use Xabbuh\PandaBundle\Cloud\CloudFactory;
 use Xabbuh\PandaClient\Api\Account;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class CloudFactoryTest extends \PHPUnit_Framework_TestCase
+class CloudFactoryTest extends TestCase
 {
     /**
      * @var CloudFactory
