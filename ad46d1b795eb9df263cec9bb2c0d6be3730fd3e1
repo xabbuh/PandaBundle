@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by stof at 2017-04-30T08:35:59Z
+
+As I added a job running on PHP 7.1, it requires merging https://github.com/xabbuh/panda-client/pull/15 too
+
+---------------------------------------------------------------------------
+
+by stof at 2017-04-30T12:57:51Z
+
+OK, ready except for the failure on Symfony 3.3 (the dev build), which I will investigate
+
+---------------------------------------------------------------------------
+
+by stof at 2017-04-30T13:29:28Z
+
+The deprecation-related failure on 3.3 is because the ControllerTest is instantiating the kernel and the container like for functional tests, and then tries to inject mocks in it for all the panda-client layer. This is really weird, and requires rewriting the test entirely. So I suggest doing it in a separate PR.
