@@ -36,6 +36,7 @@ before_install:
 
 install:
   - composer update $COMPOSER_OPTIONS
+  - vendor/bin/simple-phpunit install
 
 script:
   - if [[ "$xdebug" = "yes" ]]; then vendor/bin/simple-phpunit --coverage-clover=coverage.clover; else vendor/bin/simple-phpunit; fi
