@@ -7,8 +7,8 @@ XabbuhPandaBundle
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/edbe503c-eb0f-4a13-a049-34b869b30fde/mini.png)](https://insight.sensiolabs.com/projects/edbe503c-eb0f-4a13-a049-34b869b30fde)
 
 The XabbuhPandaBundle eases integration of the Panda encoding service into
-Symfony 2. It sits on top a [PHP client implementation]
-(https://github.com/xabbuh/panda-client) for Panda's REST API.
+Symfony. It sits on top of a [PHP client implementation](https://github.com/xabbuh/panda-client)
+for Panda's REST API.
 
 Features included are:
 
