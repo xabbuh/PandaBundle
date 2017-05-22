@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -68,7 +69,7 @@ class ListVideosCommand extends CloudCommand
         $output->writeln('Total number of videos: '.$result->total);
 
         if (count($result->videos) > 0) {
-            $table = $this->getTableHelper($output);
+            $table = new Table($output);
             $table->setHeaders(array(
                 'video id',
                 'encoding status',

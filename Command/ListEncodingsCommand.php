@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -83,7 +84,7 @@ class ListEncodingsCommand extends CloudCommand
         $encodings = $this->getCloud($input)->getEncodings($filter);
 
         if (count($encodings) > 0) {
-            $table = $this->getTableHelper($output);
+            $table = new Table($output);
             $table->setHeaders(array(
                 'encoding id',
                 'video id',

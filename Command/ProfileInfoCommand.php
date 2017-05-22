@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,7 +45,7 @@ class ProfileInfoCommand extends CloudCommand
     protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $profile = $this->getCloud($input)->getProfile($input->getArgument('profile-id'));
-        $table = $this->getTableHelper($output);
+        $table = new Table($output);
         $table->addRows(array(
             array('id', $profile->getId()),
             array('title', $profile->getTitle()),

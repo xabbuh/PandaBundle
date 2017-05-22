@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,7 +46,7 @@ class EncodingInfoCommand extends CloudCommand
     {
         $cloud = $this->getCloud($input);
         $encoding = $cloud->getEncoding($input->getArgument('encoding-id'));
-        $table = $this->getTableHelper($output);
+        $table = new Table($output);
         $table->addRows(array(
             array('id', $encoding->getId()),
             array('video id', $encoding->getVideoId()),

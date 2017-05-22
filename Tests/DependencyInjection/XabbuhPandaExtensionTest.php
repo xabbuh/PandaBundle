@@ -111,13 +111,17 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
             1,
             'bar'
         );
-        $this->validateFactoryService('xabbuh_panda.cloud_factory', 'get', $withAccountCloud);
+        $factory = $withAccountCloud->getFactory();
+        $this->assertEquals(new Reference('xabbuh_panda.cloud_factory'), $factory[0]);
+        $this->assertSame('get', $factory[1]);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'xabbuh_panda.without_account_cloud',
             1,
             null
         );
-        $this->validateFactoryService('xabbuh_panda.cloud_factory', 'get', $withoutAccountCloud);
+        $factory = $withoutAccountCloud->getFactory();
+        $this->assertEquals(new Reference('xabbuh_panda.cloud_factory'), $factory[0]);
+        $this->assertSame('get', $factory[1]);
     }
 
     protected function getContainerExtensions()
@@ -142,11 +146,9 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
         );
 
         foreach ($serializers as $serviceId => $factoryMethod) {
-            $this->validateFactoryClass(
-                '%xabbuh_panda.serializer.factory.class%',
-                $factoryMethod,
-                $this->container->getDefinition($serviceId)
-            );
+            $factory = $this->container->getDefinition($serviceId)->getFactory();
+            $this->assertEquals('%xabbuh_panda.serializer.factory.class%', $factory[0]);
+            $this->assertSame($factoryMethod, $factory[1]);
         }
     }
 
@@ -187,29 +189,5 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertEquals($expectedMethodName, $actualMethodName);
         $this->assertEquals($expectedArgument, $actualArgument);
-    }
-
-    private function validateFactoryClass($expectedClass, $expectedMethod, Definition $definition)
-    {
-        if (method_exists($definition, 'setFactory')) {
-            $factory = $definition->getFactory();
-            $this->assertEquals($expectedClass, $factory[0]);
-            $this->assertSame($expectedMethod, $factory[1]);
-        } else {
-            $this->assertSame($expectedClass, $definition->getFactoryClass());
-            $this->assertSame($expectedMethod, $definition->getFactoryMethod());
-        }
-    }
-
-    private function validateFactoryService($expectedService, $expectedMethod, Definition $definition)
-    {
-        if (method_exists($definition, 'setFactory')) {
-            $factory = $definition->getFactory();
-            $this->assertEquals(new Reference($expectedService), $factory[0]);
-            $this->assertSame($expectedMethod, $factory[1]);
-        } else {
-            $this->assertSame($expectedService, $definition->getFactoryService());
-            $this->assertSame($expectedMethod, $definition->getFactoryMethod());
-        }
     }
 }

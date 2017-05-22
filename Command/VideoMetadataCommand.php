@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,7 +46,7 @@ class VideoMetadataCommand extends CloudCommand
     {
         $cloud = $this->getCloud($input);
         $metadata = $cloud->getVideoMetadata($input->getArgument('video-id'));
-        $table = $this->getTableHelper($output);
+        $table = new Table($output);
 
         foreach ($metadata as $key => $value) {
             $table->addRow(array(

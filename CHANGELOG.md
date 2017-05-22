@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3.0
+-----
+
+* dropped support for Symfony versions before 2.8
+
 1.2.1
 -----
 

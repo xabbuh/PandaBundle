@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -38,7 +39,7 @@ class CloudInfoCommand extends CloudCommand
     protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $cloud = $this->getCloud($input)->getCloud();
-        $table = $this->getTableHelper($output);
+        $table = new Table($output);
         $table->addRows(array(
             array('id', $cloud->getId()),
             array('name', $cloud->getName()),

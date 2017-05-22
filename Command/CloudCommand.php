@@ -67,22 +67,6 @@ abstract class CloudCommand extends ContainerAwareCommand
     }
 
     /**
-     * Returns the console table helper.
-     *
-     * @param OutputInterface $output
-     *
-     * @return TableHelper|Table
-     */
-    protected function getTableHelper(OutputInterface $output = null)
-    {
-        if (class_exists('Symfony\Component\Console\Helper\Table')) {
-            return new Table($output);
-        }
-
-        return new TableHelper();
-    }
-
-    /**
      * Executes the actual command (to be implemented by subclasses, will be called automatically).
      *
      * @param InputInterface  $input

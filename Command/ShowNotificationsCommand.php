@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -38,7 +39,7 @@ class ShowNotificationsCommand extends CloudCommand
     protected function doExecuteCommand(InputInterface $input, OutputInterface $output)
     {
         $notifications = $this->getCloud($input)->getNotifications();
-        $table = $this->getTableHelper($output);
+        $table = new Table($output);
         $table->addRow(array('url', $notifications->getUrl()));
 
         if ($notifications->getNotificationEvent('video_created')->isActive()) {

@@ -141,13 +141,7 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
      */
     public function testExceptionIsThrownForInvalidOptions(array $options)
     {
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $type = 'Symfony\Component\Form\Extension\Core\Type\FileType';
-        } else {
-            $type = 'file';
-        }
-
-        $this->factory->create($type, null, $options);
+        $this->factory->create('Symfony\Component\Form\Extension\Core\Type\FileType', null, $options);
     }
 
     public function invalidOptionsProvider()
@@ -169,13 +163,7 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
 
         $options['cloud'] = 'the-cloud';
 
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $type = 'Symfony\Component\Form\Extension\Core\Type\FileType';
-        } else {
-            $type = 'file';
-        }
-
-        $form = $this->factory->createNamed($id, $type, null, $options);
+        $form = $this->factory->createNamed($id, 'Symfony\Component\Form\Extension\Core\Type\FileType', null, $options);
 
         return $form->createView();
     }

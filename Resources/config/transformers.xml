@@ -61,15 +61,27 @@
 
         <service id="xabbuh_panda.serializer.cloud"
             class="%xabbuh_panda.serializer.cloud.class%"
-            public="false" />
+            public="false"
+        >
+            <factory class="%xabbuh_panda.serializer.factory.class%" method="getCloudSerializer" />
+        </service>
         <service id="xabbuh_panda.serializer.encoding"
             class="%xabbuh_panda.serializer.encoding.class%"
-            public="false" />
+            public="false"
+        >
+            <factory class="%xabbuh_panda.serializer.factory.class%" method="getEncodingSerializer" />
+        </service>
         <service id="xabbuh_panda.serializer.profile"
             class="%xabbuh_panda.serializer.profile.class%"
-            public="false" />
+            public="false"
+        >
+            <factory class="%xabbuh_panda.serializer.factory.class%" method="getProfileSerializer" />
+        </service>
         <service id="xabbuh_panda.serializer.video"
             class="%xabbuh_panda.serializer.video.class%"
-            public="false" />
+            public="false"
+        >
+            <factory class="%xabbuh_panda.serializer.factory.class%" method="getVideoSerializer" />
+        </service>
     </services>
 </container>

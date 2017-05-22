@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,7 +47,7 @@ class VideoInfoCommand extends CloudCommand
         $cloud = $this->getCloud($input);
         $video = $cloud->getVideo($input->getArgument('video-id'));
 
-        $table = $this->getTableHelper($output);
+        $table = new Table($output);
         $table->addRows(array(
             array('id', $video->getId()),
             array('file name', $video->getOriginalFilename()),
