@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by stof at 2017-04-30T15:19:21Z
+
+the goal is to avoid having to replace instances of services in the container at runtime, which is deprecated.
+
+---------------------------------------------------------------------------
+
+by stof at 2017-04-30T17:21:06Z
+
+Tests are green !
+
+---------------------------------------------------------------------------
+
+by stof at 2017-05-02T07:52:50Z
+
+@xabbuh any chance to merge this to make the CI green again ?
