@@ -4,6 +4,7 @@ CHANGELOG
 1.4.0
 -----
 
+* made the bundle compatible with Symfony 4
 * explicitly marked the `xabbuh_panda.controller` service as public
 * deprecated the `cloud_factory` service
 * added autowiring support by adding aliases for `CloudInterface` (if at
