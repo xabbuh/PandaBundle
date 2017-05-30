@@ -13,5 +13,11 @@
                 <argument>%xabbuh_panda.cloud.default%</argument>
             </call>
         </service>
+
+        <service id="xabbuh_panda.http_client" class="Xabbuh\PandaClient\Api\HttplugClient" abstract="true">
+            <argument>null</argument>
+            <argument>null</argument>
+            <argument>null</argument>
+        </service>
     </services>
 </container>

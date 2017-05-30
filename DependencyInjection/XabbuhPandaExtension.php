@@ -13,7 +13,9 @@ namespace Xabbuh\PandaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -60,6 +62,14 @@ class XabbuhPandaExtension extends Extension
 
         $this->loadAccounts($config['accounts'], $container);
         $this->loadClouds($config['clouds'], $container);
+
+        $baseHttpClientDefinition = $container->getDefinition('xabbuh_panda.http_client');
+
+        foreach (array('client' => 0, 'request_factory' => 1, 'stream_factory' => 2) as $key => $argumentIndex) {
+            if (null !== $config['httplug'][$key]) {
+                $baseHttpClientDefinition->replaceArgument($argumentIndex, new Reference($config['httplug'][$key]));
+            }
+        }
     }
 
     private function loadAccounts(array $accounts, ContainerBuilder $container)
@@ -92,15 +102,29 @@ class XabbuhPandaExtension extends Extension
         $cloudManagerDefinition = $container->getDefinition('xabbuh_panda.cloud_manager');
 
         foreach ($clouds as $name => $cloudConfig) {
+            $accountDefinition = new Definition('Xabbuh\PandaClient\Api\Account');
+            $accountDefinition->setFactory(array(new Reference('xabbuh_panda.account_manager'), 'getAccount'));
+
+            $accountDefinition->addArgument(isset($cloudConfig['account']) ? $cloudConfig['account'] : null);
+
+            if (class_exists('Symfony\Component\DependencyInjection\ChildDefinition')) {
+                $httpClientDefinition = new ChildDefinition('xabbuh_panda.http_client');
+            } else {
+                $httpClientDefinition = new DefinitionDecorator('xabbuh_panda.http_client');
+            }
+
+            $httpClientDefinition->setPublic(false);
+            $httpClientDefinition->addMethodCall('setAccount', array($accountDefinition));
+            $httpClientDefinition->addMethodCall('setCloudId', array($cloudConfig['id']));
+
+            $httpClientId = 'xabbuh_panda.http_client.'.strtr($name, ' -', '_');
+
+            $container->setDefinition($httpClientId, $httpClientDefinition);
+
             // register each cloud as a service
-            $cloudDefinition = new Definition(
-                'Xabbuh\PandaClient\Api\Cloud',
-                array(
-                    $cloudConfig['id'],
-                    isset($cloudConfig['account']) ? $cloudConfig['account'] : null,
-                )
-            );
-            $cloudDefinition->setFactory(array(new Reference('xabbuh_panda.cloud_factory'), 'get'));
+            $cloudDefinition = new Definition('Xabbuh\PandaClient\Api\Cloud');
+            $cloudDefinition->addMethodCall('setHttpClient', array(new Reference($httpClientId)));
+            $cloudDefinition->addMethodCall('setTransformers', array(new Reference('xabbuh_panda.transformer')));
 
             $id = 'xabbuh_panda.'.strtr($name, ' -', '_').'_cloud';
             $container->setDefinition($id, $cloudDefinition);
