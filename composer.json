@@ -28,7 +28,8 @@
     },
     "require-dev": {
         "guzzlehttp/psr7": "^1.4",
-        "matthiasnoback/symfony-dependency-injection-test": "~0.7",
+        "matthiasnoback/symfony-dependency-injection-test": "~1.0",
+        "phpunit/phpunit": "^5.7.19",
         "php-http/mock-client": "^1.0",
         "symfony/browser-kit": "^2.8||^3.0",
         "symfony/dom-crawler": "^2.8||^3.0",
