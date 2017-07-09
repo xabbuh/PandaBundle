@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true" bootstrap="vendor/autoload.php">
     <php>
+        <server name="KERNEL_CLASS" value="AppKernel" />
         <server name="KERNEL_DIR" value="Tests/App" />
     </php>
     <testsuites>
