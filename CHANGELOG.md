@@ -4,6 +4,8 @@ CHANGELOG
 1.3.0
 -----
 
+* make use of HTTPlug to perform HTTP requests
+* made the bundle compatible with Symfony 3.x and PHP 7.1
 * dropped support for Symfony versions before 2.8
 
 1.2.1
