@@ -19,6 +19,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Xabbuh\PandaClient\Api\CloudInterface;
 
 /**
  * XabbuhPandaExtension.
@@ -62,6 +63,14 @@ class XabbuhPandaExtension extends Extension
 
         $this->loadAccounts($config['accounts'], $container);
         $this->loadClouds($config['clouds'], $container);
+
+        if (!empty($config['clouds'])) {
+            $autowiredCloud = new Definition(CloudInterface::class);
+            $autowiredCloud->setPublic(false);
+            $autowiredCloud->setFactory(array(new Reference('xabbuh_panda.cloud_manager'), 'getCloud'));
+
+            $container->setDefinition(CloudInterface::class, $autowiredCloud);
+        }
 
         $baseHttpClientDefinition = $container->getDefinition('xabbuh_panda.http_client');
 
