@@ -77,7 +77,20 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('stream_factory')->defaultNull()->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+            ->validate()
+                ->ifTrue(function ($v) {
+                    return !empty($v['clouds']) && !isset($v['clouds'][$v['default_cloud']]);
+                })
+                ->thenInvalid('The configured default cloud is not one of the configured clouds.')
+            ->end()
+            ->validate()
+                ->ifTrue(function ($v) {
+                    return !empty($v['accounts']) && !isset($v['accounts'][$v['default_account']]);
+                })
+                ->thenInvalid('The configured default account is not one of the configured accounts.')
+            ->end()
+        ;
 
         return $treeBuilder;
     }

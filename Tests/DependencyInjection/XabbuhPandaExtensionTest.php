@@ -87,6 +87,7 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load(array(
             'default_account' => 'default',
+            'default_cloud' => 'with_account',
             'clouds' => array(
                 'with_account' => array(
                     'id' => 'foo',
@@ -96,6 +97,10 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
                     'id' => 'foobar',
                 ),
             ),
+            'accounts' => array(
+                'default' => array('access_key' => 'fake', 'secret_key' => 'fake_secret'),
+                'bar' => array('access_key' => 'fake2', 'secret_key' => 'fake_secret2'),
+            )
         ));
 
         $this->ensureThatDefinitionsAreRegistered(array(
@@ -115,13 +120,9 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
             array(new Reference('xabbuh_panda.http_client.without_account'))
         );
 
-        $accountDef = new Definition('Xabbuh\PandaClient\Api\Account', array('bar'));
-        $accountDef->setFactory(array(new Reference('xabbuh_panda.account_manager'), 'getAccount'));
-        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.with_account', 'setAccount', array($accountDef));
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.with_account', 'setAccount', array(new Reference('xabbuh_panda.bar_account')));
 
-        $withoutAccountDef = new Definition('Xabbuh\PandaClient\Api\Account', array(null));
-        $withoutAccountDef->setFactory(array(new Reference('xabbuh_panda.account_manager'), 'getAccount'));
-        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.without_account', 'setAccount', array($withoutAccountDef));
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.without_account', 'setAccount', array(new Reference('xabbuh_panda.default_account')));
     }
 
     protected function getContainerExtensions()

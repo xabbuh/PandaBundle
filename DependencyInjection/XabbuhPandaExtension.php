@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Definition;
@@ -61,15 +62,11 @@ class XabbuhPandaExtension extends Extension
         $loader->load('transformers.xml');
         $loader->load('video_uploader_extension.xml');
 
-        $this->loadAccounts($config['accounts'], $container);
-        $this->loadClouds($config['clouds'], $container);
+        $knownAccounts = $this->loadAccounts($config['accounts'], $container);
+        $knownClouds = $this->loadClouds($config['clouds'], $container, $knownAccounts, $config['default_account']);
 
-        if (!empty($config['clouds'])) {
-            $autowiredCloud = new Definition(CloudInterface::class);
-            $autowiredCloud->setPublic(false);
-            $autowiredCloud->setFactory(array(new Reference('xabbuh_panda.cloud_manager'), 'getCloud'));
-
-            $container->setDefinition(CloudInterface::class, $autowiredCloud);
+        if (isset($knownClouds[$config['default_cloud']])) {
+            $container->setAlias(CloudInterface::class, new Alias($knownClouds[$config['default_cloud']], false));
         }
 
         $baseHttpClientDefinition = $container->getDefinition('xabbuh_panda.http_client');
@@ -84,6 +81,8 @@ class XabbuhPandaExtension extends Extension
     private function loadAccounts(array $accounts, ContainerBuilder $container)
     {
         $accountManagerDefinition = $container->getDefinition('xabbuh_panda.account_manager');
+
+        $knownAccounts = array();
 
         foreach ($accounts as $name => $accountConfig) {
             // register each account as a service
@@ -103,18 +102,24 @@ class XabbuhPandaExtension extends Extension
                 'registerAccount',
                 array($name, new Reference($id))
             );
+            $knownAccounts[$name] = $id;
         }
+
+        return $knownAccounts;
     }
 
-    private function loadClouds(array $clouds, ContainerBuilder $container)
+    private function loadClouds(array $clouds, ContainerBuilder $container, array $knownAccounts, $defaultAccount)
     {
         $cloudManagerDefinition = $container->getDefinition('xabbuh_panda.cloud_manager');
 
-        foreach ($clouds as $name => $cloudConfig) {
-            $accountDefinition = new Definition('Xabbuh\PandaClient\Api\Account');
-            $accountDefinition->setFactory(array(new Reference('xabbuh_panda.account_manager'), 'getAccount'));
+        $knownClouds = array();
 
-            $accountDefinition->addArgument(isset($cloudConfig['account']) ? $cloudConfig['account'] : null);
+        foreach ($clouds as $name => $cloudConfig) {
+            $accountName = isset($cloudConfig['account']) ? $cloudConfig['account'] : $defaultAccount;
+
+            if (!isset($knownAccounts[$accountName])) {
+                throw new \InvalidArgumentException(sprintf('The account `%s` configured for the cloud `%s` is not one of the configured accounts.', $accountName, $name));
+            }
 
             if (class_exists('Symfony\Component\DependencyInjection\ChildDefinition')) {
                 $httpClientDefinition = new ChildDefinition('xabbuh_panda.http_client');
@@ -123,7 +128,9 @@ class XabbuhPandaExtension extends Extension
             }
 
             $httpClientDefinition->setPublic(false);
-            $httpClientDefinition->addMethodCall('setAccount', array($accountDefinition));
+            // Get a reference to the account service directly, to avoid instantiating the AccountManager (and all other
+            // accounts due to the AccountManager not supporting lazy-loading)
+            $httpClientDefinition->addMethodCall('setAccount', array(new Reference($knownAccounts[$accountName])));
             $httpClientDefinition->addMethodCall('setCloudId', array($cloudConfig['id']));
 
             $httpClientId = 'xabbuh_panda.http_client.'.strtr($name, ' -', '_');
@@ -143,7 +150,10 @@ class XabbuhPandaExtension extends Extension
                 'registerCloud',
                 array($name, new Reference($id))
             );
+            $knownClouds[$name] = $id;
         }
+
+        return $knownClouds;
     }
 
     /**
