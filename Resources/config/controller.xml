@@ -6,7 +6,7 @@
         <parameter key="xabbuh_panda.controller.class">Xabbuh\PandaBundle\Controller\Controller</parameter>
     </parameters>
     <services>
-        <service id="xabbuh_panda.controller" class="%xabbuh_panda.controller.class%">
+        <service id="xabbuh_panda.controller" class="%xabbuh_panda.controller.class%" public="true">
             <argument type="service" id="xabbuh_panda.cloud_manager" />
             <argument type="service" id="event_dispatcher" />
         </service>
