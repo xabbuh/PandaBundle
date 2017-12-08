@@ -1,0 +1,42 @@
+---------------------------------------------------------------------------
+
+by stof at 2017-10-19T14:55:24Z
+
+I'm not sure that supporting clouds and accounts not available in the extension config but registering later by a compiler pass is that worth it, especially for the default_cloud for the autowiring part.
+We could decide that the autowiring is only provided if the default_cloud is one of the clouds defined in the bundle config (there would be no BC break, as autowiring is new anyway).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-02T14:28:24Z
+
+#30 is merged now
+
+---------------------------------------------------------------------------
+
+by stof at 2017-11-02T16:48:34Z
+
+@xabbuh rebased
+
+---------------------------------------------------------------------------
+
+by stof at 2017-11-02T16:49:48Z
+
+@xabbuh should we deprecate cases where accounts referenced by config-defined clouds are not defined in the config, and the case where the default cloud is not one of the config-defined ones ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-03T17:19:11Z
+
+Yes, I think we do not need to support these cases.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-03T17:19:31Z
+
+Do you want to do that as part of this PR?
+
+---------------------------------------------------------------------------
+
+by stof at 2017-12-01T15:26:08Z
+
+@xabbuh done
