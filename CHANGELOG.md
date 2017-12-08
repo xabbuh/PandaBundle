@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.4.0
+-----
+
+* explicitly marked the `xabbuh_panda.controller` service as public
+* deprecated the `cloud_factory` service
+* added autowiring support by adding aliases for `CloudInterface` (if at
+  least one cloud is configured) and `CloudManagerInterface`
+
 1.3.0
 -----
 
