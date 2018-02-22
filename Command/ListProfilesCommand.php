@@ -22,12 +22,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListProfilesCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:profile:list';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:profile:list');
         $this->setDescription('List all profiles of a cloud');
 
         parent::configure();

@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListVideosCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:video:list';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:video:list');
         $this->setDescription('List all videos of a cloud');
         $this->addOption(
             'page',

@@ -22,12 +22,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CreateProfileCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:profile:create';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:profile:create');
         $this->setDescription('Create a profile based on a given preset');
         $this->addArgument(
         'preset',

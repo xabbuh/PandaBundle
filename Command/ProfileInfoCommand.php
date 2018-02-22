@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProfileInfoCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:profile:info';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:profile:info');
         $this->setDescription('Fetch information for a profile');
         $this->addArgument(
             'profile-id',

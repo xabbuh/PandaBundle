@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class VideoInfoCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:video:info';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:video:info');
         $this->setDescription('Fetch information for a video');
         $this->addArgument(
             'video-id',

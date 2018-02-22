@@ -23,12 +23,13 @@ use Xabbuh\PandaClient\Model\Profile;
  */
 class DeleteProfileCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:profile:delete';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:profile:delete');
         $this->setDescription('Delete a profile');
         $this->addArgument(
             'profile-id',

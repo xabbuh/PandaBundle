@@ -23,12 +23,13 @@ use Xabbuh\PandaClient\Model\Encoding;
  */
 class CancelEncodingCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:encoding:cancel';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:encoding:cancel');
         $this->setDescription('Cancel an encoding');
         $this->addArgument(
             'encoding-id',

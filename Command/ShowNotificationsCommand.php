@@ -22,12 +22,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ShowNotificationsCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:notifications:show';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:notifications:show');
         $this->setDescription('Show the current notification configuration');
 
         parent::configure();

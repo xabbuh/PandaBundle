@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListEncodingsCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:encoding:list';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:encoding:list');
         $this->setDescription('Display a (optionally filtered) list of encodings');
         $this->addOption(
             'status',

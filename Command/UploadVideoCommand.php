@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UploadVideoCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:video:upload';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:video:upload');
         $this->setDescription('Upload a video');
         $this->addOption(
             'profile',

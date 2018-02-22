@@ -22,12 +22,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CloudInfoCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:cloud:info';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:cloud:info');
         $this->setDescription('Display details of a cloud');
 
         parent::configure();

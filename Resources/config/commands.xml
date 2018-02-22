@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="xabbuh_panda.command.cancel_encoding_command" class="Xabbuh\PandaBundle\Command\CancelEncodingCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.change_url_command" class="Xabbuh\PandaBundle\Command\ChangeUrlCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.cloud_info_command" class="Xabbuh\PandaBundle\Command\CloudInfoCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.create_encoding_command" class="Xabbuh\PandaBundle\Command\CreateEncodingCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.create_profile_command" class="Xabbuh\PandaBundle\Command\CreateProfileCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.delete_encoding_command" class="Xabbuh\PandaBundle\Command\DeleteEncodingCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.delete_profile_command" class="Xabbuh\PandaBundle\Command\DeleteProfileCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.delete_video_command" class="Xabbuh\PandaBundle\Command\DeleteVideoCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.disable_event_command" class="Xabbuh\PandaBundle\Command\DisableEventCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.enable_event_command" class="Xabbuh\PandaBundle\Command\EnableEventCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.encoding_info_command" class="Xabbuh\PandaBundle\Command\EncodingInfoCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.list_encodings_command" class="Xabbuh\PandaBundle\Command\ListEncodingsCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.list_profiles_command" class="Xabbuh\PandaBundle\Command\ListProfilesCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.list_videos_command" class="Xabbuh\PandaBundle\Command\ListVideosCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.modify_cloud_command" class="Xabbuh\PandaBundle\Command\ModifyCloudCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.modify_profile_command" class="Xabbuh\PandaBundle\Command\ModifyProfileCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.profile_info_command" class="Xabbuh\PandaBundle\Command\ProfileInfoCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.retry_encoding_command" class="Xabbuh\PandaBundle\Command\RetryEncodingCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.show_notifications_command" class="Xabbuh\PandaBundle\Command\ShowNotificationsCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.upload_video_command" class="Xabbuh\PandaBundle\Command\UploadVideoCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.video_info_command" class="Xabbuh\PandaBundle\Command\VideoInfoCommand">
+            <tag name="console.command" />
+        </service>
+
+        <service id="xabbuh_panda.command.video_metadata_command" class="Xabbuh\PandaBundle\Command\VideoMetadataCommand">
+            <tag name="console.command" />
+        </service>
+    </services>
+</container>

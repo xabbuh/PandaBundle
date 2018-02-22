@@ -24,12 +24,13 @@ use Xabbuh\PandaClient\Model\Video;
  */
 class CreateEncodingCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:encoding:create';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:encoding:create');
         $this->setDescription('Create an encoding');
         $this->addArgument(
             'video-id',
