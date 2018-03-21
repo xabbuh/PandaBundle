@@ -24,12 +24,12 @@ use Xabbuh\PandaClient\Model\Notifications;
  */
 class EnableEventCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:notifications:enable';
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:notifications:enable');
         $this->setDescription('Enable a notification event');
         $this->addArgument(
             'event',

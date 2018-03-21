@@ -24,12 +24,13 @@ use Xabbuh\PandaClient\Model\Notifications;
  */
 class DisableEventCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:notifications:disable';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:notifications:disable');
         $this->setDescription('Disable a notification event');
         $this->addArgument(
             'event',

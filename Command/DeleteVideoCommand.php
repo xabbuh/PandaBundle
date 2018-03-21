@@ -23,12 +23,12 @@ use Xabbuh\PandaClient\Model\Video;
  */
 class DeleteVideoCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:video:delete';
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:video:delete');
         $this->setDescription('Delete a video');
         $this->addArgument(
             'video-id',

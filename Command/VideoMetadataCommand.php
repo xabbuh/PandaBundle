@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class VideoMetadataCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:video:metadata';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:video:metadata');
         $this->setDescription('Fetch metadata for a video');
         $this->addArgument(
             'video-id',

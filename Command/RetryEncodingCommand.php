@@ -23,12 +23,13 @@ use Xabbuh\PandaClient\Model\Encoding;
  */
 class RetryEncodingCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:encoding:retry';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:encoding:retry');
         $this->setDescription('Restart an encoding');
         $this->addArgument(
             'encoding-id',

@@ -12,8 +12,6 @@
 namespace Xabbuh\PandaBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,6 +32,7 @@ abstract class CloudCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
+        $this->setName(static::$defaultName); // BC with Symfony Console 3.3 and older not handling the property automatically
         $this->addOption(
             'cloud',
             '-c',
@@ -55,7 +54,7 @@ abstract class CloudCommand extends ContainerAwareCommand
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @return \Xabbuh\PandaClient\Api\Cloud
+     * @return \Xabbuh\PandaClient\Api\CloudInterface
      */
     protected function getCloud(InputInterface $input)
     {

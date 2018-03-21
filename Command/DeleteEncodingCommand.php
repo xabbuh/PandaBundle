@@ -23,12 +23,13 @@ use Xabbuh\PandaClient\Model\Encoding;
  */
 class DeleteEncodingCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:encoding:delete';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:encoding:delete');
         $this->setDescription('Delete an encoding');
         $this->addArgument(
             'encoding-id',

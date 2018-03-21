@@ -58,6 +58,7 @@ class XabbuhPandaExtension extends Extension
         $loader->load('account_manager.xml');
         $loader->load('cloud_manager.xml');
         $loader->load('cloud_factory.xml');
+        $loader->load('commands.xml');
         $loader->load('controller.xml');
         $loader->load('transformers.xml');
         $loader->load('video_uploader_extension.xml');

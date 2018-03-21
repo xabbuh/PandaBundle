@@ -24,12 +24,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ModifyCloudCommand extends ContainerAwareCommand
 {
+    protected static $defaultName = 'panda:cloud:modify';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:cloud:modify');
+        $this->setName(static::$defaultName); // BC with Symfony Console 3.3 and older not handling the property automatically
         $this->setDescription('Modify a cloud');
         $this->addOption(
             'account',

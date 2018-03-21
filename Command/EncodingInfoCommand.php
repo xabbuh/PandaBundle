@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EncodingInfoCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:encoding:info';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:encoding:info');
         $this->setDescription('Fetch information for an encoding');
         $this->addArgument(
             'encoding-id',

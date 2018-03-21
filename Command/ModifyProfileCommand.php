@@ -23,12 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ModifyProfileCommand extends CloudCommand
 {
+    protected static $defaultName = 'panda:profile:modify';
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->setName('panda:profile:modify');
         $this->setDescription('Modify a profile');
         $this->addArgument(
             'profile-id',
