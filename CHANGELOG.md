@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.4.1
+-----
+
+* register commands as services for compatibility with recent Symfony
+  versions
+
 1.4.0
 -----
 
