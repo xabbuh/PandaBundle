@@ -1,43 +1,41 @@
-{% block file_row %}
-    {% spaceless %}
-        {% if panda_uploader %}
-            {{ block("panda_uploader_widget") }}
-        {% else %}
-            <div>
-                {{ form_label(form) }}
-                {{ form_errors(form) }}
-                {{ form_widget(form) }}
-            </div>
-        {% endif %}
-    {% endspaceless %}
-{% endblock %}
+{% block file_row -%}
+    {%- if panda_uploader -%}
+        {{- block("panda_uploader_widget") -}}
+    {%- else -%}
+        <div>
+            {{- form_label(form) -}}
+            {{- form_errors(form) -}}
+            {{- form_widget(form) -}}
+        </div>
+    {%- endif -%}
+{%- endblock %}
 
-{% block panda_uploader_widget %}
+{% block panda_uploader_widget -%}
     <div class="panda-uploader-widget">
-        {{ form_label(form) }}
-        {{ form_errors(form) }}
-        {% set type = "hidden" %}
-        {{ block("form_widget_simple") }}
-        {{ block("browse_button_widget") }}
-        {{ block("cancel_button_widget") }}
-        {{ block("progress_bar_widget") }}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {%- set type = "hidden" %}
+        {{- block("form_widget_simple") -}}
+        {{- block("browse_button_widget") -}}
+        {{- block("cancel_button_widget") -}}
+        {{- block("progress_bar_widget") -}}
     </div>
 {% endblock %}
 
-{% block browse_button_widget %}
+{% block browse_button_widget -%}
     <div class="browse-button" id="{{ browse_button_id }}">{{ browse_button_label }}</div>
-{% endblock %}
+{%- endblock %}
 
-{% block cancel_button_widget %}
-    {% if cancel_button %}
+{% block cancel_button_widget -%}
+    {%- if cancel_button -%}
         <div class="cancel-button" id="{{ cancel_button_id }}">{{ cancel_button_label }}</div>
-    {% endif %}
-{% endblock %}
+    {%- endif -%}
+{%- endblock %}
 
-{% block progress_bar_widget %}
-    {% if progress_bar %}
+{% block progress_bar_widget -%}
+    {%- if progress_bar -%}
         <div class="progress-bar" id="{{ progress_bar_id }}">
             0%
         </div>
-    {% endif %}
-{% endblock %}
+    {%- endif -%}
+{%- endblock %}
