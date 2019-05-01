@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -62,7 +63,15 @@ class VideoUploaderExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\FileType';
+        return FileType::class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getExtendedTypes(): iterable
+    {
+        return [FileType::class];
     }
 
     /**
