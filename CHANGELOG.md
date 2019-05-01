@@ -5,6 +5,7 @@ CHANGELOG
 -----
 
 * dropped support for PHP 5
+* dropped support for unmaintained Symfony versions
 
 1.4.1
 -----
