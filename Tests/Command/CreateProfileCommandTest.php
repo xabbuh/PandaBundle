@@ -21,10 +21,10 @@ class CreateProfileCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new CreateProfileCommand();
-        $this->apiMethod = 'addProfileFromPreset';
-
         parent::setUp();
+
+        $this->command = new CreateProfileCommand($this->cloudManager);
+        $this->apiMethod = 'addProfileFromPreset';
     }
 
     public function testCommand()

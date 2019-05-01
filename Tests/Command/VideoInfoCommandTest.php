@@ -21,9 +21,10 @@ class VideoInfoCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new VideoInfoCommand();
-        $this->apiMethod = 'getVideo';
         parent::setUp();
+
+        $this->command = new VideoInfoCommand($this->cloudManager);
+        $this->apiMethod = 'getVideo';
     }
 
     public function testCommand()

@@ -21,10 +21,10 @@ class CloudInfoCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new CloudInfoCommand();
-        $this->apiMethod = 'getCloud';
-
         parent::setUp();
+
+        $this->command = new CloudInfoCommand($this->cloudManager);
+        $this->apiMethod = 'getCloud';
     }
 
     public function testCommand()

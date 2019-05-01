@@ -21,10 +21,10 @@ class DeleteVideoCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new DeleteVideoCommand();
-        $this->apiMethod = 'deleteVideo';
-
         parent::setUp();
+
+        $this->command = new DeleteVideoCommand($this->cloudManager);
+        $this->apiMethod = 'deleteVideo';
     }
 
     public function testCommand()

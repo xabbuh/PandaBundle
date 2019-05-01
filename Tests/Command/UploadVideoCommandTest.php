@@ -19,9 +19,10 @@ class UploadVideoCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new UploadVideoCommand();
-        $this->apiMethod = 'encodeVideoFile';
         parent::setUp();
+
+        $this->command = new UploadVideoCommand($this->cloudManager);
+        $this->apiMethod = 'encodeVideoFile';
     }
 
     public function testCommand()

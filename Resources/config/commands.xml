@@ -5,90 +5,112 @@
 
     <services>
         <service id="xabbuh_panda.command.cancel_encoding_command" class="Xabbuh\PandaBundle\Command\CancelEncodingCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.change_url_command" class="Xabbuh\PandaBundle\Command\ChangeUrlCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.cloud_info_command" class="Xabbuh\PandaBundle\Command\CloudInfoCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.create_encoding_command" class="Xabbuh\PandaBundle\Command\CreateEncodingCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.create_profile_command" class="Xabbuh\PandaBundle\Command\CreateProfileCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.delete_encoding_command" class="Xabbuh\PandaBundle\Command\DeleteEncodingCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.delete_profile_command" class="Xabbuh\PandaBundle\Command\DeleteProfileCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.delete_video_command" class="Xabbuh\PandaBundle\Command\DeleteVideoCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.disable_event_command" class="Xabbuh\PandaBundle\Command\DisableEventCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.enable_event_command" class="Xabbuh\PandaBundle\Command\EnableEventCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.encoding_info_command" class="Xabbuh\PandaBundle\Command\EncodingInfoCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.list_encodings_command" class="Xabbuh\PandaBundle\Command\ListEncodingsCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.list_profiles_command" class="Xabbuh\PandaBundle\Command\ListProfilesCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.list_videos_command" class="Xabbuh\PandaBundle\Command\ListVideosCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.modify_cloud_command" class="Xabbuh\PandaBundle\Command\ModifyCloudCommand">
+            <argument type="service" id="xabbuh_panda.cloud_factory" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.modify_profile_command" class="Xabbuh\PandaBundle\Command\ModifyProfileCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.profile_info_command" class="Xabbuh\PandaBundle\Command\ProfileInfoCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.retry_encoding_command" class="Xabbuh\PandaBundle\Command\RetryEncodingCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.show_notifications_command" class="Xabbuh\PandaBundle\Command\ShowNotificationsCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.upload_video_command" class="Xabbuh\PandaBundle\Command\UploadVideoCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.video_info_command" class="Xabbuh\PandaBundle\Command\VideoInfoCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
 
         <service id="xabbuh_panda.command.video_metadata_command" class="Xabbuh\PandaBundle\Command\VideoMetadataCommand">
+            <argument type="service" id="xabbuh_panda.cloud_manager" />
             <tag name="console.command" />
         </service>
     </services>

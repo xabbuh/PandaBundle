@@ -22,10 +22,10 @@ class EnableEventCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new EnableEventCommand();
-        $this->apiMethod = 'setNotifications';
-
         parent::setUp();
+
+        $this->command = new EnableEventCommand($this->cloudManager);
+        $this->apiMethod = 'setNotifications';
     }
 
     public function testCommand()

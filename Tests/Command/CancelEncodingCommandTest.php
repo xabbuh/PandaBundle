@@ -21,10 +21,10 @@ class CancelEncodingCloudCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new CancelEncodingCommand();
-        $this->apiMethod = 'cancelEncoding';
-
         parent::setUp();
+
+        $this->command = new CancelEncodingCommand($this->cloudManager);
+        $this->apiMethod = 'cancelEncoding';
     }
 
     public function testCommand()

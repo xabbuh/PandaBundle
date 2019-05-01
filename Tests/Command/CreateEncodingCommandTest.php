@@ -22,10 +22,10 @@ class CreateEncodingCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new CreateEncodingCommand();
-        $this->apiMethod = 'createEncodingWithProfileId';
-
         parent::setUp();
+
+        $this->command = new CreateEncodingCommand($this->cloudManager);
+        $this->apiMethod = 'createEncodingWithProfileId';
     }
 
     public function testCommandWithProfileId()

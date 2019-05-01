@@ -21,10 +21,10 @@ class ProfileInfoCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new ProfileInfoCommand();
-        $this->apiMethod = 'getProfile';
-
         parent::setUp();
+
+        $this->command = new ProfileInfoCommand($this->cloudManager);
+        $this->apiMethod = 'getProfile';
     }
 
     public function testCommand()

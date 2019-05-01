@@ -4,6 +4,7 @@ CHANGELOG
 1.5.0
 -----
 
+* all command classes no longer extend the deprecated `ContainerAwareCommand` class
 * dropped support for PHP 5
 * dropped support for unmaintained Symfony versions
 

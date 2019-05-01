@@ -21,10 +21,10 @@ class DeleteEncodingCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new DeleteEncodingCommand();
-        $this->apiMethod = 'deleteEncoding';
-
         parent::setUp();
+
+        $this->command = new DeleteEncodingCommand($this->cloudManager);
+        $this->apiMethod = 'deleteEncoding';
     }
 
     public function testCommand()

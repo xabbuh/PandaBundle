@@ -30,10 +30,10 @@ class ModifyProfileCommandTest extends CloudCommandTest
 
     protected function setUp()
     {
-        $this->command = new ModifyProfileCommand();
-        $this->apiMethod = 'getProfile';
-
         parent::setUp();
+
+        $this->command = new ModifyProfileCommand($this->cloudManager);
+        $this->apiMethod = 'getProfile';
 
         $this->cloudFactory = $this->createCloudFactoryMock();
         $this->profile = $this->createProfileMock();

@@ -21,10 +21,10 @@ class RetryEncodingCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new RetryEncodingCommand();
-        $this->apiMethod = 'retryEncoding';
-
         parent::setUp();
+
+        $this->command = new RetryEncodingCommand($this->cloudManager);
+        $this->apiMethod = 'retryEncoding';
     }
 
     public function testCommand()

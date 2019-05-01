@@ -21,10 +21,10 @@ class ListEncodingsCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new ListEncodingsCommand();
-        $this->apiMethod = 'getEncodings';
-
         parent::setUp();
+
+        $this->command = new ListEncodingsCommand($this->cloudManager);
+        $this->apiMethod = 'getEncodings';
     }
 
     public function testCommandWithoutOptions()

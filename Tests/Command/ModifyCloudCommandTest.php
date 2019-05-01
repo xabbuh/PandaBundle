@@ -25,16 +25,11 @@ class ModifyCloudCommandTest extends CommandTest
 
     protected function setUp()
     {
-        $this->command = new ModifyCloudCommand();
+        $this->createCloudFactoryMock();
+
+        $this->command = new ModifyCloudCommand($this->cloudFactory);
 
         parent::setUp();
-
-        $this->createCloudFactoryMock();
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->with('xabbuh_panda.cloud_factory')
-            ->will($this->returnValue($this->cloudFactory));
     }
 
     public function testCommandWithoutOptions()

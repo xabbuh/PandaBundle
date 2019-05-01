@@ -21,10 +21,10 @@ class ChangeUrlCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new ChangeUrlCommand();
-        $this->apiMethod = 'setNotifications';
-
         parent::setUp();
+
+        $this->command = new ChangeUrlCommand($this->cloudManager);
+        $this->apiMethod = 'setNotifications';
     }
 
     public function testCommand()

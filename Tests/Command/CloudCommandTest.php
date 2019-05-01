@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Xabbuh\PandaClient\Api\CloudManagerInterface;
 use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
@@ -30,6 +31,18 @@ abstract class CloudCommandTest extends CommandTest
 
     protected $apiMethod;
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->defaultCloud = $this->getMockBuilder('\Xabbuh\PandaClient\Api\Cloud')->getMock();
+        $this->cloudManager = $this->getMockBuilder('\Xabbuh\PandaClient\Api\CloudManager')->getMock();
+        $this->cloudManager
+            ->expects($this->any())
+            ->method('getDefaultCloud')
+            ->will($this->returnValue($this->defaultCloud));
+    }
+
     public function testCommandWhenPandaExceptionIsThrown()
     {
         $this
@@ -43,33 +56,6 @@ abstract class CloudCommandTest extends CommandTest
             '/An error occurred: Panda API error message/',
             $this->commandTester->getDisplay()
         );
-    }
-
-    protected function createContainerMock()
-    {
-        parent::createContainerMock();
-
-        $this->createCloudManagerMock();
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->with('xabbuh_panda.cloud_manager')
-            ->will($this->returnValue($this->cloudManager));
-    }
-
-    protected function createCloudManagerMock()
-    {
-        $this->createDefaultCloudMock();
-        $this->cloudManager = $this->getMockBuilder('\Xabbuh\PandaClient\Api\CloudManager')->getMock();
-        $this->cloudManager
-            ->expects($this->any())
-            ->method('getDefaultCloud')
-            ->will($this->returnValue($this->defaultCloud));
-    }
-
-    protected function createDefaultCloudMock()
-    {
-        $this->defaultCloud = $this->getMockBuilder('\Xabbuh\PandaClient\Api\Cloud')->getMock();
     }
 
     protected function validateTableRow($label, $value)

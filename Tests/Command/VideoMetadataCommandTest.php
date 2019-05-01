@@ -20,10 +20,10 @@ class VideoMetadataCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new VideoMetadataCommand();
-        $this->apiMethod = 'getVideoMetadata';
-
         parent::setUp();
+
+        $this->command = new VideoMetadataCommand($this->cloudManager);
+        $this->apiMethod = 'getVideoMetadata';
     }
 
     public function testCommand()

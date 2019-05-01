@@ -21,10 +21,10 @@ class DeleteProfileCommandTest extends CloudCommandTest
 {
     protected function setUp()
     {
-        $this->command = new DeleteProfileCommand();
-        $this->apiMethod = 'deleteProfile';
-
         parent::setUp();
+
+        $this->command = new DeleteProfileCommand($this->cloudManager);
+        $this->apiMethod = 'deleteProfile';
     }
 
     public function testCommand()
