@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.5.0
+-----
+
+* dropped support for PHP 5
+
 1.4.1
 -----
 
