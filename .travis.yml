@@ -19,8 +19,6 @@ matrix:
       env: COMPOSER_OPTIONS="--prefer-lowest --prefer-stable"
     - php: 7.1
     # Test against LTS versions
-    - php: 7.1
-      env: SYMFONY_LTS="^2"
     - php: 7.0
       env: SYMFONY_LTS="^3"
     # Test against dev versions
