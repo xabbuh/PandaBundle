@@ -32,7 +32,7 @@ class FunctionalTest extends WebTestCase
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
      */
-    private $client;
+    protected static $client;
 
     public function setUp()
     {
@@ -44,13 +44,13 @@ class FunctionalTest extends WebTestCase
 
         $this->event = null;
         $this->eventCounter = 0;
-        $this->client = static::createClient();
+        self::$client = static::createClient();
     }
 
     public function testSignWithoutTimestamp()
     {
-        $this->client->request('GET', '/sign/'.$this->getDefaultCloudName());
-        $decodedResponse = $this->validateJsonResponse($this->client->getResponse());
+        self::$client->request('GET', '/sign/'.$this->getDefaultCloudName());
+        $decodedResponse = $this->validateJsonResponse(self::$client->getResponse());
 
         $this->assertEquals('e122090f4e506ae9ee266c3eb78a8b67', $decodedResponse->cloud_id);
         $this->assertEquals('799572f795a5a09a251cf2cf46c419ab', $decodedResponse->access_key);
@@ -65,16 +65,16 @@ class FunctionalTest extends WebTestCase
         // first, request signature without specifying the request method
         // and the url path of the request to be signed (this implies that GET
         // and /videos.json will be used as default values)
-        $this->client->request(
+        self::$client->request(
             'GET',
             '/sign/'.$this->getDefaultCloudName(),
             array('timestamp' => $timestamp)
         );
-        $decodedResponse1 = $this->validateJsonResponse($this->client->getResponse());
+        $decodedResponse1 = $this->validateJsonResponse(self::$client->getResponse());
 
         // do a second request where the request method (GET) and the url
         // path (/videos.json) are explicitly specified
-        $this->client->request(
+        self::$client->request(
             'GET',
             '/sign/'.$this->getDefaultCloudName(),
             array(
@@ -83,7 +83,7 @@ class FunctionalTest extends WebTestCase
                 'timestamp' => $timestamp
             )
         );
-        $decodedResponse2 = $this->validateJsonResponse($this->client->getResponse());
+        $decodedResponse2 = $this->validateJsonResponse(self::$client->getResponse());
 
         // check that both signatures are equal
         $this->assertEquals($decodedResponse1->signature, $decodedResponse2->signature);
@@ -91,16 +91,16 @@ class FunctionalTest extends WebTestCase
 
     public function testNotifyWithoutEvent()
     {
-        $this->client->request('POST', '/notify');
+        self::$client->request('POST', '/notify');
 
-        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(400, self::$client->getResponse()->getStatusCode());
     }
 
     public function testNotifyWithInvalidEvent()
     {
-        $this->client->request('POST', '/notify', array('event' => 'video-complete'));
+        self::$client->request('POST', '/notify', array('event' => 'video-complete'));
 
-        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(400, self::$client->getResponse()->getStatusCode());
     }
 
     private function getDefaultCloudName()
