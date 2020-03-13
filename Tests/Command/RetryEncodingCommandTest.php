@@ -44,12 +44,11 @@ class RetryEncodingCommandTest extends CloudCommandTest
         $this->runCommand('panda:encoding:retry', array('encoding-id' => $encodingId));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments
-     */
     public function testCommandWithoutArguments()
     {
+        self::expectException(\RuntimeException::class);
+        self::expectExceptionMessage('Not enough arguments');
+
         $this->runCommand('panda:encoding:retry');
     }
 
