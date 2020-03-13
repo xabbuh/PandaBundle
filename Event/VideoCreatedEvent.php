@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @final since 1.5
  */
-class VideoCreatedEvent extends Event
+class VideoCreatedEvent
 {
     /**
      * The VIDEO_CREATED event occurs when a video was successfully created.

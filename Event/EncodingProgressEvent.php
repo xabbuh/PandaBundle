@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @final since 1.5
  */
-class EncodingProgressEvent extends Event
+class EncodingProgressEvent
 {
     /**
      * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.

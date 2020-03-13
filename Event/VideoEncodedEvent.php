@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @final since 1.5
  */
-class VideoEncodedEvent extends Event
+class VideoEncodedEvent
 {
     /**
      * The VIDEO_ENCODED event occurs when a video was successfully encoded.

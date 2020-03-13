@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @final since 1.5
  */
-class EncodingCompleteEvent extends Event
+class EncodingCompleteEvent
 {
     /**
      * The ENCODING_COMPLETE event occurs when an encoding is done or failed.
