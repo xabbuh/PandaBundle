@@ -20,6 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to modify a profile.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class ModifyProfileCommand extends CloudCommand
 {

@@ -19,6 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * List all configured profiles for a cloud.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class ListProfilesCommand extends CloudCommand
 {

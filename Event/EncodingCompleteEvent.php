@@ -17,6 +17,8 @@ use Symfony\Component\EventDispatcher\Event;
  * Event that is triggered when an encoding has successfully finished.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class EncodingCompleteEvent extends Event
 {

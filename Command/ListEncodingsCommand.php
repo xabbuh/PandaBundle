@@ -20,6 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command for displaying lists of encodings.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class ListEncodingsCommand extends CloudCommand
 {

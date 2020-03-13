@@ -24,6 +24,8 @@ use Xabbuh\PandaClient\Exception\PandaException;
  * given the configured default cloud is used.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @internal since 1.5
  */
 abstract class CloudCommand extends ContainerAwareCommand
 {

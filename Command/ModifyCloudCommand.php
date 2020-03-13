@@ -21,6 +21,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Modify a panda cloud via command-line.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class ModifyCloudCommand extends ContainerAwareCommand
 {

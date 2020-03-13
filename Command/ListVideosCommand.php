@@ -20,6 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to display a list of videos.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class ListVideosCommand extends CloudCommand
 {
