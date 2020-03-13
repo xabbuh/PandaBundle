@@ -14,7 +14,7 @@
         "psr-4": { "Xabbuh\\PandaBundle\\": "" }
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "symfony/config": "^3.4||^4.4",
         "symfony/console": "^3.4||^4.4",
         "symfony/dependency-injection": "^3.4||^4.4",
@@ -28,13 +28,13 @@
     },
     "require-dev": {
         "guzzlehttp/psr7": "^1.4",
-        "matthiasnoback/symfony-dependency-injection-test": "^2.0||^3.0||^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1||^4.0",
         "php-http/mock-client": "^1.0",
         "symfony/browser-kit": "^3.4||^4.4",
         "symfony/dom-crawler": "^3.4||^4.4",
         "symfony/finder": "^3.4||^4.4",
         "symfony/framework-bundle": "^3.4||^4.4",
-        "symfony/phpunit-bridge": "^3.3||^4.4",
+        "symfony/phpunit-bridge": "^4.4",
         "symfony/validator": "^3.4||^4.4"
     },
     "minimum-stability": "dev",

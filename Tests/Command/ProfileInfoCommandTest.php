@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\ProfileInfoCommand;
 use Xabbuh\PandaClient\Model\Profile;
 
@@ -19,7 +20,9 @@ use Xabbuh\PandaClient\Model\Profile;
  */
 class ProfileInfoCommandTest extends CloudCommandTest
 {
-    protected function setUp()
+    use SetUpTearDownTrait;
+
+    private function doSetUp()
     {
         $this->command = new ProfileInfoCommand();
         $this->apiMethod = 'getProfile';

@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\VideoInfoCommand;
 use Xabbuh\PandaClient\Model\Video;
 
@@ -19,7 +20,9 @@ use Xabbuh\PandaClient\Model\Video;
  */
 class VideoInfoCommandTest extends CloudCommandTest
 {
-    protected function setUp()
+    use SetUpTearDownTrait;
+
+    private function doSetUp()
     {
         $this->command = new VideoInfoCommand();
         $this->apiMethod = 'getVideo';

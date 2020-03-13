@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\ChangeUrlCommand;
 use Xabbuh\PandaClient\Model\Notifications;
 
@@ -19,7 +20,9 @@ use Xabbuh\PandaClient\Model\Notifications;
  */
 class ChangeUrlCommandTest extends CloudCommandTest
 {
-    protected function setUp()
+    use SetUpTearDownTrait;
+
+    private function doSetUp()
     {
         $this->command = new ChangeUrlCommand();
         $this->apiMethod = 'setNotifications';

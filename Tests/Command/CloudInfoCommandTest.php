@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\CloudInfoCommand;
 use Xabbuh\PandaClient\Model\Cloud;
 
@@ -19,7 +20,9 @@ use Xabbuh\PandaClient\Model\Cloud;
  */
 class CloudInfoCommandTest extends CloudCommandTest
 {
-    protected function setUp()
+    use SetUpTearDownTrait;
+
+    private function doSetUp()
     {
         $this->command = new CloudInfoCommand();
         $this->apiMethod = 'getCloud';

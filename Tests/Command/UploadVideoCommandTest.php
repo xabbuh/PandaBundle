@@ -10,6 +10,7 @@
  */
 
 namespace Xabbuh\PandaBundle\Tests\Command;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\UploadVideoCommand;
 
 /**
@@ -17,7 +18,9 @@ use Xabbuh\PandaBundle\Command\UploadVideoCommand;
  */
 class UploadVideoCommandTest extends CloudCommandTest
 {
-    protected function setUp()
+    use SetUpTearDownTrait;
+
+    private function doSetUp()
     {
         $this->command = new UploadVideoCommand();
         $this->apiMethod = 'encodeVideoFile';
