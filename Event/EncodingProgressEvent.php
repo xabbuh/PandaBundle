@@ -11,24 +11,54 @@
 
 namespace Xabbuh\PandaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event as LegacyEvent;
+use Symfony\Contracts\EventDispatcher\Event;
+
+if (class_exists(LegacyEvent::class)) {
+    /**
+     * Event that is triggered repeatedly while an encoding process is running.
+     *
+     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+     *
+     * @final since 1.5
+     */
+    class EncodingProgressEvent extends LegacyEvent
+    {
+        use EncodingProgressEventTrait;
+
+        /**
+         * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
+         *
+         * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
+         */
+        const NAME = 'xabbuh_panda.encoding_progress';
+    }
+} else {
+    /**
+     * Event that is triggered repeatedly while an encoding process is running.
+     *
+     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+     *
+     * @final since 1.5
+     */
+    class EncodingProgressEvent extends Event
+    {
+        use EncodingProgressEventTrait;
+
+        /**
+         * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
+         *
+         * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
+         */
+        const NAME = 'xabbuh_panda.encoding_progress';
+    }
+}
 
 /**
- * Event that is triggered repeatedly while an encoding process is running.
- *
- * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final since 1.5
+ * @internal
  */
-class EncodingProgressEvent extends Event
+trait EncodingProgressEventTrait
 {
-    /**
-     * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
-     *
-     * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
-     */
-    const NAME = 'xabbuh_panda.encoding_progress';
-
     /**
      * The id of the encoded video
      * @var string
