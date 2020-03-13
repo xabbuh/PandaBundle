@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  *
- * @final since 1.5
+ * @final
  */
 class VideoCreatedEvent extends Event
 {

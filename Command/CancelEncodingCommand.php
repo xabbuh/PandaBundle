@@ -21,7 +21,7 @@ use Xabbuh\PandaClient\Model\Encoding;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  *
- * @final since 1.5
+ * @final
  */
 class CancelEncodingCommand extends CloudCommand
 {
