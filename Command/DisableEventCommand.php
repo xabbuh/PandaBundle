@@ -22,7 +22,7 @@ use Xabbuh\PandaClient\Model\Notifications;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  *
- * @final since 1.5
+ * @final
  */
 class DisableEventCommand extends CloudCommand
 {

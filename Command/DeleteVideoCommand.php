@@ -21,7 +21,7 @@ use Xabbuh\PandaClient\Model\Video;
  *
  * @author Christian Flothmann <chrsitian.flothmann@xabbuh.de>
  *
- * @final since 1.5
+ * @final
  */
 class DeleteVideoCommand extends CloudCommand
 {

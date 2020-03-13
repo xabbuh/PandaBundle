@@ -21,7 +21,7 @@ use Xabbuh\PandaClient\Model\Profile;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  *
- * @final since 1.5
+ * @final
  */
 class DeleteProfileCommand extends CloudCommand
 {
