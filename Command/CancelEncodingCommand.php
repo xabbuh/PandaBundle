@@ -20,6 +20,8 @@ use Xabbuh\PandaClient\Model\Encoding;
  * Command to cancel an encoding.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class CancelEncodingCommand extends CloudCommand
 {

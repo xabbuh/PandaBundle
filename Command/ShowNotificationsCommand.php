@@ -19,6 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Fetch notification status information via command-line.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class ShowNotificationsCommand extends CloudCommand
 {

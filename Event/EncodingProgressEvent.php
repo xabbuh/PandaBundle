@@ -17,6 +17,8 @@ use Symfony\Component\EventDispatcher\Event;
  * Event that is triggered repeatedly while an encoding process is running.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class EncodingProgressEvent extends Event
 {

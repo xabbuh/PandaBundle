@@ -17,6 +17,8 @@ use Symfony\Component\EventDispatcher\Event;
  * Event that is triggered when a video was successfully encoded.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class VideoEncodedEvent extends Event
 {

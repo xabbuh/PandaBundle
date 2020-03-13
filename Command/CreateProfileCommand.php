@@ -19,6 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to create a profile based on a preset.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final since 1.5
  */
 class CreateProfileCommand extends CloudCommand
 {
