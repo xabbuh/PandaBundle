@@ -11,10 +11,11 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Xabbuh\PandaClient\Api\CloudManager;
 use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
@@ -27,8 +28,15 @@ use Xabbuh\PandaClient\Exception\PandaException;
  *
  * @internal since 1.5
  */
-abstract class CloudCommand extends ContainerAwareCommand
+abstract class CloudCommand extends Command
 {
+    private $cloudManager;
+
+    public function __construct(CloudManager $cloudManager)
+    {
+        $this->cloudManager = $cloudManager;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -48,7 +56,7 @@ abstract class CloudCommand extends ContainerAwareCommand
      */
     protected function getCloudManager()
     {
-        return $this->getContainer()->get('xabbuh_panda.cloud_manager');
+        return $this->cloudManager->get('xabbuh_panda.cloud_manager');
     }
 
     /**

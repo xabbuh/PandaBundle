@@ -11,11 +11,12 @@
 
 namespace Xabbuh\PandaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Xabbuh\PandaBundle\Cloud\CloudFactory;
 
 /**
  * Modify a panda cloud via command-line.
@@ -24,9 +25,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @final since 1.5
  */
-class ModifyCloudCommand extends ContainerAwareCommand
+class ModifyCloudCommand extends Command
 {
     protected static $defaultName = 'panda:cloud:modify';
+
+    private $cloudFactory;
+
+    public function __construct(CloudFactory $cloudFactory)
+    {
+        $this->cloudFactory = $cloudFactory;
+    }
 
     /**
      * {@inheritDoc}
@@ -78,8 +86,7 @@ class ModifyCloudCommand extends ContainerAwareCommand
         // if anything has changed
         if (count($data) > 0) {
             // push these changes to the panda service
-            $cloudFactory = $this->getContainer()->get('xabbuh_panda.cloud_factory');
-            $cloud = $cloudFactory->get(
+            $cloud = $this->cloudFactory->get(
                 $input->getArgument('cloud-id'),
                 $input->getOption('account')
             );
