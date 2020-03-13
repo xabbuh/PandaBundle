@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\RetryEncodingCommand;
 use Xabbuh\PandaClient\Model\Encoding;
 
@@ -26,10 +27,9 @@ class RetryEncodingCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new RetryEncodingCommand();
-        $this->apiMethod = 'retryEncoding';
-
         parent::setUp();
+
+        $this->apiMethod = 'retryEncoding';
     }
 
     public function testCommand()
@@ -63,6 +63,11 @@ class RetryEncodingCommandTest extends CloudCommandTest
             array('encoding-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new RetryEncodingCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

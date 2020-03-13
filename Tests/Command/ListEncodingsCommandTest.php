@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ListEncodingsCommand;
 use Xabbuh\PandaClient\Model\Encoding;
 
@@ -26,10 +27,9 @@ class ListEncodingsCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ListEncodingsCommand();
-        $this->apiMethod = 'getEncodings';
-
         parent::setUp();
+
+        $this->apiMethod = 'getEncodings';
     }
 
     public function testCommandWithoutOptions()
@@ -85,6 +85,11 @@ class ListEncodingsCommandTest extends CloudCommandTest
             ->will($this->returnValue($this->createEncodingResult()));
         $this->runCommand('panda:encoding:list', array('--video-id' => 'video-id'));
         $this->validateEncodingResultOutput();
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ListEncodingsCommand($this->cloudManager);
     }
 
     private function createEncodingResult()

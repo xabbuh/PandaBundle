@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ListVideosCommand;
 use Xabbuh\PandaClient\Model\Video;
 
@@ -26,10 +27,9 @@ class ListVideosCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ListVideosCommand();
-        $this->apiMethod = 'getVideosForPagination';
-
         parent::setUp();
+
+        $this->apiMethod = 'getVideosForPagination';
     }
 
     public function testCommandWithoutOptions()
@@ -74,6 +74,11 @@ class ListVideosCommandTest extends CloudCommandTest
             ->will($this->returnValue($this->createVideoResultList(1, 10, array())));
         $this->runCommand('panda:video:list');
         $this->validateEmptyVideoResultOutput();
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ListVideosCommand($this->cloudManager);
     }
 
     private function createNonEmptyVideoList()

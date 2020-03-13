@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ChangeUrlCommand;
 use Xabbuh\PandaClient\Model\Notifications;
 
@@ -26,10 +27,9 @@ class ChangeUrlCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ChangeUrlCommand();
-        $this->apiMethod = 'setNotifications';
-
         parent::setUp();
+
+        $this->apiMethod = 'setNotifications';
     }
 
     public function testCommand()
@@ -52,6 +52,11 @@ class ChangeUrlCommandTest extends CloudCommandTest
         self::expectExceptionMessage('Not enough arguments');
 
         $this->runCommand('panda:notifications:change-url');
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ChangeUrlCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

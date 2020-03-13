@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\DeleteVideoCommand;
 use Xabbuh\PandaClient\Model\Video;
 
@@ -26,10 +27,9 @@ class DeleteVideoCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new DeleteVideoCommand();
-        $this->apiMethod = 'deleteVideo';
-
         parent::setUp();
+
+        $this->apiMethod = 'deleteVideo';
     }
 
     public function testCommand()
@@ -63,6 +63,11 @@ class DeleteVideoCommandTest extends CloudCommandTest
             array('video-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new DeleteVideoCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

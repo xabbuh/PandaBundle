@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ProfileInfoCommand;
 use Xabbuh\PandaClient\Model\Profile;
 
@@ -26,10 +27,9 @@ class ProfileInfoCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ProfileInfoCommand();
-        $this->apiMethod = 'getProfile';
-
         parent::setUp();
+
+        $this->apiMethod = 'getProfile';
     }
 
     public function testCommand()
@@ -69,6 +69,11 @@ class ProfileInfoCommandTest extends CloudCommandTest
         self::expectExceptionMessage('Not enough arguments');
 
         $this->runCommand('panda:profile:info');
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ProfileInfoCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

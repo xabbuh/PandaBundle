@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\CreateEncodingCommand;
 use Xabbuh\PandaClient\Model\Encoding;
 use Xabbuh\PandaClient\Model\Video;
@@ -27,10 +28,9 @@ class CreateEncodingCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new CreateEncodingCommand();
-        $this->apiMethod = 'createEncodingWithProfileId';
-
         parent::setUp();
+
+        $this->apiMethod = 'createEncodingWithProfileId';
     }
 
     public function testCommandWithProfileId()
@@ -124,6 +124,11 @@ class CreateEncodingCommandTest extends CloudCommandTest
             )
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new CreateEncodingCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()
