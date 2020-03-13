@@ -7,6 +7,11 @@ cache:
     - $HOME/.composer/cache/files
     - $HOME/symfony-bridge/.phpunit
 
+branches:
+  only:
+    - master
+    - /^\d+\.(\d+|x)$/
+
 env:
   global:
     - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
