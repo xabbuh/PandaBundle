@@ -11,19 +11,24 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\ModifyCloudCommand;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class ModifyCloudCommandTest extends CommandTest
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var \Xabbuh\PandaBundle\Cloud\CloudFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     private $cloudFactory;
 
-    protected function setUp()
+    private function doSetUp()
     {
         $this->command = new ModifyCloudCommand();
 

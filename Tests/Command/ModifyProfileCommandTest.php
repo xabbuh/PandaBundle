@@ -11,13 +11,18 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class ModifyProfileCommandTest extends CloudCommandTest
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var \Xabbuh\PandaBundle\Cloud\CloudFactory|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -28,7 +33,7 @@ class ModifyProfileCommandTest extends CloudCommandTest
      */
     private $profile;
 
-    protected function setUp()
+    private function doSetUp()
     {
         $this->command = new ModifyProfileCommand();
         $this->apiMethod = 'getProfile';

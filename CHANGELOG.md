@@ -6,7 +6,7 @@ CHANGELOG
 
 * marked all command and event classes as `final`, extending them will not
   be supported as of 2.0
-* dropped support for PHP 5
+* dropped support for PHP 5 and 7.0
 * dropped support for unmaintained Symfony versions
 
 1.4.1
