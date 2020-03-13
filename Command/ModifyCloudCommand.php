@@ -83,5 +83,7 @@ class ModifyCloudCommand extends ContainerAwareCommand
             );
             $cloud->setCloud($data, $input->getArgument('cloud-id'));
         }
+
+        return 0;
     }
 }

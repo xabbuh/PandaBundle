@@ -80,8 +80,12 @@ abstract class CloudCommand extends ContainerAwareCommand
     {
         try {
             $this->doExecuteCommand($input, $output);
+
+            return 0;
         } catch (PandaException $e) {
             $output->writeln(sprintf('<error>An error occurred: %s</error>', $e->getMessage()));
+
+            return 1;
         }
     }
 }
