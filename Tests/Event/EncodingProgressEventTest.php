@@ -18,6 +18,8 @@ use Xabbuh\PandaBundle\Event\EncodingProgressEvent;
  * Test the EncodingProgressEvent class.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class EncodingProgressEventTest extends TestCase
 {

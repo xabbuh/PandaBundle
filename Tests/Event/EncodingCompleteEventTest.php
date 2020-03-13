@@ -18,6 +18,8 @@ use Xabbuh\PandaBundle\Event\EncodingCompleteEvent;
  * Test the EncodingCompletedEvent class.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class EncodingCompleteEventTest extends TestCase
 {

@@ -18,6 +18,8 @@ use Xabbuh\PandaBundle\Event\VideoCreatedEvent;
  * Test the VideoCreatedEvent class.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class VideoCreatedEventTest extends TestCase
 {

@@ -17,6 +17,8 @@ use Xabbuh\PandaClient\Model\Encoding;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class ListEncodingsCommandTest extends CloudCommandTest
 {
