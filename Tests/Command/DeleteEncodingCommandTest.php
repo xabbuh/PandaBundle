@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Command\DeleteEncodingCommand;
 use Xabbuh\PandaClient\Model\Encoding;
 
@@ -19,7 +20,9 @@ use Xabbuh\PandaClient\Model\Encoding;
  */
 class DeleteEncodingCommandTest extends CloudCommandTest
 {
-    protected function setUp()
+    use SetUpTearDownTrait;
+
+    private function doSetUp()
     {
         $this->command = new DeleteEncodingCommand();
         $this->apiMethod = 'deleteEncoding';

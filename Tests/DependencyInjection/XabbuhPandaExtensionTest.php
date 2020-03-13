@@ -125,7 +125,7 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall('xabbuh_panda.http_client.without_account', 'setAccount', array(new Reference('xabbuh_panda.default_account')));
     }
 
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return array(new XabbuhPandaExtension());
     }

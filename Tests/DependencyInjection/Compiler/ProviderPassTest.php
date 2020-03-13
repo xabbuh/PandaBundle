@@ -54,7 +54,7 @@ class ProviderPassTest extends AbstractCompilerPassTestCase
         $this->validateContainerWithTaggedProviders(1, 1);
     }
 
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ProviderPass());
     }

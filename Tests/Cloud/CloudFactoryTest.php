@@ -13,6 +13,7 @@ namespace Xabbuh\PandaBundle\Tests\Cloud;
 
 use Http\Discovery\HttpClientDiscovery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaBundle\Cloud\CloudFactory;
 use Xabbuh\PandaClient\Api\Account;
 
@@ -23,6 +24,8 @@ use Xabbuh\PandaClient\Api\Account;
  */
 class CloudFactoryTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var CloudFactory
      */
@@ -43,7 +46,7 @@ class CloudFactoryTest extends TestCase
      */
     private $transformerRegistry;
 
-    protected function setUp()
+    private function doSetUp()
     {
         $this->createAccountManagerMock();
         $this->createTransformerRegistryMock();
