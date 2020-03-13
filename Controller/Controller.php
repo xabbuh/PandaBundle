@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Controller;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as ConstractsEventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -125,7 +126,12 @@ class Controller
     {
         try {
             $event = EventFactory::createEventFromRequest($request);
-            $this->eventDispatcher->dispatch(constant(get_class($event).'::NAME'), $event);
+
+            if ($this->eventDispatcher instanceof ConstractsEventDispatcherInterface) {
+                $this->eventDispatcher->dispatch($event, constant(get_class($event).'::NAME'));
+            } else {
+                $this->eventDispatcher->dispatch(constant(get_class($event).'::NAME'), $event);
+            }
 
             return new Response('');
         } catch (\InvalidArgumentException $e) {
