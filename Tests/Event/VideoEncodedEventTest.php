@@ -18,6 +18,8 @@ use Xabbuh\PandaBundle\Event\VideoEncodedEvent;
  * Test the VideoEncodedEvent class.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class VideoEncodedEventTest extends TestCase
 {

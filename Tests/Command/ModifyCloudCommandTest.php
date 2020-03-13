@@ -16,6 +16,8 @@ use Xabbuh\PandaBundle\Command\ModifyCloudCommand;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class ModifyCloudCommandTest extends CommandTest
 {

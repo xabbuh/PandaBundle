@@ -17,6 +17,8 @@ use Xabbuh\PandaBundle\Event\EventFactory;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class EventFactoryTest extends TestCase
 {

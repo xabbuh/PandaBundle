@@ -16,6 +16,8 @@ use Xabbuh\PandaBundle\Command\VideoMetadataCommand;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @group legacy
  */
 class VideoMetadataCommandTest extends CloudCommandTest
 {
