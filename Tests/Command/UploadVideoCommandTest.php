@@ -91,12 +91,11 @@ class UploadVideoCommandTest extends CloudCommandTest
         $this->assertRegExp('/File uploaded successfully./', $this->commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments
-     */
     public function testCommandWithoutArguments()
     {
+        self::expectException(\RuntimeException::class);
+        self::expectExceptionMessage('Not enough arguments');
+
         $this->runCommand('panda:video:upload');
     }
 

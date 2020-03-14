@@ -14,6 +14,7 @@ namespace Xabbuh\PandaBundle\Tests\Form\Extension;
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\FormIntegrationTestCase;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension;
 
 /**
@@ -139,11 +140,12 @@ class VideoUploaderExtensionTest extends FormIntegrationTestCase
     }
 
     /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @dataProvider invalidOptionsProvider
      */
     public function testExceptionIsThrownForInvalidOptions(array $options)
     {
+        self::expectException(InvalidOptionsException::class);
+
         $this->factory->create('Symfony\Component\Form\Extension\Core\Type\FileType', null, $options);
     }
 

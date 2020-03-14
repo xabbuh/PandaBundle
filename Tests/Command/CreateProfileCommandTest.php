@@ -49,12 +49,11 @@ class CreateProfileCommandTest extends CloudCommandTest
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments
-     */
     public function testCommandWithoutArguments()
     {
+        self::expectException(\RuntimeException::class);
+        self::expectExceptionMessage('Not enough arguments');
+
         $this->runCommand('panda:profile:create');
     }
 
