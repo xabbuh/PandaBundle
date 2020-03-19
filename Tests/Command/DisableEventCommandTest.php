@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\DisableEventCommand;
 use Xabbuh\PandaClient\Model\NotificationEvent;
 use Xabbuh\PandaClient\Model\Notifications;
@@ -27,10 +28,9 @@ class DisableEventCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new DisableEventCommand();
-        $this->apiMethod = 'setNotifications';
-
         parent::setUp();
+
+        $this->apiMethod = 'setNotifications';
     }
 
     public function testCommand()
@@ -54,6 +54,11 @@ class DisableEventCommandTest extends CloudCommandTest
         self::expectExceptionMessage('Not enough arguments');
 
         $this->runCommand('panda:notifications:disable');
+    }
+
+    protected function createCommand(): Command
+    {
+        return new DisableEventCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

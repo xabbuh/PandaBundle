@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\CreateProfileCommand;
 use Xabbuh\PandaClient\Model\Profile;
 
@@ -26,10 +27,9 @@ class CreateProfileCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new CreateProfileCommand();
-        $this->apiMethod = 'addProfileFromPreset';
-
         parent::setUp();
+
+        $this->apiMethod = 'addProfileFromPreset';
     }
 
     public function testCommand()
@@ -68,6 +68,11 @@ class CreateProfileCommandTest extends CloudCommandTest
             array('preset' => 'h264')
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new CreateProfileCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

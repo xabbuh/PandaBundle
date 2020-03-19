@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
 
 /**
@@ -35,10 +36,9 @@ class ModifyProfileCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ModifyProfileCommand();
-        $this->apiMethod = 'getProfile';
-
         parent::setUp();
+
+        $this->apiMethod = 'getProfile';
 
         $this->cloudFactory = $this->createCloudFactoryMock();
         $this->profile = $this->createProfileMock();
@@ -146,6 +146,11 @@ class ModifyProfileCommandTest extends CloudCommandTest
             array('profile-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ModifyProfileCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

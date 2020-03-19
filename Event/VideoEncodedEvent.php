@@ -11,24 +11,54 @@
 
 namespace Xabbuh\PandaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event as LegacyEvent;
+use Symfony\Contracts\EventDispatcher\Event;
+
+if (class_exists(LegacyEvent::class)) {
+    /**
+     * Event that is triggered when a video was successfully encoded.
+     *
+     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+     *
+     * @final
+     */
+    class VideoEncodedEvent extends LegacyEvent
+    {
+        use VideoEncodedEventTrait;
+
+        /**
+         * The VIDEO_ENCODED event occurs when a video was successfully encoded.
+         *
+         * The event listener method receives a Xabbuh\PandaBundle\Event\VideoCreatedEvent instance.
+         */
+        const NAME = 'xabbuh_panda.video_encoded';
+    }
+} else {
+    /**
+     * Event that is triggered when a video was successfully encoded.
+     *
+     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+     *
+     * @final since
+     */
+    class VideoEncodedEvent extends Event
+    {
+        use VideoEncodedEventTrait;
+
+        /**
+         * The VIDEO_ENCODED event occurs when a video was successfully encoded.
+         *
+         * The event listener method receives a Xabbuh\PandaBundle\Event\VideoCreatedEvent instance.
+         */
+        const NAME = 'xabbuh_panda.video_encoded';
+    }
+}
 
 /**
- * Event that is triggered when a video was successfully encoded.
- *
- * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
+ * @internal
  */
-class VideoEncodedEvent extends Event
+trait VideoEncodedEventTrait
 {
-    /**
-     * The VIDEO_ENCODED event occurs when a video was successfully encoded.
-     *
-     * The event listener method receives a Xabbuh\PandaBundle\Event\VideoCreatedEvent instance.
-     */
-    const NAME = 'xabbuh_panda.video_encoded';
-
     /**
      * The id of the encoded video
      * @var string

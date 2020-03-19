@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\DeleteProfileCommand;
 use Xabbuh\PandaClient\Model\Profile;
 
@@ -26,10 +27,9 @@ class DeleteProfileCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new DeleteProfileCommand();
-        $this->apiMethod = 'deleteProfile';
-
         parent::setUp();
+
+        $this->apiMethod = 'deleteProfile';
     }
 
     public function testCommand()
@@ -63,6 +63,11 @@ class DeleteProfileCommandTest extends CloudCommandTest
             array('profile-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new DeleteProfileCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

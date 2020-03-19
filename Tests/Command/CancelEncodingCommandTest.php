@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\CancelEncodingCommand;
 use Xabbuh\PandaClient\Model\Encoding;
 
@@ -26,10 +27,9 @@ class CancelEncodingCloudCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new CancelEncodingCommand();
-        $this->apiMethod = 'cancelEncoding';
-
         parent::setUp();
+
+        $this->apiMethod = 'cancelEncoding';
     }
 
     public function testCommand()
@@ -66,6 +66,11 @@ class CancelEncodingCloudCommandTest extends CloudCommandTest
             array('encoding-id' => md5(uniqid()))
         );
         $this->assertRegExp('/An error occurred/', $this->commandTester->getDisplay());
+    }
+
+    protected function createCommand(): Command
+    {
+        return new CancelEncodingCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

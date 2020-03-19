@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ListProfilesCommand;
 use Xabbuh\PandaClient\Model\Profile;
 
@@ -26,10 +27,9 @@ class ListProfilesCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ListProfilesCommand();
-        $this->apiMethod = 'getProfiles';
-
         parent::setUp();
+
+        $this->apiMethod = 'getProfiles';
     }
 
     public function testCommand()
@@ -51,5 +51,10 @@ class ListProfilesCommandTest extends CloudCommandTest
             array($profileId1, 'Profile 1'),
             array($profileId2, 'Profile 2'),
         ));
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ListProfilesCommand($this->cloudManager);
     }
 }

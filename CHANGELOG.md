@@ -4,8 +4,13 @@ CHANGELOG
 1.5.0
 -----
 
+* not injecting the required dependencies through the constructor of the
+  command classes is deprecated
+* the `setContainer()` and `getContainer()` methods of the command classes
+  are deprecated
 * marked all command and event classes as `final`, extending them will not
   be supported as of 2.0
+* added support for Symfony 5 components
 * dropped support for PHP 5 and 7.0
 * dropped support for unmaintained Symfony versions
 
