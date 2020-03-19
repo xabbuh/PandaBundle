@@ -20,7 +20,7 @@ if (class_exists(LegacyEvent::class)) {
      *
      * @author Christian Flothmann <christian.flothmann@xabbuh.de>
      *
-     * @final  since 1.5
+     * @final since 1.5
      */
     class EncodingCompleteEvent extends LegacyEvent
     {
@@ -39,7 +39,7 @@ if (class_exists(LegacyEvent::class)) {
      *
      * @author Christian Flothmann <christian.flothmann@xabbuh.de>
      *
-     * @final  since 1.5
+     * @final since 1.5
      */
     class EncodingCompleteEvent extends Event
     {
