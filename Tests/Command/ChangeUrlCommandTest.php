@@ -18,8 +18,6 @@ use Xabbuh\PandaClient\Model\Notifications;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class ChangeUrlCommandTest extends CloudCommandTest
 {

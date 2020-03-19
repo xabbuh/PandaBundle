@@ -17,8 +17,6 @@ use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class ModifyProfileCommandTest extends CloudCommandTest
 {

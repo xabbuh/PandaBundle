@@ -19,8 +19,6 @@ use Xabbuh\PandaClient\Model\Video;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class CreateEncodingCommandTest extends CloudCommandTest
 {

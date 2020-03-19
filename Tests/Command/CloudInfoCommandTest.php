@@ -18,8 +18,6 @@ use Xabbuh\PandaClient\Model\Cloud;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class CloudInfoCommandTest extends CloudCommandTest
 {

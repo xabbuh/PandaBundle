@@ -18,8 +18,6 @@ use Xabbuh\PandaClient\Model\Profile;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class DeleteProfileCommandTest extends CloudCommandTest
 {
