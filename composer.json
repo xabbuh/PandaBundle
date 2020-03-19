@@ -29,7 +29,8 @@
     "require-dev": {
         "guzzlehttp/psr7": "^1.4",
         "matthiasnoback/symfony-dependency-injection-test": "^3.1||^4.0",
-        "php-http/mock-client": "^1.0",
+        "nyholm/psr7": "^1.0",
+        "php-http/mock-client": "^1.1",
         "symfony/browser-kit": "^3.4||^4.4",
         "symfony/dom-crawler": "^3.4||^4.4",
         "symfony/finder": "^3.4||^4.4",

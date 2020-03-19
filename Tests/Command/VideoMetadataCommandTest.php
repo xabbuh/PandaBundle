@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\VideoMetadataCommand;
 
 /**
@@ -25,10 +26,9 @@ class VideoMetadataCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new VideoMetadataCommand();
-        $this->apiMethod = 'getVideoMetadata';
-
         parent::setUp();
+
+        $this->apiMethod = 'getVideoMetadata';
     }
 
     public function testCommand()
@@ -58,6 +58,11 @@ class VideoMetadataCommandTest extends CloudCommandTest
         self::expectExceptionMessage('Not enough arguments');
 
         $this->runCommand('panda:video:metadata');
+    }
+
+    protected function createCommand(): Command
+    {
+        return new VideoMetadataCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

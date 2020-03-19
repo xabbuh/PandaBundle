@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\EncodingInfoCommand;
 use Xabbuh\PandaClient\Model\Encoding;
 
@@ -26,10 +27,9 @@ class EncodingInfoCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new EncodingInfoCommand();
-        $this->apiMethod = 'getEncoding';
-
         parent::setUp();
+
+        $this->apiMethod = 'getEncoding';
     }
 
     public function testCommand()
@@ -120,6 +120,11 @@ class EncodingInfoCommandTest extends CloudCommandTest
         self::expectExceptionMessage('Not enough arguments');
 
         $this->runCommand('panda:encoding:info');
+    }
+
+    protected function createCommand(): Command
+    {
+        return new EncodingInfoCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

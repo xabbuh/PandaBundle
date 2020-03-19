@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\UploadVideoCommand;
 
 /**
@@ -24,9 +25,9 @@ class UploadVideoCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new UploadVideoCommand();
-        $this->apiMethod = 'encodeVideoFile';
         parent::setUp();
+
+        $this->apiMethod = 'encodeVideoFile';
     }
 
     public function testCommand()
@@ -97,6 +98,11 @@ class UploadVideoCommandTest extends CloudCommandTest
         self::expectExceptionMessage('Not enough arguments');
 
         $this->runCommand('panda:video:upload');
+    }
+
+    protected function createCommand(): Command
+    {
+        return new UploadVideoCommand($this->cloudManager);
     }
 
     protected function getDefaultCommandArguments()

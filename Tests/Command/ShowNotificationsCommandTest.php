@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ShowNotificationsCommand;
 use Xabbuh\PandaClient\Model\NotificationEvent;
 use Xabbuh\PandaClient\Model\Notifications;
@@ -27,9 +28,9 @@ class ShowNotificationsCommandTest extends CloudCommandTest
 
     private function doSetUp()
     {
-        $this->command = new ShowNotificationsCommand();
-        $this->apiMethod = 'getNotifications';
         parent::setUp();
+
+        $this->apiMethod = 'getNotifications';
     }
 
     public function testCommand()
@@ -88,5 +89,10 @@ class ShowNotificationsCommandTest extends CloudCommandTest
             array('encoding-progress', 'enabled'),
             array('encoding-completed', 'disabled'),
         ));
+    }
+
+    protected function createCommand(): Command
+    {
+        return new ShowNotificationsCommand($this->cloudManager);
     }
 }

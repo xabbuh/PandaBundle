@@ -11,6 +11,7 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
@@ -18,6 +19,8 @@ use Xabbuh\PandaClient\Exception\PandaException;
  */
 abstract class CloudCommandTest extends CommandTest
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var \Xabbuh\PandaClient\Api\CloudManager|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -29,6 +32,13 @@ abstract class CloudCommandTest extends CommandTest
     protected $defaultCloud;
 
     protected $apiMethod;
+
+    private function doSetUp()
+    {
+        $this->createCloudManagerMock();
+
+        parent::setUp();
+    }
 
     public function testCommandWhenPandaExceptionIsThrown()
     {
@@ -43,18 +53,6 @@ abstract class CloudCommandTest extends CommandTest
             '/An error occurred: Panda API error message/',
             $this->commandTester->getDisplay()
         );
-    }
-
-    protected function createContainerMock()
-    {
-        parent::createContainerMock();
-
-        $this->createCloudManagerMock();
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->with('xabbuh_panda.cloud_manager')
-            ->will($this->returnValue($this->cloudManager));
     }
 
     protected function createCloudManagerMock()

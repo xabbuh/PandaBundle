@@ -11,8 +11,17 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
+use Http\Mock\Client;
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ModifyCloudCommand;
+use Xabbuh\PandaClient\Api\Account;
+use Xabbuh\PandaClient\Api\AccountManager;
+use Xabbuh\PandaClient\Serializer\Symfony\Serializer;
+use Xabbuh\PandaClient\Transformer\CloudTransformer;
+use Xabbuh\PandaClient\Transformer\TransformerRegistry;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -24,92 +33,84 @@ class ModifyCloudCommandTest extends CommandTest
     use SetUpTearDownTrait;
 
     /**
-     * @var \Xabbuh\PandaBundle\Cloud\CloudFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var Client
      */
-    private $cloudFactory;
-
-    private function doSetUp()
-    {
-        $this->command = new ModifyCloudCommand();
-
-        parent::setUp();
-
-        $this->createCloudFactoryMock();
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->with('xabbuh_panda.cloud_factory')
-            ->will($this->returnValue($this->cloudFactory));
-    }
+    private $httpClient;
 
     public function testCommandWithoutOptions()
     {
-        $this->cloudFactory
-            ->expects($this->never())
-            ->method('get');
         $this->runCommand('panda:cloud:modify', array('cloud-id' => md5(uniqid())));
+
+        $this->assertCount(0, $this->httpClient->getRequests());
     }
 
     public function testCommandWithName()
     {
         $cloudId = md5(uniqid());
-        $cloud = $this->createCloudMock();
-        $this->cloudFactory
-            ->expects($this->once())
-            ->method('get')
-            ->with($cloudId, null)
-            ->will($this->returnValue($cloud));
-        $cloud->expects($this->once())
-            ->method('setCloud')
-            ->with($this->equalTo(array('name' => 'foo')), $cloudId);
+
+        $this->httpClient->addResponse(new Response(200, [], json_encode(['name' => 'foo'])));
+
         $this->runCommand('panda:cloud:modify', array(
             'cloud-id' => $cloudId,
             '--name' => 'foo',
         ));
+
+        $lastRequest = $this->httpClient->getLastRequest();
+
+        $this->assertCount(1, $this->httpClient->getRequests());
+        $this->assertSame(sprintf('https://api.pandastream.com/v2/clouds/%s.json', $cloudId), (string) $lastRequest->getUri());
+        $this->assertCloudDataHaveBeenSent($lastRequest, [
+            'access_key' => 'default account access key',
+            'cloud_id' => $cloudId,
+            'name' => 'foo',
+        ]);
     }
 
     public function testCommandWithAccessKeyAndSecretKey()
     {
         $cloudId = md5(uniqid());
-        $cloud = $this->createCloudMock();
-        $this->cloudFactory
-            ->expects($this->once())
-            ->method('get')
-            ->with($cloudId, null)
-            ->will($this->returnValue($cloud));
-        $cloud->expects($this->once())
-            ->method('setCloud')
-            ->with(
-                $this->equalTo(array(
-                    'aws_access_key' => 'access-key',
-                    'aws_secret_key' => 'secret-key',
-                )),
-                $cloudId
-            );
+
+        $this->httpClient->addResponse(new Response(200, [], json_encode(['name' => 'foo'])));
+
         $this->runCommand('panda:cloud:modify', array(
             'cloud-id' => $cloudId,
             '--access-key' => 'access-key',
             '--secret-key' => 'secret-key',
         ));
+
+        $lastRequest = $this->httpClient->getLastRequest();
+
+        $this->assertCount(1, $this->httpClient->getRequests());
+        $this->assertSame(sprintf('https://api.pandastream.com/v2/clouds/%s.json', $cloudId), (string) $lastRequest->getUri());
+        $this->assertCloudDataHaveBeenSent($lastRequest, [
+            'access_key' => 'default account access key',
+            'aws_access_key' => 'access-key',
+            'aws_secret_key' => 'secret-key',
+            'cloud_id' => $cloudId,
+        ]);
     }
 
     public function testCommandWithAccountAndBucket()
     {
         $cloudId = md5(uniqid());
-        $cloud = $this->createCloudMock();
-        $this->cloudFactory
-            ->expects($this->once())
-            ->method('get')
-            ->with($cloudId, 'an-account')
-            ->will($this->returnValue($cloud));
-        $cloud->expects($this->once())
-            ->method('setCloud')
-            ->with($this->equalTo(array('s3_videos_bucket' => 'foo')), $cloudId);
+
+        $this->httpClient->addResponse(new Response(200, [], json_encode(['name' => 'foo'])));
+
         $this->runCommand('panda:cloud:modify', array(
             'cloud-id' => $cloudId,
             '--account' => 'an-account',
             '--s3-bucket' => 'foo',
         ));
+
+        $lastRequest = $this->httpClient->getLastRequest();
+
+        $this->assertCount(1, $this->httpClient->getRequests());
+        $this->assertSame(sprintf('https://api.pandastream.com/v2/clouds/%s.json', $cloudId), (string) $lastRequest->getUri());
+        $this->assertCloudDataHaveBeenSent($lastRequest, [
+            'access_key' => 'second account access key',
+            'cloud_id' => $cloudId,
+            's3_videos_bucket' => 'foo',
+        ]);
     }
 
     public function testCommandWithoutArguments()
@@ -120,16 +121,30 @@ class ModifyCloudCommandTest extends CommandTest
         $this->runCommand('panda:cloud:modify');
     }
 
-    private function createCloudFactoryMock()
+    protected function createCommand(): Command
     {
-        $this->cloudFactory = $this->getMockBuilder('\Xabbuh\PandaBundle\Cloud\CloudFactory')
-            ->disableOriginalConstructor()
-            ->setMethods(array())
-            ->getMock();
+        $accountManager = new AccountManager();
+        $accountManager->registerAccount('default-account', new Account('default account access key', 'default account secret key', 'api.pandastream.com'));
+        $accountManager->registerAccount('an-account', new Account('second account access key', 'second account secret key', 'api.pandastream.com'));
+        $accountManager->setDefaultAccount('default-account');
+
+        $cloudTransformer = new CloudTransformer();
+        $cloudTransformer->setSerializer(new Serializer());
+        $transformerRegistry = new TransformerRegistry();
+        $transformerRegistry->setCloudTransformer($cloudTransformer);
+
+        $this->httpClient = new Client();
+
+        return new ModifyCloudCommand($accountManager, $transformerRegistry, $this->httpClient);
     }
 
-    private function createCloudMock()
+    private function assertCloudDataHaveBeenSent(RequestInterface $request, array $expectedData): void
     {
-        return $this->getMockBuilder('\Xabbuh\PandaClient\Api\Cloud')->getMock();
+        parse_str((string) $request->getBody(), $sentData);
+
+        unset($sentData['signature']);
+        unset($sentData['timestamp']);
+
+        $this->assertEquals($expectedData, $sentData);
     }
 }
