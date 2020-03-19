@@ -21,8 +21,6 @@ use Xabbuh\PandaClient\Api\Account;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class ControllerTest extends TestCase
 {

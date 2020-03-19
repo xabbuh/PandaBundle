@@ -16,8 +16,6 @@ use Xabbuh\PandaBundle\Command\UploadVideoCommand;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class UploadVideoCommandTest extends CloudCommandTest
 {

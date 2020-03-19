@@ -11,54 +11,24 @@
 
 namespace Xabbuh\PandaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event as LegacyEvent;
 use Symfony\Contracts\EventDispatcher\Event;
 
-if (class_exists(LegacyEvent::class)) {
-    /**
-     * Event that is triggered repeatedly while an encoding process is running.
-     *
-     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
-     *
-     * @final
-     */
-    class EncodingProgressEvent extends LegacyEvent
-    {
-        use EncodingProgressEventTrait;
-
-        /**
-         * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
-         *
-         * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
-         */
-        const NAME = 'xabbuh_panda.encoding_progress';
-    }
-} else {
-    /**
-     * Event that is triggered repeatedly while an encoding process is running.
-     *
-     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
-     *
-     * @final
-     */
-    class EncodingProgressEvent extends Event
-    {
-        use EncodingProgressEventTrait;
-
-        /**
-         * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
-         *
-         * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
-         */
-        const NAME = 'xabbuh_panda.encoding_progress';
-    }
-}
-
 /**
- * @internal
+ * Event that is triggered repeatedly while an encoding process is running.
+ *
+ * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final
  */
-trait EncodingProgressEventTrait
+class EncodingProgressEvent extends Event
 {
+    /**
+     * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.
+     *
+     * The event listener method receives a Xabbuh\PandaBundle\Event\EncodingProgressEvent instance.
+     */
+    const NAME = 'xabbuh_panda.encoding_progress';
+
     /**
      * The id of the encoded video
      * @var string

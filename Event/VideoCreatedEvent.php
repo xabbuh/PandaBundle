@@ -11,54 +11,24 @@
 
 namespace Xabbuh\PandaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event as LegacyEvent;
 use Symfony\Contracts\EventDispatcher\Event;
 
-if (class_exists(LegacyEvent::class)) {
-    /**
-     * Event that is triggered when a video was successfully created.
-     *
-     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
-     *
-     * @final
-     */
-    class VideoCreatedEvent extends LegacyEvent
-    {
-        use VideoCreatedEventTrait;
-
-        /**
-         * The VIDEO_CREATED event occurs when a video was successfully created.
-         *
-         * The event listener method receives a Xabbuh\PandaBundle\Event\VideoCreatedEvent instance.
-         */
-        const NAME = 'xabbuh_panda.video_created';
-    }
-} else {
-    /**
-     * Event that is triggered when a video was successfully created.
-     *
-     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
-     *
-     * @final
-     */
-    class VideoCreatedEvent extends Event
-    {
-        use VideoCreatedEventTrait;
-
-        /**
-         * The VIDEO_CREATED event occurs when a video was successfully created.
-         *
-         * The event listener method receives a Xabbuh\PandaBundle\Event\VideoCreatedEvent instance.
-         */
-        const NAME = 'xabbuh_panda.video_created';
-    }
-}
-
 /**
- * @internal
+ * Event that is triggered when a video was successfully created.
+ *
+ * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final
  */
-trait VideoCreatedEventTrait
+class VideoCreatedEvent extends Event
 {
+    /**
+     * The VIDEO_CREATED event occurs when a video was successfully created.
+     *
+     * The event listener method receives a Xabbuh\PandaBundle\Event\VideoCreatedEvent instance.
+     */
+    const NAME = 'xabbuh_panda.video_created';
+
     /**
      * The id of the video
      * @var string

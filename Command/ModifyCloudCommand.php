@@ -12,124 +12,40 @@
 namespace Xabbuh\PandaBundle\Command;
 
 use Http\Client\HttpClient;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Xabbuh\PandaClient\Api\AccountManagerInterface;
 use Xabbuh\PandaClient\Api\Cloud;
 use Xabbuh\PandaClient\Api\HttplugClient;
 use Xabbuh\PandaClient\Transformer\TransformerRegistry;
 
-if (class_exists(ContainerAwareCommand::class)) {
-    /**
-     * Modify a panda cloud via command-line.
-     *
-     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
-     *
-     * @final
-     */
-    class ModifyCloudCommand extends ContainerAwareCommand
-    {
-        use ModifyCloudCommandTrait;
-
-        protected static $defaultName = 'panda:cloud:modify';
-
-        private $accountManager;
-        private $transformerRegistry;
-        private $httpClient;
-
-        public function __construct(AccountManagerInterface $accountManager = null, TransformerRegistry $transformerRegistry = null, HttpClient $httpClient = null)
-        {
-            if (null === $accountManager) {
-                @trigger_error(sprintf('Not injecting an %s instance into the constructor of the %s class is deprecated since PandaBundle 1.5.', AccountManagerInterface::class, static::class), E_USER_DEPRECATED);
-            }
-
-            if (null === $transformerRegistry) {
-                @trigger_error(sprintf('Not injecting an %s instance into the constructor of the %s class is deprecated since PandaBundle 1.5.', TransformerRegistry::class, static::class), E_USER_DEPRECATED);
-            }
-
-            parent::__construct();
-
-            $this->accountManager = $accountManager;
-            $this->transformerRegistry = $transformerRegistry;
-            $this->httpClient = $httpClient;
-        }
-
-        public function setContainer(ContainerInterface $container = null)
-        {
-            @trigger_error(sprintf('The %s() method is deprecated since PandaBundle 1.5.', __METHOD__), E_USER_DEPRECATED);
-
-            parent::setContainer($container);
-        }
-
-        public function getContainer()
-        {
-            @trigger_error(sprintf('The %s() method is deprecated since PandaBundle 1.5.', __METHOD__), E_USER_DEPRECATED);
-
-            return parent::getContainer();
-        }
-    }
-} else {
-    /**
-     * Modify a panda cloud via command-line.
-     *
-     * @author Christian Flothmann <christian.flothmann@xabbuh.de>
-     *
-     * @final
-     */
-    class ModifyCloudCommand extends Command
-    {
-        use ModifyCloudCommandTrait;
-
-        protected static $defaultName = 'panda:cloud:modify';
-
-        private $accountManager;
-        private $transformerRegistry;
-        private $httpClient;
-        private $container;
-
-        public function __construct(AccountManagerInterface $accountManager = null, TransformerRegistry $transformerRegistry = null, HttpClient $httpClient = null)
-        {
-            if (null === $accountManager) {
-                @trigger_error(sprintf('Not injecting an %s instance into the constructor of the %s class is deprecated since PandaBundle 1.5.', AccountManagerInterface::class, static::class), E_USER_DEPRECATED);
-            }
-
-            if (null === $transformerRegistry) {
-                @trigger_error(sprintf('Not injecting an %s instance into the constructor of the %s class is deprecated since PandaBundle 1.5.', TransformerRegistry::class, static::class), E_USER_DEPRECATED);
-            }
-
-            parent::__construct();
-
-            $this->accountManager = $accountManager;
-            $this->transformerRegistry = $transformerRegistry;
-            $this->httpClient = $httpClient;
-        }
-
-        public function setContainer(ContainerInterface $container = null)
-        {
-            @trigger_error(sprintf('The %s() method is deprecated since PandaBundle 1.5.', __METHOD__), E_USER_DEPRECATED);
-
-            $this->container = $container;
-        }
-
-        public function getContainer()
-        {
-            @trigger_error(sprintf('The %s() method is deprecated since PandaBundle 1.5.', __METHOD__), E_USER_DEPRECATED);
-
-            return $this->container;
-        }
-    }
-}
-
 /**
- * @internal
+ * Modify a panda cloud via command-line.
+ *
+ * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ *
+ * @final
  */
-trait ModifyCloudCommandTrait
+class ModifyCloudCommand extends Command
 {
+    protected static $defaultName = 'panda:cloud:modify';
+
+    private $accountManager;
+    private $transformerRegistry;
+    private $httpClient;
+
+    public function __construct(AccountManagerInterface $accountManager, TransformerRegistry $transformerRegistry, HttpClient $httpClient = null)
+    {
+        parent::__construct();
+
+        $this->accountManager = $accountManager;
+        $this->transformerRegistry = $transformerRegistry;
+        $this->httpClient = $httpClient;
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -25,8 +25,6 @@ use Xabbuh\PandaClient\Transformer\TransformerRegistry;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @group legacy
  */
 class ModifyCloudCommandTest extends CommandTest
 {
