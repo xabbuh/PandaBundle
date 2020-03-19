@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.0.0
+-----
+
+* dropped support for Symfony 3.4
+
 1.5.0
 -----
 

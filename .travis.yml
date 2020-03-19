@@ -26,8 +26,6 @@ matrix:
     - php: 7.3
     - php: 7.4
     # Test against LTS versions
-    - php: 7.1
-      env: SYMFONY_LTS="^3"
     - php: 7.2
       env: SYMFONY_LTS="^4"
     # Test against dev versions
