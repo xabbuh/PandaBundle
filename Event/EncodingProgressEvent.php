@@ -17,10 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  * Event that is triggered repeatedly while an encoding process is running.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class EncodingProgressEvent extends Event
+final class EncodingProgressEvent extends Event
 {
     /**
      * The ENCODING_PROGRESS event occurs repeatedly while an encoding process is running.

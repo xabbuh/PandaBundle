@@ -17,10 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  * Event that is triggered when a video was successfully created.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class VideoCreatedEvent extends Event
+final class VideoCreatedEvent extends Event
 {
     /**
      * The VIDEO_CREATED event occurs when a video was successfully created.

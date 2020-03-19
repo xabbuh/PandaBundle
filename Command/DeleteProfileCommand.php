@@ -20,10 +20,8 @@ use Xabbuh\PandaClient\Model\Profile;
  * Command to delete a profile.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class DeleteProfileCommand extends CloudCommand
+final class DeleteProfileCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:profile:delete';
 

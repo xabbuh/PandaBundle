@@ -19,10 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Fetch notification status information via command-line.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ShowNotificationsCommand extends CloudCommand
+final class ShowNotificationsCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:notifications:show';
 

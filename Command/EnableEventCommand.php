@@ -21,10 +21,8 @@ use Xabbuh\PandaClient\Model\Notifications;
  * Command for enabling notification events.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class EnableEventCommand extends CloudCommand
+final class EnableEventCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:notifications:enable';
     /**

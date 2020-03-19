@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Fetch data of a video.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class VideoInfoCommand extends CloudCommand
+final class VideoInfoCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:video:info';
 

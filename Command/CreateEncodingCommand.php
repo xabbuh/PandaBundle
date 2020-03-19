@@ -21,10 +21,8 @@ use Xabbuh\PandaClient\Model\Video;
  * Command to create an encoding.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class CreateEncodingCommand extends CloudCommand
+final class CreateEncodingCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:encoding:create';
 

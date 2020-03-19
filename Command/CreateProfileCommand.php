@@ -19,10 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to create a profile based on a preset.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class CreateProfileCommand extends CloudCommand
+final class CreateProfileCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:profile:create';
 

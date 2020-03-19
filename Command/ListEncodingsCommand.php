@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command for displaying lists of encodings.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ListEncodingsCommand extends CloudCommand
+final class ListEncodingsCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:encoding:list';
 

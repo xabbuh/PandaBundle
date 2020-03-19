@@ -21,10 +21,8 @@ use Xabbuh\PandaClient\Model\Notifications;
  * Command for disabling notification events.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class DisableEventCommand extends CloudCommand
+final class DisableEventCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:notifications:disable';
 

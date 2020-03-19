@@ -19,10 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to display cloud details.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class CloudInfoCommand extends CloudCommand
+final class CloudInfoCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:cloud:info';
 

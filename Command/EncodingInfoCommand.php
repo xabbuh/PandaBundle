@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Fetch an encoding's data.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class EncodingInfoCommand extends CloudCommand
+final class EncodingInfoCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:encoding:info';
 

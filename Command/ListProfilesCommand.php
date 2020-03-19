@@ -19,10 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * List all configured profiles for a cloud.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ListProfilesCommand extends CloudCommand
+final class ListProfilesCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:profile:list';
 

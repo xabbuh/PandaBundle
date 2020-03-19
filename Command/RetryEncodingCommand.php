@@ -20,10 +20,8 @@ use Xabbuh\PandaClient\Model\Encoding;
  * Command to restart an encoding.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class RetryEncodingCommand extends CloudCommand
+final class RetryEncodingCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:encoding:retry';
 

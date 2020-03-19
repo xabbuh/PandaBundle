@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to display a list of videos.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ListVideosCommand extends CloudCommand
+final class ListVideosCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:video:list';
 

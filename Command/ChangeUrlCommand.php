@@ -20,10 +20,8 @@ use Xabbuh\PandaClient\Model\Notifications;
  * Command for modifying the endpoint of notification requests.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ChangeUrlCommand extends CloudCommand
+final class ChangeUrlCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:notifications:change-url';
 

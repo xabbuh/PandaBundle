@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Show a profile's details.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ProfileInfoCommand extends CloudCommand
+final class ProfileInfoCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:profile:info';
 

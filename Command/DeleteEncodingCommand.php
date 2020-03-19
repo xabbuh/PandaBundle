@@ -20,10 +20,8 @@ use Xabbuh\PandaClient\Model\Encoding;
  * Command to delete an encoding.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class DeleteEncodingCommand extends CloudCommand
+final class DeleteEncodingCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:encoding:delete';
 

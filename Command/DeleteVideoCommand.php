@@ -20,10 +20,8 @@ use Xabbuh\PandaClient\Model\Video;
  * Delete a video on the command-line.
  *
  * @author Christian Flothmann <chrsitian.flothmann@xabbuh.de>
- *
- * @final
  */
-class DeleteVideoCommand extends CloudCommand
+final class DeleteVideoCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:video:delete';
     /**

@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command for upload video files into a Panda cloud.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class UploadVideoCommand extends CloudCommand
+final class UploadVideoCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:video:upload';
 

@@ -26,10 +26,8 @@ use Xabbuh\PandaClient\Transformer\TransformerRegistry;
  * Modify a panda cloud via command-line.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ModifyCloudCommand extends Command
+final class ModifyCloudCommand extends Command
 {
     protected static $defaultName = 'panda:cloud:modify';
 

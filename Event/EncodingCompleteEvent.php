@@ -17,10 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  * Event that is triggered when an encoding has successfully finished.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class EncodingCompleteEvent extends Event
+final class EncodingCompleteEvent extends Event
 {
     /**
      * The ENCODING_COMPLETE event occurs when an encoding is done or failed.

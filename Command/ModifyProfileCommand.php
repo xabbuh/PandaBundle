@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to modify a profile.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class ModifyProfileCommand extends CloudCommand
+final class ModifyProfileCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:profile:modify';
 

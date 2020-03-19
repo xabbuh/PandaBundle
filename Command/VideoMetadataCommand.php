@@ -20,10 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Fetch and display metadata of a video.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
- *
- * @final
  */
-class VideoMetadataCommand extends CloudCommand
+final class VideoMetadataCommand extends CloudCommand
 {
     protected static $defaultName = 'panda:video:metadata';
 
