@@ -12,6 +12,7 @@
 namespace Xabbuh\PandaBundle\Tests\DependencyInjection;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Xabbuh\PandaBundle\Tests\DependencyInjection\Kernel;
 
 class ContainerCompilationTest extends KernelTestCase
@@ -21,7 +22,7 @@ class ContainerCompilationTest extends KernelTestCase
         $container = $this->bootKernel()->getContainer();
 
         foreach ($container->getParameter('xabbuh_panda.test_service_aliases') as $id => $type) {
-            $this->assertInstanceOf($type, $container->get($id));
+            $this->assertInstanceOf($type, $container->get($id, ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE));
         }
     }
 
@@ -33,7 +34,7 @@ class ContainerCompilationTest extends KernelTestCase
         $container = $this->bootKernel()->getContainer();
 
         foreach ($container->getParameter('xabbuh_panda.deprecated_test_service_aliases') as $id => $type) {
-            $this->assertInstanceOf($type, $container->get($id));
+            $this->assertInstanceOf($type, $container->get($id, ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE));
         }
     }
 
