@@ -21,7 +21,7 @@ use Xabbuh\PandaClient\Model\Encoding;
  *
  * @group legacy
  */
-class CancelEncodingCloudCommandTest extends CloudCommandTest
+class CancelEncodingCommandTest extends CloudCommandTest
 {
     use SetUpTearDownTrait;
 
