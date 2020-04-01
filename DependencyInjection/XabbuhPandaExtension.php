@@ -57,7 +57,6 @@ class XabbuhPandaExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('account_manager.xml');
         $loader->load('cloud_manager.xml');
-        $loader->load('cloud_factory.xml');
         $loader->load('commands.xml');
         $loader->load('controller.xml');
         $loader->load('transformers.xml');
@@ -68,12 +67,6 @@ class XabbuhPandaExtension extends Extension
 
         if (isset($knownClouds[$config['default_cloud']])) {
             $container->setAlias(CloudInterface::class, new Alias($knownClouds[$config['default_cloud']], false));
-        }
-
-        if (method_exists(Definition::class, 'getDeprecation')) {
-            $container->getDefinition('xabbuh_panda.cloud_factory')->setDeprecated('xabbuh/panda-bundle', '1.4', '');
-        } else {
-            $container->getDefinition('xabbuh_panda.cloud_factory')->setDeprecated(true);
         }
 
         $baseHttpClientDefinition = $container->getDefinition('xabbuh_panda.http_client');
