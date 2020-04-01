@@ -32,7 +32,13 @@ class ContainerCompilationTest extends KernelTestCase
     {
         $container = $this->bootKernel()->getContainer();
 
-        foreach ($container->getParameter('xabbuh_panda.deprecated_test_service_aliases') as $id => $type) {
+        $deprecatedServices = $container->getParameter('xabbuh_panda.deprecated_test_service_aliases');
+
+        if (!$deprecatedServices) {
+            $this->markTestSkipped('No deprecated services found.');
+        }
+
+        foreach ($deprecatedServices as $id => $type) {
             $this->assertInstanceOf($type, $container->get($id));
         }
     }

@@ -48,7 +48,6 @@ class XabbuhPandaExtensionTest extends AbstractExtensionTestCase
         $this->ensureThatDefinitionsAreRegistered(array(
             'xabbuh_panda.account_manager' => 'Xabbuh\PandaClient\Api\AccountManager',
             'xabbuh_panda.cloud_manager' => 'Xabbuh\PandaClient\Api\CloudManager',
-            'xabbuh_panda.cloud_factory' => 'Xabbuh\PandaBundle\Cloud\CloudFactory',
             'xabbuh_panda.controller' => 'Xabbuh\PandaBundle\Controller\Controller',
             'xabbuh_panda.serializer.cloud' => 'Xabbuh\PandaClient\Serializer\Symfony\Serializer',
             'xabbuh_panda.serializer.encoding' => 'Xabbuh\PandaClient\Serializer\Symfony\Serializer',
