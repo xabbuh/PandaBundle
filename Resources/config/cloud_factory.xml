@@ -7,7 +7,6 @@
     </parameters>
     <services>
         <service id="xabbuh_panda.cloud_factory" class="%xabbuh_panda.cloud.factory.class%">
-            <deprecated />
             <argument type="service" id="xabbuh_panda.account_manager"/>
             <argument type="service" id="xabbuh_panda.transformer"/>
         </service>

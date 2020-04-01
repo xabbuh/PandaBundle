@@ -70,6 +70,12 @@ class XabbuhPandaExtension extends Extension
             $container->setAlias(CloudInterface::class, new Alias($knownClouds[$config['default_cloud']], false));
         }
 
+        if (method_exists(Definition::class, 'getDeprecation')) {
+            $container->getDefinition('xabbuh_panda.cloud_factory')->setDeprecated('xabbuh/panda-bundle', '1.4', '');
+        } else {
+            $container->getDefinition('xabbuh_panda.cloud_factory')->setDeprecated(true);
+        }
+
         $baseHttpClientDefinition = $container->getDefinition('xabbuh_panda.http_client');
 
         foreach (array('client' => 0, 'request_factory' => 1, 'stream_factory' => 2) as $key => $argumentIndex) {
