@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.5.1
+-----
+
+* fixed compatibility with symfony/dependency-injection 5.1
+* exclude tests and development files from the archive
+
 1.5.0
 -----
 
