@@ -7,6 +7,12 @@ CHANGELOG
 * removed `CloudFactoryInterface` and `CloudFactory`
 * dropped support for Symfony 3.4
 
+1.5.1
+-----
+
+* fixed compatibility with symfony/dependency-injection 5.1
+* exclude tests and development files from the archive
+
 1.5.0
 -----
 
