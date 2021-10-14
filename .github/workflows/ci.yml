@@ -1,0 +1,88 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - master
+            - '[0-9]+.[0-9x]+'
+    pull_request:
+
+jobs:
+    check_composer:
+        name: Check composer.json
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v2
+              with:
+                  coverage: none
+                  php-version: '7.4'
+            - run: composer validate --strict --no-check-lock
+
+    tests:
+        name: "Tests on PHP ${{ matrix.php }}${{ matrix.name_suffix }}"
+        runs-on: ubuntu-latest
+
+        env:
+            SYMFONY_DEPRECATIONS_HELPER: 'max[direct]=0' # TODO remove that once upgrading dev-deps job to run on PHPUnit 9.5 on PHP 8
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php: [ '7.1', '7.2', '7.3', '7.4' ]
+                min_stability: [ '' ]
+                name_suffix: [ '' ]
+                composer_flags: [ '' ]
+                symfony_version: [ '' ]
+                coverage: [ 'none' ]
+                include:
+                    - php: '7.4'
+                      min_stability: 'dev'
+                      name_suffix: ' (dev deps)'
+                      coverage: 'xdebug'
+                    - php: '7.1'
+                      min_stability: ''
+                      name_suffix: ' (lowest deps)'
+                      composer_flags: '--prefer-lowest'
+                      coverage: 'none'
+                    - php: '7.4'
+                      name_suffix: ' (Symfony LTS 4.x)'
+                      symfony_version: '^4'
+                      coverage: 'none'
+
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    coverage: "${{ matrix.coverage }}"
+                    php-version: "${{ matrix.php }}"
+
+            -   name: Configure stability
+                if: "matrix.min_stability != ''"
+                run: composer config minimum-stability "${{ matrix.min_stability }}"
+
+            -   name: force Symfony version
+                run: composer require "symfony/lts:${{ matrix.symfony_version }}@dev" --dev --no-update
+                if: "matrix.symfony_version != ''"
+
+            -   name: Install dependencies
+                run: composer update --ansi --no-progress --prefer-dist --no-interaction ${{ matrix.composer_flags }}
+
+            -   name: Install PHPUnit
+                run: vendor/bin/simple-phpunit install
+
+            -   name: Run tests
+                if: "matrix.coverage == 'none'"
+                run: vendor/bin/simple-phpunit -v --colors=always
+
+            -   name: Run tests with code coverage
+                if: "matrix.coverage != 'none'"
+                run: vendor/bin/simple-phpunit -v --colors=always --coverage-clover=coverage.clover
+
+            -   name: Install coverage uploader
+                if: "matrix.coverage != 'none'"
+                run: wget https://scrutinizer-ci.com/ocular.phar
+
+            -   name: Upload code coverage to Scrutinizer
+                if: "matrix.coverage != 'none'"
+                run: php ocular.phar code-coverage:upload --format=php-clover coverage.clover

@@ -12,7 +12,6 @@
 namespace Xabbuh\PandaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +23,8 @@ use Xabbuh\PandaClient\Api\Account;
  */
 class ControllerTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
-     * @var \Symfony\Component\EventDispatcher\Event
+     * @var \Symfony\Contracts\EventDispatcher\Event
      */
     public $event;
 
@@ -47,11 +44,11 @@ class ControllerTest extends TestCase
     private $controller;
 
     /**
-     * @var \Xabbuh\PandaClient\Api\CloudInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Xabbuh\PandaClient\Api\CloudInterface&\PHPUnit\Framework\MockObject\MockObject
      */
     private $defaultCloud;
 
-    private function doSetUp()
+    protected function setUp(): void
     {
         $this->event = null;
         $this->eventCounter = 0;

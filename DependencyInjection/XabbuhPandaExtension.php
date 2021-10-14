@@ -158,6 +158,8 @@ class XabbuhPandaExtension extends Extension
 
     /**
      * {@inheritDoc}
+     *
+     * @return string
      */
     public function getNamespace()
     {

@@ -11,8 +11,9 @@
 
 namespace Xabbuh\PandaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Create Panda events based on requests.
@@ -117,7 +118,12 @@ class EventFactory
     public static function createVideoCreatedEventFromRequest(Request $request)
     {
         $videoId = $request->request->get('video_id');
-        $encodingIds = $request->request->get('encoding_ids');
+        if ($request->request instanceof InputBag) {
+            $encodingIds = $request->request->all('encoding_ids');
+        } else {
+            // BC for symfony < 5.1
+            $encodingIds = $request->request->get('encoding_ids');
+        }
 
         if (null === $videoId || !is_string($videoId)) {
             throw new \InvalidArgumentException('no valid video id given');
@@ -142,7 +148,12 @@ class EventFactory
     public static function createVideoEncodedEventFromRequest(Request $request)
     {
         $videoId = $request->request->get('video_id');
-        $encodingIds = $request->request->get('encoding_ids');
+        if ($request->request instanceof InputBag) {
+            $encodingIds = $request->request->all('encoding_ids');
+        } else {
+            // BC for symfony < 5.1
+            $encodingIds = $request->request->get('encoding_ids');
+        }
 
         if (null === $videoId || !is_string($videoId)) {
             throw new \InvalidArgumentException('no valid video id given');

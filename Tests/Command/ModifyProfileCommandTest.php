@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
 
@@ -20,25 +19,17 @@ use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
  */
 class ModifyProfileCommandTest extends CloudCommandTest
 {
-    use SetUpTearDownTrait;
-
     /**
-     * @var \Xabbuh\PandaBundle\Cloud\CloudFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $cloudFactory;
-
-    /**
-     * @var \Xabbuh\PandaClient\Model\Profile|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Xabbuh\PandaClient\Model\Profile&\PHPUnit\Framework\MockObject\MockObject
      */
     private $profile;
 
-    private function doSetUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->apiMethod = 'getProfile';
 
-        $this->cloudFactory = $this->createCloudFactoryMock();
         $this->profile = $this->createProfileMock();
         $this->defaultCloud
             ->expects($this->any())
@@ -159,13 +150,5 @@ class ModifyProfileCommandTest extends CloudCommandTest
     private function createProfileMock()
     {
         return $this->getMockBuilder('\Xabbuh\PandaClient\Model\Profile')->getMock();
-    }
-
-    private function createCloudFactoryMock()
-    {
-        return $this->getMockBuilder('\Xabbuh\PandaBundle\Cloud\CloudFactory')
-            ->disableOriginalConstructor()
-            ->setMethods(array())
-            ->getMock();
     }
 }

@@ -12,7 +12,6 @@
 namespace Xabbuh\PandaBundle\Tests\Command;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -23,8 +22,6 @@ use Xabbuh\PandaClient\Exception\ApiException;
  */
 abstract class CommandTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var Application
      */
@@ -40,7 +37,7 @@ abstract class CommandTest extends TestCase
      */
     protected $commandTester;
 
-    private function doSetUp()
+    protected function setUp(): void
     {
         $this->command = $this->createCommand();
 

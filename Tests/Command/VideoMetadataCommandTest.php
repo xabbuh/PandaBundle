@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\VideoMetadataCommand;
 
@@ -20,9 +19,7 @@ use Xabbuh\PandaBundle\Command\VideoMetadataCommand;
  */
 class VideoMetadataCommandTest extends CloudCommandTest
 {
-    use SetUpTearDownTrait;
-
-    private function doSetUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
