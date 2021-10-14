@@ -20,7 +20,7 @@ use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
 class ModifyProfileCommandTest extends CloudCommandTest
 {
     /**
-     * @var \Xabbuh\PandaClient\Model\Profile|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Xabbuh\PandaClient\Model\Profile&\PHPUnit\Framework\MockObject\MockObject
      */
     private $profile;
 

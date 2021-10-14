@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FunctionalTest extends WebTestCase
 {
     /**
-     * @var \Symfony\Component\EventDispatcher\Event
+     * @var \Symfony\Contracts\EventDispatcher\Event
      */
     public $event;
 
@@ -30,7 +30,7 @@ class FunctionalTest extends WebTestCase
     public $eventCounter;
 
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
     private $client;
 

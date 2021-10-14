@@ -11,9 +11,9 @@
 
 namespace Xabbuh\PandaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Create Panda events based on requests.

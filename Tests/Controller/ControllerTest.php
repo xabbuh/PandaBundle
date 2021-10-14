@@ -24,7 +24,7 @@ use Xabbuh\PandaClient\Api\Account;
 class ControllerTest extends TestCase
 {
     /**
-     * @var \Symfony\Component\EventDispatcher\Event
+     * @var \Symfony\Contracts\EventDispatcher\Event
      */
     public $event;
 
@@ -44,7 +44,7 @@ class ControllerTest extends TestCase
     private $controller;
 
     /**
-     * @var \Xabbuh\PandaClient\Api\CloudInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Xabbuh\PandaClient\Api\CloudInterface&\PHPUnit\Framework\MockObject\MockObject
      */
     private $defaultCloud;
 
