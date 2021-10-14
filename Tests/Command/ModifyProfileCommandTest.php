@@ -20,11 +20,6 @@ use Xabbuh\PandaBundle\Command\ModifyProfileCommand;
 class ModifyProfileCommandTest extends CloudCommandTest
 {
     /**
-     * @var \Xabbuh\PandaBundle\Cloud\CloudFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $cloudFactory;
-
-    /**
      * @var \Xabbuh\PandaClient\Model\Profile|\PHPUnit_Framework_MockObject_MockObject
      */
     private $profile;
@@ -35,7 +30,6 @@ class ModifyProfileCommandTest extends CloudCommandTest
 
         $this->apiMethod = 'getProfile';
 
-        $this->cloudFactory = $this->createCloudFactoryMock();
         $this->profile = $this->createProfileMock();
         $this->defaultCloud
             ->expects($this->any())
@@ -156,13 +150,5 @@ class ModifyProfileCommandTest extends CloudCommandTest
     private function createProfileMock()
     {
         return $this->getMockBuilder('\Xabbuh\PandaClient\Model\Profile')->getMock();
-    }
-
-    private function createCloudFactoryMock()
-    {
-        return $this->getMockBuilder('\Xabbuh\PandaBundle\Cloud\CloudFactory')
-            ->disableOriginalConstructor()
-            ->setMethods(array())
-            ->getMock();
     }
 }
