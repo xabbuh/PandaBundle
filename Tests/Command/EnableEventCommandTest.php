@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\EnableEventCommand;
 use Xabbuh\PandaClient\Model\NotificationEvent;
@@ -22,9 +21,7 @@ use Xabbuh\PandaClient\Model\Notifications;
  */
 class EnableEventCommandTest extends CloudCommandTest
 {
-    use SetUpTearDownTrait;
-
-    private function doSetUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\EncodingInfoCommand;
 use Xabbuh\PandaClient\Model\Encoding;
@@ -21,9 +20,7 @@ use Xabbuh\PandaClient\Model\Encoding;
  */
 class EncodingInfoCommandTest extends CloudCommandTest
 {
-    use SetUpTearDownTrait;
-
-    private function doSetUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

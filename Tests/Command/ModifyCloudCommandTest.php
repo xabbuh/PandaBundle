@@ -14,7 +14,6 @@ namespace Xabbuh\PandaBundle\Tests\Command;
 use Http\Mock\Client;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Console\Command\Command;
 use Xabbuh\PandaBundle\Command\ModifyCloudCommand;
 use Xabbuh\PandaClient\Api\Account;
@@ -28,8 +27,6 @@ use Xabbuh\PandaClient\Transformer\TransformerRegistry;
  */
 class ModifyCloudCommandTest extends CommandTest
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var Client
      */

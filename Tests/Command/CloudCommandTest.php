@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Command;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Xabbuh\PandaClient\Exception\PandaException;
 
 /**
@@ -19,8 +18,6 @@ use Xabbuh\PandaClient\Exception\PandaException;
  */
 abstract class CloudCommandTest extends CommandTest
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var \Xabbuh\PandaClient\Api\CloudManager|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -33,7 +30,7 @@ abstract class CloudCommandTest extends CommandTest
 
     protected $apiMethod;
 
-    private function doSetUp()
+    protected function setUp(): void
     {
         $this->createCloudManagerMock();
 

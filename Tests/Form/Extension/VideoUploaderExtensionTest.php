@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Form\Extension;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\FormIntegrationTestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -22,14 +21,12 @@ use Xabbuh\PandaBundle\Form\Extension\VideoUploaderExtension;
  */
 class VideoUploaderExtensionTest extends FormIntegrationTestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     private $urlGenerator;
 
-    private function doSetUp()
+    protected function setUp(): void
     {
         $this->urlGenerator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
 

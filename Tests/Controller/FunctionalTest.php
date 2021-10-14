@@ -11,7 +11,6 @@
 
 namespace Xabbuh\PandaBundle\Tests\Controller;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,8 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FunctionalTest extends WebTestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var \Symfony\Component\EventDispatcher\Event
      */
@@ -37,7 +34,7 @@ class FunctionalTest extends WebTestCase
      */
     private $client;
 
-    private function doSetUp()
+    protected function setUp(): void
     {
         try {
             self::getKernelClass();
