@@ -23,6 +23,9 @@ jobs:
         name: "Tests on PHP ${{ matrix.php }}${{ matrix.name_suffix }}"
         runs-on: ubuntu-latest
 
+        env:
+            SYMFONY_DEPRECATIONS_HELPER: 'max[direct]=0' # TODO remove that once upgrading dev-deps job to run on PHPUnit 9.5 on PHP 8
+
         strategy:
             fail-fast: false
             matrix:
